@@ -1,0 +1,62 @@
+\documentclass{scrbook}
+\KOMAoptions{paper=a4, fontsize=12pt, chapterprefix=true, twoside=semi, DIV=classic, parskip=half}
+
+\usepackage[T1]{fontenc}
+\usepackage[sf]{noto}
+\linespread{1.25}
+
+\usepackage{scrlayer-scrpage}
+\usepackage[fulladjust]{marginnote}
+
+\KOMAoptions{headsepline=on, DIV=last}
+
+\pagestyle{scrheadings}
+%\automark[chapter]{chapter}
+%\automark*[section]{}
+\setkomafont{pagehead}{\color{RoyalBlue}\itshape\bfseries}
+\renewcommand*{\chaptermarkformat}{\chapapp~\thechapter\autodot~--~}
+\ofoot*{}
+\cfoot*{\pagemark}
+
+\addtokomafont{chapterprefix}{\itshape\color{white}}
+\renewcommand*{\chapterformat}{\raggedleft\colorbox{RoyalBlue}{\parbox[b][66pt]{66pt}{\vfill\centering{\large\chapapp}\\[-6pt]\thechapter\vfill}}}
+\renewcommand*{\chapterheadendvskip}{\pgfornament[width=\textwidth]{88}\par}
+
+\renewcommand*{\sectionformat}{\colorbox{black}{\textcolor{white}{\thesection}}\enskip}
+\makeatletter
+\renewcommand*\sectionlinesformat[4]{\makebox[0pt][l]{\rule[-\fboxsep]{\textwidth}{1pt}}\@hangfrom{#3}{#4}}
+\makeatother
+
+\usepackage{graphicx}
+\usepackage[svgnames, dvipsnames]{xcolor}
+\usepackage{pgfornament}
+
+\usepackage{listings}
+\lstdefinestyle{mystyle}{
+    language=[latex]TeX, 
+    basicstyle=\footnotesize\ttfamily,
+    backgroundcolor=\color{Goldenrod!20},
+    keywordstyle=\color{blue!80}\bfseries,
+    commentstyle=\color{Green},
+    breaklines=true,
+    showstringspaces=false,
+    belowskip=0pt
+}
+\lstset{style=mystyle}
+
+\title{How to Reproduce this Book Exactly with \LaTeX}
+\subtitle{A Self-contained Tutorial on Writing Mathematical Notes}
+\author{C.~L.~Loi}
+
+\setcounter{tocdepth}{\sectiontocdepth}
+
+\begin{document}
+
+\pagenumbering{roman}
+\maketitle
+\tableofcontents
+\cleardoubleoddpage
+\pagenumbering{arabic}
+\include{ch1}
+
+\end{document}
