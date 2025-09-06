@@ -24,12 +24,43 @@
 
 \renewcommand*{\sectionformat}{\colorbox{black}{\textcolor{white}{\thesection}}\enskip}
 \makeatletter
-\renewcommand*\sectionlinesformat[4]{\makebox[0pt][l]{\rule[-\fboxsep]{\textwidth}{1pt}}\@hangfrom{#3}{#4}}
+\renewcommand*\sectionlinesformat[4]{\makebox[0pt][l]{\rule[-\fboxsep]{\textwidth}{1pt}}\@hangfrom{#3}\parbox[b]{0.85\textwidth}{\linespread{1}\selectfont#4}}
 \makeatother
 
 \usepackage{graphicx}
 \usepackage[svgnames, dvipsnames]{xcolor}
+\usepackage[many]{tcolorbox}
 \usepackage{pgfornament}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mdframed}
+\usepackage{lipsum}
+\usepackage{microtype}
+\usepackage{tabularx}
+
+\usepackage[lastexercise,answerdelayed]{exercise}
+\renewcounter{Exercise}[chapter]
+\renewcommand*{\theExercise}{\thechapter.\arabic{Exercise}}
+\renewcommand*{\ExerciseHeader}{\noindent \textbf{\theExercise}}
+\renewcommand*{\AnswerHeader}{\noindent \textbf{\theExercise}}
+\renewcommand*{\ExerciseSkipBefore}{\dimexpr.5\baselineskip}
+\renewcommand*{\ExerciseSkipAfter}{\dimexpr.5\baselineskip}
+
+\newmdenv[leftmargin = 0pt,
+  innerleftmargin = 1em,
+  innertopmargin = 1em,
+  innerbottommargin = 1em,
+  innerrightmargin = 1em,
+  rightmargin = 0pt,
+  linewidth= 1ex,
+  skipabove= \baselineskip,
+  skipbelow= \baselineskip,
+  topline = false,
+  rightline = false,
+  bottomline = false,
+  backgroundcolor=Mahogany!20,
+  linecolor=Mahogany,
+  frametitle={\sffamily Exercise(s)},
+  frametitleaboveskip = 1em]{exercisebox}
 
 \usepackage{listings}
 \lstdefinestyle{mystyle}{
@@ -44,11 +75,16 @@
 }
 \lstset{style=mystyle}
 
+\usepackage{hyperref}
+
 \title{How to Reproduce this Book Exactly with \LaTeX}
 \subtitle{A Self-contained Tutorial on Writing Mathematical Notes}
 \author{C.~L.~Loi}
+\lowertitleback{"How to Reproduce this Book Exactly with \LaTeX"\\
+Copyright ©, C.~L.~Loi, 2025. All rights reserved.}
 
-\setcounter{tocdepth}{\sectiontocdepth}
+%\setcounter{tocdepth}{}
+\allowdisplaybreaks
 
 \begin{document}
 
@@ -57,6 +93,7 @@
 \tableofcontents
 \cleardoubleoddpage
 \pagenumbering{arabic}
-\include{ch1}
+\include{ch1_basic_structure}
+\include{ch2}
 
 \end{document}

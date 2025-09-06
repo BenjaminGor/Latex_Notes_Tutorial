@@ -1,0 +1,60 @@
+\chapter{Formatting of Text and Paragraphs}
+
+\paragraph{Introduction} This chapter explains how to adjust the various aspects of text, such as fonts, shape/size/style, and positioning.
+
+\section{About Fonts}
+
+\subsection{The Three Font Family Types}
+
+\paragraph{(Sans) Serif, Typewriter} In any \LaTeX{} document, the text can be typed in three different \textit{font families}: \textit{serif}, \textit{sans serif}, and \textit{typewriter}. In this book, headings (of chapters, sections, etc.) are in the sans serif family, while the remaining main text is in serif. Table \ref{tab:fontfamily} below demonstrates how to select a specific font family for a piece of text.
+\begin{table}
+\begin{tabularx}{\textwidth}{|l|X|l|l|}
+\hline
+Font Family & Command & Switch & Output \\
+\hline
+Serif & \texttt{\textbackslash textrm\{Hello World!\}}& \texttt{\textbackslash rmfamily} & \textrm{Hello World!} \\
+\hline
+Sans Serif & \texttt{\textbackslash textsf\{Hello World!\}}& \texttt{\textbackslash sffamily} & \textsf{Hello World!} \\
+\hline
+Typewriter & \texttt{\textbackslash texttt\{Hello World!\}}& \texttt{\textbackslash ttfamily} & \texttt{Hello World!} \\
+\hline
+\end{tabularx}
+\caption{The commands for switching between the three font families and how they appear.}
+\label{tab:fontfamily}
+\end{table}
+For instance, both
+\begin{lstlisting}
+... 
+produces the following output: \par
+\textsf{\lipsum[3]} % or {\sffamily \lipsum[3]}, remember the curly brackets {} to limit the scope of the \sffamily command.
+\end{lstlisting}
+produces the following output: \par
+{\sffamily \lipsum[3]} \par
+The \% symbol indicates a trailing comment that is neither interpreted nor displayed.
+
+\subsection{Changing the Actual Font for a Font Family}
+
+\paragraph{Font Libraries}
+Each of the previous font families is internally assigned a specific \textit{font}. To change the actual fonts, we can call the corresponding font package(s). The \LaTeX{} Font Catalogue \href{https://tug.org/FontCatalogue/}{https://tug.org/FontCatalogue/} provides a comprehensive list of available fonts and the way to import them. This book has substituted the \textbf{Noto Sans} font for the sans serif family, via the preamble
+\begin{lstlisting}
+\usepackage[T1]{fontenc}
+\usepackage[sf]{noto}
+\end{lstlisting}
+
+\begin{exercisebox}
+\begin{Exercise}
+Choose a font of your liking from the Font Catalogue to replace the original one in the book.
+\end{Exercise}
+\end{exercisebox}
+
+\section{Text Attributes}
+
+\subsection{Font Size}
+
+\subsection{Font Shapes}
+
+\subsection{Text Color}
+
+\section{Paragraphs and Positioning}
+
+\section{Verbatim Mode}
