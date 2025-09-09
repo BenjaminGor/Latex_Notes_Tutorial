@@ -8,12 +8,12 @@
 \usepackage{scrlayer-scrpage}
 \usepackage[fulladjust]{marginnote}
 
-\KOMAoptions{headsepline=on, DIV=last}
+\KOMAoptions{headsepline=on, captions=besidetop, DIV=last}
 
 \pagestyle{scrheadings}
 %\automark[chapter]{chapter}
 %\automark*[section]{}
-\setkomafont{pagehead}{\color{RoyalBlue}\itshape\bfseries}
+\setkomafont{pagehead}{\color{RoyalBlue}\slshape\bfseries}
 \renewcommand*{\chaptermarkformat}{\chapapp~\thechapter\autodot~--~}
 \ofoot*{}
 \cfoot*{\pagemark}
@@ -36,11 +36,14 @@
 \usepackage{lipsum}
 \usepackage{microtype}
 \usepackage{tabularx}
+\usepackage{adjustbox}
+
+\definecolor{mint}{rgb}{0.24, 0.71, 0.54}
 
 \usepackage[lastexercise,answerdelayed]{exercise}
 \renewcounter{Exercise}[chapter]
 \renewcommand*{\theExercise}{\thechapter.\arabic{Exercise}}
-\renewcommand*{\ExerciseHeader}{\noindent \textbf{\theExercise}}
+\renewcommand*{\ExerciseHeader}{\textbf{\theExercise )}}
 \renewcommand*{\AnswerHeader}{\noindent \textbf{\theExercise}}
 \renewcommand*{\ExerciseSkipBefore}{\dimexpr.5\baselineskip}
 \renewcommand*{\ExerciseSkipAfter}{\dimexpr.5\baselineskip}

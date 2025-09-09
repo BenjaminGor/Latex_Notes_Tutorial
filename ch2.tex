@@ -30,18 +30,21 @@ produces the following output: \par
 \end{lstlisting}
 produces the following output: \par
 {\sffamily \lipsum[3]} \par
-The \% symbol indicates a trailing comment that is neither interpreted nor displayed.
+The \% symbol indicates a trailing \textit{comment} that is neither interpreted nor displayed.
 
 \subsection{Changing the Actual Font for a Font Family}
 
 \paragraph{Font Libraries}
-Each of the previous font families is internally assigned a specific \textit{font}. To change the actual fonts, we can call the corresponding font package(s). The \LaTeX{} Font Catalogue \href{https://tug.org/FontCatalogue/}{https://tug.org/FontCatalogue/} provides a comprehensive list of available fonts and the way to import them. This book has substituted the \textbf{Noto Sans} font for the sans serif family, via the preamble
+Each of the previous font families is internally assigned a specific \textit{font}. To change the actual fonts, we can call the corresponding font package(s). The \textbf{\LaTeX{} Font Catalogue} \href{https://tug.org/FontCatalogue/}{https://tug.org/FontCatalogue/} provides a comprehensive list of available fonts and the way to import them. This book has substituted the \textbf{Noto Sans} font for the sans serif family, via the preamble
 \begin{lstlisting}
 \usepackage[T1]{fontenc}
 \usepackage[sf]{noto}
 \end{lstlisting}
 
 \begin{exercisebox}
+\begin{Exercise}
+Change the font family just for the dummy Lipsum paragraph above to typewriter.
+\end{Exercise}
 \begin{Exercise}
 Choose a font of your liking from the Font Catalogue to replace the original one in the book.
 \end{Exercise}
@@ -51,10 +54,169 @@ Choose a font of your liking from the Font Catalogue to replace the original one
 
 \subsection{Font Size}
 
+\paragraph{Size Commands}
+In Section \ref{sec:komaopt} we talked about setting the base global font size by \texttt{\textbackslash KOMAoptions}. However, to control the \textit{local} font size for some places, we can use the \textit{size commands}, listed in Table \ref{tab:fontsize} below.
+\begin{table}[ht]
+\begin{captionbeside}[test]{The various commands for text size.\footnotemark}[l][\textwidth]{
+\adjustbox{valign=t}{\begin{tabularx}{0.6\textwidth}{|>{\rule{0pt}{20pt}}l|X|}
+\hline
+Command & Output \\
+\hline
+\texttt{\textbackslash tiny} & {\tiny Who am I?} \\
+\hline
+\texttt{\textbackslash scriptsize} & {\scriptsize Who am I?} \\
+\hline
+\texttt{\textbackslash footnotesize	} & {\footnotesize Who am I?} \\
+\hline
+\texttt{\textbackslash small} & {\small Who am I?} \\
+\hline
+\texttt{\textbackslash normalsize} & {\normalsize Who am I?} \\
+\hline
+\texttt{\textbackslash large} & {\large Who am I?} \\
+\hline
+\texttt{\textbackslash Large} & {\Large Who am I?} \\
+\hline
+\texttt{\textbackslash LARGE} & {\LARGE Who am I?} \\
+\hline
+\texttt{\textbackslash huge} & {\huge Who am I?} \\
+\hline
+\texttt{\textbackslash Huge} & {\Huge Who am I?} \\
+\hline
+\end{tabularx}}}
+\end{captionbeside}
+\label{tab:fontsize}
+\end{table}
+For example, writing
+\begin{lstlisting}
+... produces \par
+{\small Though she be but little} {\LARGE she is fierce} \\ % scope
+\scriptsize % switch
+taken from Shakespeare's A Midsummer Night's Dream
+\normalsize % back to default ...
+\end{lstlisting}
+\footnotetext{\texttt{\textbackslash huge} and \texttt{\textbackslash Huge} have the same size when the font size is 12 pt (but different for 10 or 11 pt).}
+produces \par
+{\small Though she be but little} {\LARGE she is fierce} \\
+\scriptsize
+taken from Shakespeare's A Midsummer Night's Dream
+\normalsize
+\par The \texttt{\textbackslash \textbackslash} sign breaks the current line and starts a new line right below. And again, the curly brackets \verb|{}| limit the effect of command(s) within the scope.
+
+\paragraph{Selectfont} It is also possible to fix a numerical value for the font size using \texttt{\textbackslash fontsize\{<font\_size>\}\{<line\_spacing>\}} and \texttt{\textbackslash selectfont}. As an illustration, the code
+\begin{lstlisting}
+... leads to \par
+{\fontsize{15pt}{21pt}\selectfont May those who accept their fate be granted happiness. May those who defy their fate be granted glory. \\
+-- Princess Tutu\par} % the \par is needed to update the line spacing
+\end{lstlisting}
+leads to \par
+{\fontsize{15pt}{21pt}\selectfont May those who accept their fate be granted happiness. May those who defy their fate be granted glory. \\
+-- Princess Tutu\par}
+
 \subsection{Font Shapes}
+
+\paragraph{Italic, Bold, and More}
+Similar to font families, there are different \textit{font shape/\allowbreak styles} such as the commonly seen italic or bold. Table \ref{tab:fontshape} above shows the relevant commands to invoke them.
+\begin{table}
+\begin{tabularx}{\textwidth}{|l|X|l|l|}
+\hline
+Font Style & Command & Switch & Output \\
+\hline
+Bold & \texttt{\textbackslash textbf\{"10 Downing"\}}& \texttt{\textbackslash bfseries} & \textbf{"10 Downing"} \\
+\hline
+Medium & \texttt{\textbackslash textmd\{"10 Downing"\}}& \texttt{\textbackslash mdseries} & \textmd{"10 Downing"} \\
+\hline
+Italic & \texttt{\textbackslash textit\{"10 Downing"\}}& \texttt{\textbackslash itshape} & \textit{"10 Downing"} \\
+\hline
+Slanted & \texttt{\textbackslash textsl\{"10 Downing"\}}& \texttt{\textbackslash slshape} & \textsl{"10 Downing"} \\
+\hline
+Small Caps & \texttt{\textbackslash textsc\{"10 Downing"\}}& \texttt{\textbackslash scshape} & \textsc{"10 Downing"} \\
+\hline
+Upright & \texttt{\textbackslash textup\{"10 Downing"\}}& \texttt{\textbackslash upshape} & \textup{"10 Downing"} \\
+\hline
+\end{tabularx}
+\caption{The commands for different font styles. The medium/upright style is effectively the default normal.}
+\label{tab:fontshape}
+\end{table}
+Adding to the previous example, we can write
+\begin{lstlisting}
+... which produces \par
+\textit{\small Though she be but little} {\LARGE \bfseries \scshape she is fierce} \\ % scope
+\scriptsize % switch
+taken from \slshape \underline{Shakespeare's A Midsummer Night's Dream}
+\normalsize \upshape % back to default ...
+\end{lstlisting}
+which produces \par
+\textit{\small Though she be but little} {\LARGE \bfseries \scshape she is fierce} \\
+\scriptsize
+taken from \slshape \underline{Shakespeare's A Midsummer Night's Dream}
+\normalsize \upshape \par
+We also have \texttt{\textbackslash underline} and \texttt{\textbackslash emph}. You may want to try them out.
 
 \subsection{Text Color}
 
+\paragraph{xcolor}
+While there are default colors in the \LaTeX{} system, we can load a variety of additional colors from the \verb|xcolor| package, often with flags as
+\begin{lstlisting}
+\usepackage[svgnames, dvipsnames]{xcolor}    
+\end{lstlisting}
+The reference color list can be found in \href{https://www.overleaf.com/learn/latex/Using_colors_in_LaTeX}{https://www.overleaf.com/learn/latex/\allowbreak Using\_colors\_in\_LaTeX}. To set the color for a piece of text, we can enclose it with the \texttt{\textbackslash textcolor\{<color\_name>\}\{<text>\}} command. It is also possible to change the color within a group by \texttt{\textbackslash color\{<color\_name>\}}. For instance,
+\begin{lstlisting}
+... outputs \par
+\textcolor{Red}{Roses are red,} \\
+\textcolor{Blue}{violets are blue,} \\ 
+{\color{Purple} sugar is sweet and so are you.} % remember to limit the scope by the curly brackets!
+\end{lstlisting}
+outputs \par
+\textcolor{Red}{Roses are red,} \\
+\textcolor{Blue}{violets are blue,} \\ 
+{\color{Purple} sugar is sweet and so are you.}
+
+\paragraph{Self-defined colors}
+It is also possible to design a custom color by the command \texttt{\textbackslash definecolor\{<color\_name>\}\{<color\_model>\}\{<values>\}}. There are $4$ possible color models: \verb|rgb|, \verb|RGB|, \verb|cmyk|, and \verb|gray|. For example,
+\begin{lstlisting}
+...
+\definecolor{mint}{rgb}{0.24, 0.71, 0.54} % in the preamble
+... gives
+\textcolor{mint}{Mint Tears}
+\end{lstlisting}
+gives \textcolor{mint}{Mint Tears}. Color codes can be checked via \href{https://latexcolor.com/}{https://latexcolor.com/}.\par
+
+In addition, we can mix colors by the expression \texttt{<color\_1>!<mix\_ratio>!\allowbreak <color\_2>}. For instance,
+\begin{lstlisting}
+\textcolor{Blue!40!Green}{Copper (II)} \textcolor{Black!50}{Sulphate}
+\end{lstlisting}
+is displayed as \textcolor{Blue!40!Green}{Copper (II)} \textcolor{Black!50}{Sulphate}.
+
 \section{Paragraphs and Positioning}
+
+\subsection{Paragraphs and Line Breaks}
+
+\paragraph{New Lines} As explained before, the \texttt{\textbackslash\textbackslash} symbol issues a \textit{line break}, and the \texttt{\textbackslash par} command ends a paragraph and starts a new one. \\
+Both of them initiate a \textit{new line}, but with (without) an extra \textit{line skip/spacing} for \texttt{\textbackslash par} (\texttt{\textbackslash\textbackslash}). There is also \texttt{\textbackslash newline} which is seldom used.
+    
+A blank line in the \TeX{} file has the same effect as \texttt{\textbackslash par}. They in fact end the so-called \textit{horizontal mode} and distribute the text into lines placed on the current vertical list (see \href{https://tex.stackexchange.com/questions/82664/when-to-use-par-and-when-newline-or-blank-lines}{\TeX{} StackExchange 82664}). \par 
+The effects of \texttt{\textbackslash\textbackslash}, \texttt{\textbackslash par}, and blank lines can be observed right in this subsection, which is typed as
+\begin{lstlisting}
+\paragraph{New Lines} As explained before, ... ends a paragraph and starts a new one. \\
+Both of them initiate a \textit{new line}, ... which is seldom used.
+                % Here is a blank line plus this comment only
+A blank line in the \TeX{} file ... placed on the current vertical list (see ...). \par
+The effects of \texttt{\textbackslash\textbackslash}, \texttt{\textbackslash par}, and blank lines can be observed right in this subsection, which is typed as
+... % this code block
+\end{lstlisting}
+
+\subsection{Justification and Indents}
+
+\subsection{Length Units}
+
+\subsection{Vertical and Horizontal Spaces}
+
+\subsection{Boxes and Rules}
+
+\begin{exercisebox}
+\begin{Exercise}
+Copy your favorite quote or paragraph to the document, and use the commands/techniques introduced in these two sections to make it beautiful and stylish.    
+\end{Exercise}
+\end{exercisebox}
 
 \section{Verbatim Mode}
