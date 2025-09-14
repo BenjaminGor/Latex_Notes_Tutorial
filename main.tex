@@ -50,7 +50,7 @@
 
 \newmdenv[leftmargin = 0pt,
   innerleftmargin = 1em,
-  innertopmargin = 1em,
+  innertopmargin = 0.5em,
   innerbottommargin = 1em,
   innerrightmargin = 1em,
   rightmargin = 0pt,
@@ -66,7 +66,7 @@
   frametitleaboveskip = 1em]{exercisebox}
 
 \usepackage{listings}
-\lstdefinestyle{mystyle}{
+\lstdefinestyle{lstTeXstyle}{
     language=[latex]TeX, 
     basicstyle=\footnotesize\ttfamily,
     backgroundcolor=\color{Goldenrod!20},
@@ -74,9 +74,11 @@
     commentstyle=\color{Green},
     breaklines=true,
     showstringspaces=false,
-    belowskip=0pt
+    numbers=none,
+    belowskip=0pt,
+    escapeinside={/*!}{!*/},
 }
-\lstset{style=mystyle}
+\lstset{style=lstTeXstyle}
 
 \usepackage{hyperref}
 
@@ -97,6 +99,6 @@ Copyright ©, C.~L.~Loi, 2025. All rights reserved.}
 \cleardoubleoddpage
 \pagenumbering{arabic}
 \include{ch1_basic_structure}
-\include{ch2}
+\include{ch2_text_format}
 
 \end{document}

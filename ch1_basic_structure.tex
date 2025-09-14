@@ -15,7 +15,7 @@ For each \LaTeX{} document, we need to specify its \textit{class}. Throughout th
 \end{lstlisting}
 The arguments are typed inside the curly brackets \verb|{}| following the name of the command. Clearly, the \verb|paper| option requires the pages to be in A4 size while \verb|fontsize| indicates that the font is 12 pt large. The remaining options will be explained as we go through the later chapters.
 
-\paragraph{Packages} To enable extra functionalities, we need to import \textit{packages}. We can write along the lines of \texttt{\textbackslash usepackage[<options>]\{<package\_name>\}} to do so. We will not list all the required packages now at once, but only when they are needed. The first package we usually need is the \verb|fontenc| package with the \verb|T1| option, flagged inside a pair of square brackets.
+\paragraph{Packages} To enable extra functionalities, we need to import \textit{packages}. We can write along the lines of \texttt{\textbackslash usepackage[<options>]\{<package\_name>\}} in the preamble to do so. We will not list all the required packages now at once, but only when they are needed. The first package we usually need is the \verb|fontenc| package with the \verb|T1| option, flagged inside a pair of square brackets.
 
 \begin{exercisebox}
 \begin{Exercise}
@@ -30,7 +30,7 @@ Also, try to use \texttt{\textbackslash documentclass[<options>]\{scrbook\}} ins
 
 \subsection{Chapters and (Sub-)Sections}
 
-\paragraph{Chapters, Sections} As in any other book, the entire content is divided into \textit{chapters}, which in turn usually consist of several \textit{sections}. To mark the beginning of a chapter or section, we place the commands \texttt{\textbackslash chapter\{<chapter\_name>\}} or \texttt{\textbackslash section\{<section\_name>\}} within the \verb|document| environment, which contains the main content and is marked by a pair of \verb|begin| and \verb|end| declarations. So, to typeset the very first section at the start, we write
+\paragraph{Chapters, Sections} As in any other book, the entire content is divided into \textit{chapters}, which in turn usually consist of several \textit{sections}. To mark the beginning of a chapter or section, we place the commands \texttt{\textbackslash chapter\{<chapter\_name>\}} or \texttt{\textbackslash section\{<section\_name>\}} within the \verb|document| environment, which contains the main content and is marked by a pair of \verb|begin| and \verb|end| declarations. The preamble has to be inserted before \verb|document|. So, to typeset the very first section at the start, we write
 \begin{lstlisting}
 <preamble before the main document>
 \begin{document}
@@ -45,7 +45,7 @@ For each \LaTeX{} document, we need to specify its \textit{class}. Throughout th
 \end{lstlisting}
 The \LaTeX{} system updates the chapter/section's numbering internally. The \texttt{\textbackslash textit\{<text>\}} command presents the text in italic shape.
 
-\paragraph{Subsections, Paragraphs} An attentive reader may have already figured out that it is possible to stack an extra layer (a \textit{subsection}) in the hierarchy. This is aptly done not long ago by the \texttt{\textbackslash subsection} command:
+\paragraph{Subsections, Paragraphs} An attentive reader may have already figured out that it is possible to stack an extra layer (a \textit{subsection}) in the hierarchy. This is aptly done not long ago by the \texttt{\textbackslash subsection\{<section\_name>\}} command:
 \begin{lstlisting}
 \section{Structure Hierarchy}
 
@@ -53,7 +53,7 @@ The \LaTeX{} system updates the chapter/section's numbering internally. The \tex
 
 \paragraph{Chapters, Sections} As in any other book, the entire content is divided into \textit{chapters}, ...
 \end{lstlisting}
-He/she may also notice that we have used the \texttt{\textbackslash paragraph} command a few times to attach an unnumbered heading for each \textit{paragraph}.
+He/she may also notice that we have used the \texttt{\textbackslash paragraph} command a few times to attach an unnumbered heading for each \textit{paragraph}. There are also starred versions like \texttt{\textbackslash chapter*\{<chapter\_name>\}}, \texttt{\textbackslash section*\{<section\_name>\}}, \texttt{\textbackslash subsection*\{<section\_name>\}}, and so on, which neither display nor increase the numbering/counters.
 
 \subsection{Generating Table of Contents}
 
@@ -62,7 +62,7 @@ After establishing the structure of the book, it is convenient to generate a \te
 
 \begin{exercisebox}
 \begin{Exercise}
-Try to add some chapters, sections, subsections, or even subsubsections (which are, not surprisingly, produced by \texttt{\textbackslash subsubsection}) to see how they are displayed in the book. You may want to check out \texttt{\textbackslash part}.
+Try to add some (numbered or unnumbered) chapters, sections, subsections, or even subsubsections (which are, not surprisingly, produced by \texttt{\textbackslash subsubsection}) to see how they are displayed in the book. You may want to check out \texttt{\textbackslash part}.
 \end{Exercise}
 \begin{Exercise}
 As a follow-up to the last exercise, turn on the table of contents and confirm how the new entries are linked to it. Also, try to adjust the value for \texttt{\textbackslash setcounter{tocdepth}} as proposed above to see the effect.
@@ -70,7 +70,8 @@ As a follow-up to the last exercise, turn on the table of contents and confirm h
 \end{exercisebox}
 
 \subsection{Organizing the \TeX{} Files behind the Scenes}
-\paragraph{Include} As the size of the project scales up, it is often helpful to keep the files arranged in a clean order for maintenance. We can put the content of each chapter into separate \TeX{} files, and then use the \texttt{\textbackslash include\{<tex\_file\_name>\}} command to import them into the main script. For example, this chapter is stored as \texttt{ch1\_basic\_structure.tex} in my project space, and in the main \TeX{} file, we shall write something like
+\label{subsection:TeXorg}
+\paragraph{include} As the size of the project scales up, it is often helpful to keep the files arranged in a clean order for maintenance. We can put the content of each chapter into separate \TeX{} files, and then use the \texttt{\textbackslash include\{<tex\_file\_name>\}} command to import them into the main script. For example, this chapter is stored as \texttt{ch1\_basic\_structure.tex} in my project space, and in the main \TeX{} file, we shall write something like
 \begin{lstlisting}
 <preamble>
 \begin{document}
