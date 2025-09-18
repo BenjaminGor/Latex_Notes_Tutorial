@@ -9,13 +9,15 @@ The first chapter discusses how to properly configure \LaTeX{} files and organiz
 \paragraph{Class}
 For each \LaTeX{} document, we need to specify its \textit{class}. Throughout this book, we will use the \verb|scrbook| class provided by the \textbf{KOMA-Script}. To do so, we write \texttt{\textbackslash documentclass\{scrbook\}} at the very beginning (\textit{preamble}) of the main \TeX{} file. Although not explored in this book, some other notable classes that may be of use include \verb|beamer|, \verb|moderncv|, and \verb|article| (or \verb|scrartcl|).
 
-\paragraph{Commands and Options} The \verb|scrbook| class provides several \textit{options} to customize the format of the book. We can either supply the arguments when declaring the class, or use the command \texttt{\textbackslash KOMAoptions} in the preamble. A \textit{command} works like a function in common programming languages and performs some specific action. Commands in \LaTeX{} are denoted by the backslash \verb|\| as the first character. In this book, we have used
+\paragraph{Commands and Options}
+The \verb|scrbook| class provides several \textit{options} to customize the format of the book. We can either supply the arguments when declaring the class, or use the command \texttt{\textbackslash KOMAoptions} in the preamble. A \textit{command} works like a function in common programming languages and performs some specific action. Commands in \LaTeX{} are denoted by the backslash \verb|\| as the first character. In this book, we have used
 \begin{lstlisting}
 \KOMAoptions{paper=a4, fontsize=12pt, chapterprefix=true, twoside=semi, DIV=classic, parskip=half}
 \end{lstlisting}
 The arguments are typed inside the curly brackets \verb|{}| following the name of the command. Clearly, the \verb|paper| option requires the pages to be in A4 size while \verb|fontsize| indicates that the font is 12 pt large. The remaining options will be explained as we go through the later chapters.
 
-\paragraph{Packages} To enable extra functionalities, we need to import \textit{packages}. We can write along the lines of \texttt{\textbackslash usepackage[<options>]\{<package\_name>\}} in the preamble to do so. We will not list all the required packages now at once, but only when they are needed. The first package we usually need is the \verb|fontenc| package with the \verb|T1| option, flagged inside a pair of square brackets.
+\paragraph{Packages}
+To enable extra functionalities, we need to import \textit{packages}. We can write along the lines of \texttt{\textbackslash usepackage[<options>]\{<package\_name>\}} in the preamble to do so. We will not list all the required packages now at once, but only when they are needed. The first package we usually need is the \verb|fontenc| package with the \verb|T1| option, flagged inside a pair of square brackets.
 
 \begin{exercisebox}
 \begin{Exercise}
@@ -30,7 +32,8 @@ Also, try to use \texttt{\textbackslash documentclass[<options>]\{scrbook\}} ins
 
 \subsection{Chapters and (Sub-)Sections}
 
-\paragraph{Chapters, Sections} As in any other book, the entire content is divided into \textit{chapters}, which in turn usually consist of several \textit{sections}. To mark the beginning of a chapter or section, we place the commands \texttt{\textbackslash chapter\{<chapter\_name>\}} or \texttt{\textbackslash section\{<section\_name>\}} within the \verb|document| environment, which contains the main content and is marked by a pair of \verb|begin| and \verb|end| declarations. The preamble has to be inserted before \verb|document|. So, to typeset the very first section at the start, we write
+\paragraph{Chapters, Sections}
+As in any other book, the entire content is divided into \textit{chapters}, which in turn usually consist of several \textit{sections}. To mark the beginning of a chapter or section, we place the commands \texttt{\textbackslash chapter\{<chapter\_name>\}} or \texttt{\textbackslash section\{<section\_name>\}} within the \verb|document| environment, which contains the main content and is marked by a pair of \verb|begin| and \verb|end| declarations. The preamble has to be inserted before \verb|document|. So, to typeset the very first section at the start, we write
 \begin{lstlisting}
 <preamble before the main document>
 \begin{document}
@@ -45,7 +48,8 @@ For each \LaTeX{} document, we need to specify its \textit{class}. Throughout th
 \end{lstlisting}
 The \LaTeX{} system updates the chapter/section's numbering internally. The \texttt{\textbackslash textit\{<text>\}} command presents the text in italic shape.
 
-\paragraph{Subsections, Paragraphs} An attentive reader may have already figured out that it is possible to stack an extra layer (a \textit{subsection}) in the hierarchy. This is aptly done not long ago by the \texttt{\textbackslash subsection\{<section\_name>\}} command:
+\paragraph{Subsections, Paragraphs}
+An attentive reader may have already figured out that it is possible to stack an extra layer (a \textit{subsection}) in the hierarchy. This is aptly done not long ago by the \texttt{\textbackslash subsection\{<section\_name>\}} command:
 \begin{lstlisting}
 \section{Structure Hierarchy}
 
@@ -71,7 +75,9 @@ As a follow-up to the last exercise, turn on the table of contents and confirm h
 
 \subsection{Organizing the \TeX{} Files behind the Scenes}
 \label{subsection:TeXorg}
-\paragraph{include} As the size of the project scales up, it is often helpful to keep the files arranged in a clean order for maintenance. We can put the content of each chapter into separate \TeX{} files, and then use the \texttt{\textbackslash include\{<tex\_file\_name>\}} command to import them into the main script. For example, this chapter is stored as \texttt{ch1\_basic\_structure.tex} in my project space, and in the main \TeX{} file, we shall write something like
+
+\paragraph{include}
+As the size of the project scales up, it is often helpful to keep the files arranged in a clean order for maintenance. We can put the content of each chapter into separate \TeX{} files, and then use the \texttt{\textbackslash include\{<tex\_file\_name>\}} command to import them into the main script. For example, this chapter is stored as \texttt{ch1\_basic\_structure.tex} in my project space, and in the main \TeX{} file, we shall write something like
 \begin{lstlisting}
 <preamble>
 \begin{document}
@@ -84,7 +90,8 @@ As a follow-up to the last exercise, turn on the table of contents and confirm h
 
 \section{Testing the Book Layout by Lipsum}
 
-\paragraph{Dummy Text} Sometimes we may need to insert some placeholder text into the code to test how well the book will look in a specific layout. In this case, we can borrow the standard dummy text \textit{Lorem Ipsum} (or in short \textit{Lipsum}) widely used by the community. Just import the \verb|lipsum| generator package, and add \texttt{\textbackslash lipsum[<paragraph\_no.>]} to the desired positions. For example, the code segment
+\paragraph{Dummy Text}
+Sometimes we may need to insert some placeholder text into the code to test how well the book will look in a specific layout. In this case, we can borrow the standard dummy text \textit{Lorem Ipsum} (or in short \textit{Lipsum}) widely used by the community. Just import the \verb|lipsum| generator package, and add \texttt{\textbackslash lipsum[<paragraph\_no.>]} to the desired positions. For example, the code segment
 \begin{lstlisting}
 ...
 produces the following text exactly: \par

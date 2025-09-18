@@ -1,12 +1,14 @@
 \chapter{Formatting of Text and Paragraphs}
 
-\paragraph{Introduction} This chapter explains how to adjust the various aspects of text, such as fonts, shape/size/style, and positioning.
+\paragraph{Introduction}
+This chapter explains how to adjust the various aspects of text, such as fonts, shape/size/style, and positioning.
 
 \section{About Fonts}
 
 \subsection{The Three Font Family Types}
 
-\paragraph{(Sans) Serif, Typewriter} In any \LaTeX{} document, the text can be typed in three different \textit{font families}: \textit{serif}, \textit{sans serif}, and \textit{typewriter}. In this book, headings (of chapters, sections, etc.) are in the sans serif family, while the remaining main text is in serif. Table \ref{tab:fontfamily} below demonstrates how to select a specific font family for a piece of text.
+\paragraph{(Sans) Serif, Typewriter}
+In any \LaTeX{} document, the text can be typed in three different \textit{font families}: \textit{serif}, \textit{sans serif}, and \textit{typewriter}. In this book, headings (of chapters, sections, etc.) are in the sans serif family, while the remaining main text is in serif. Table \ref{tab:fontfamily} below demonstrates how to select a specific font family for a piece of text.
 \begin{table}
 \begin{tabularx}{\textwidth}{|l|X|l|l|}
 \hline
@@ -102,7 +104,8 @@ taken from Shakespeare's A Midsummer Night's Dream
 \normalsize
 \par The \texttt{\textbackslash \textbackslash} sign breaks the current line and starts a new line right below. And again, the curly brackets \verb|{}| limit the effect of command(s) within the scope.
 
-\paragraph{selectfont} It is also possible to fix a numerical value for the font size using \texttt{\textbackslash fontsize\{<font\_size>\}\{<line\_spacing>\}} and \texttt{\textbackslash selectfont}. As an illustration, the code
+\paragraph{selectfont}
+It is also possible to fix a numerical value for the font size using \texttt{\textbackslash fontsize\{<font\_size>\}\{<line\_spacing>\}} and \texttt{\textbackslash selectfont}. As an illustration, the code
 \begin{lstlisting}
 ... leads to \par
 {\fontsize{15pt}{21pt}\selectfont May those who accept their fate be granted happiness. May those who defy their fate be granted glory. \\
@@ -164,12 +167,12 @@ The reference color list can be found in \href{https://www.overleaf.com/learn/la
 ... outputs \par
 \textcolor{Red}{Roses are red,} \\
 \textcolor{Blue}{violets are blue,} \\ 
-{\color{Purple} sugar is sweet and so are you.} % remember to limit the scope by the curly brackets!
+{\color{Purple} Sugar is sweet and so are you.} % remember to limit the scope by the curly brackets!
 \end{lstlisting}
 outputs \par
 \textcolor{Red}{Roses are red,} \\
 \textcolor{Blue}{violets are blue,} \\ 
-{\color{Purple} sugar is sweet and so are you.}
+{\color{Purple} Sugar is sweet and so are you.}
 
 \paragraph{Self-defined colors}
 It is also possible to design a custom color by the command \texttt{\textbackslash definecolor\{<color\_name>\}\{<color\_model>\}\{<values>\}}. There are $4$ possible color models: \verb|rgb|, \verb|RGB|, \verb|cmyk|, and \verb|gray|. For example,
@@ -195,7 +198,7 @@ is displayed as \textcolor{Blue!40!Green}{Copper (II)} \textcolor{Orange!50}{Sul
 As explained before, the \texttt{\textbackslash\textbackslash} symbol issues a \textit{line break}, and the \texttt{\textbackslash par} command ends a paragraph and starts a new one. \\
 Both of them initiate a \textit{new line}, but with (without) an extra \textit{line skip/spacing} for \texttt{\textbackslash par} (\texttt{\textbackslash\textbackslash}). There is also \texttt{\textbackslash newline} which is seldom used.
     
-A blank line in the \TeX{} file has the same effect as \texttt{\textbackslash par}. They in fact end the so-called \textit{horizontal mode} and distribute the text into lines placed on the current vertical list (see \href{https://tex.stackexchange.com/questions/82664/when-to-use-par-and-when-newline-or-blank-lines}{\TeX{} StackExchange 82664}). \par 
+A blank line in the \TeX{} file has the same effect as \texttt{\textbackslash par}. They, in fact, end the so-called \textit{horizontal mode} and distribute the text into lines placed on the current vertical list (see \href{https://tex.stackexchange.com/questions/82664/when-to-use-par-and-when-newline-or-blank-lines}{\TeX{} StackExchange 82664}). \par 
 The effects of \texttt{\textbackslash\textbackslash}, \texttt{\textbackslash par}, and blank lines can be observed right in this subsection, which is typed as
 \begin{lstlisting}
 \paragraph{New Lines} As explained before, ... ends a paragraph and starts a new one. \\
@@ -211,7 +214,7 @@ The effects of \texttt{\textbackslash\textbackslash}, \texttt{\textbackslash par
 \paragraph{raggedleft/right, centering}
 {\raggedright The \texttt{\textbackslash raggedleft} and \texttt{\textbackslash raggedright} commands produce \textit{right/left-justified} text respectively. As you may have figured out, this paragraph is "\textit{ragged} right" (although not very obvious, notice $\rightarrow$) so that the text sticks to the left boundary, but the right side is now uneven. \par}
 {\raggedleft Meanwhile, this lipsum text is "ragged left": \lipsum[4]\par}
-The default setting is \textit{fully-justified} so that the text extends to both edges like this one. \texttt{\textbackslash raggedleft} and \texttt{\textbackslash raggedright} act like a switch, changing all paragraphs beyond and we may want to put them within a group enclosed by curly brackets. \par
+The default setting is \textit{fully-justified} so that the text extends to both edges like this one. \texttt{\textbackslash raggedleft} and \texttt{\textbackslash raggedright} act like a switch, changing all paragraphs beyond, and we may want to put them within a group enclosed by curly brackets. \par
 {\centering We also have \texttt{\textbackslash centering} which is quite self-explanatory and is demonstrated here. For these three commands to work properly, we require \texttt{\textbackslash par} to finish, similar to before. The code to generate the above paragraphs is \par}
 \begin{lstlisting}
 \paragraph{Raggedleft/right, Centering}
@@ -238,7 +241,11 @@ We also have \texttt{\textbackslash centering} ... The code to generate the abov
 \paragraph{Indents, parskip}
 Attentive readers may have figured out that there is no \textit{indent} for paragraphs in the book, and they are only separated by a slight vertical spacing. This is controlled by the \verb|parskip=half| value inside \texttt{\textbackslash KOMAoptions} in the preamble, which means that paragraphs are identified with a vertical spacing of half a line. The two other options \verb|parskip=no| and \verb|parskip=full| use indents (without vertical spacing) and one full line instead. 
 
-Also, we can also control indents manually by adding \texttt{\textbackslash indent}\footnote{It will not work if \texttt{parskip} is \texttt{half} or \texttt{full}.} or \texttt{\textbackslash noindent} to the start of paragraphs.
+Also, we can control indents manually by adding \texttt{\textbackslash indent}\footnote{It will not work if \texttt{parskip} is \texttt{half} or \texttt{full}.} or \texttt{\textbackslash noindent} to the start of paragraphs.
+
+\paragraph{microtype}
+Finally, for a better typesetting behavior, it is recommended to always import the \verb|microtype| package, which provides helpful patches on this.
+
 \begin{exercisebox}
 \begin{Exercise}
 Test with different \verb|parskip| options (there are additional modifiers like \verb|half-|, \verb|half+|, \verb|half*|, similar for \verb|full|) for the KOMA-script class, as well as the on-and-off of indents.     
@@ -262,7 +269,7 @@ ex & The height of a lowercase "x" character in the current font. (usually used 
 \hline
 em & The width of an uppercase "M" in the current font. (usually used for horizontal distance) \\
 \hline
-mu & $1/18$ of an em with respect to the Maths symbols. (usually used in Maths mode) \\
+mu & $1/18$ of an em with respect to the maths symbols. (usually used in math mode) \\
 \hline
 \end{tabularx}
 \caption{The various length units in \LaTeX{}.}
@@ -272,7 +279,7 @@ mu & $1/18$ of an em with respect to the Maths symbols. (usually used in Maths m
 \paragraph{Length Values, setlength}
 Subsequently, the \textit{lengths} of different markers are stored as parameters, listed in Table \ref{tab:lengthpmt} below. By using \texttt{\textbackslash setlength\allowbreak\{<length\_param>\}\{<length\_value>\}}, we can modify them and adjust distances on the page.
 
-\begin{table}
+\begin{table}[ht!]
 \begin{tabularx}{\textwidth}{|p{0.25\textwidth}|X|}
 \hline
 Parameter & Description \\
@@ -315,9 +322,9 @@ Ouch...
 gives \par
 \hspace{3ex} Hello \hspace{5ex} World \vspace{1.5em} !!! \\
 Ouch...\par
-The first two \texttt{\text hspace} commands should work as you have expected, but notice that on the other hand, \texttt{\text vspace} in the middle of a line will only take effect after it, and so the exclamation marks above are not moved down (but "Ouch..." is). Finally, they accept negative lengths and you may want to play with that.\par
+The first two \texttt{\text hspace} commands should work as you have expected, but notice that on the other hand, \texttt{\text vspace} in the middle of a line will only take effect after it, and so the exclamation marks above are not moved down (but "Ouch..." is). Finally, they accept negative lengths, and you may want to play with that.\par
 
-It is also to achieve the same effect after a line break by writing something along the lines of \texttt{\textbackslash\textbackslash [<length>]}, e.g.
+It is also to achieve the same effect after a line break by writing something along the lines of \texttt{\textbackslash\textbackslash [<length>]}, e.g.\
 \begin{lstlisting}
 Don't come any closer!!!\\[-1em]
 Nope *Taking out the axe*
@@ -326,7 +333,7 @@ Don't come any closer!!!\\[-1em]
 Nope *Taking out the axe*
 
 \paragraph{hspace*, vspace*}
-There also exist starred versions of \texttt{\textbackslash hspace*\{<length>\}} and \texttt{\textbackslash vspace*\{<length>\}}. The original ones will be "gobbled up" and disappear at line breaks, but the new ones will not. To see this clearly, let's try
+There also exist starred versions of \texttt{\textbackslash hspace*\{<length>\}} and \texttt{\textbackslash vspace*\{<length>\}}. The original ones will be "gobbled up" (see \href{https://tex.stackexchange.com/questions/89082/hspace-vs-hspace}{{\TeX{} StackExchange 89082}}) and disappear at line breaks, but the new ones will not. To see this clearly, let's try
 \begin{lstlisting}
 x\hspace{3ex}y\\
 \hspace{4ex}y?\\
@@ -337,7 +344,8 @@ x\hspace{3ex}y\\
 \hspace{4ex}y?\\
 \hspace*{4ex}y!
 
-\paragraph{hfill, vfill, fill, stretch} In the case where a fixed distance is only needed in a certain place, while other remaining empty spaces can extend automatically, we can make use of the \texttt{\textbackslash hfill}, \texttt{\textbackslash vfill} commands, or more generally \texttt{\textbackslash fill}, plus \texttt{\textbackslash stretch\{<factor>\}}. \texttt{\textbackslash hfill} and \texttt{\textbackslash vfill} will take up all the possible spaces after other \texttt{\text hspace} or \texttt{\text vspace} commands are calculated.
+\paragraph{hfill, vfill, fill, stretch}
+In the case where a fixed distance is only needed in a certain place, while other remaining empty spaces can extend automatically, we can make use of the \texttt{\textbackslash hfill}, \texttt{\textbackslash vfill} commands, or more generally \texttt{\textbackslash fill}, plus \texttt{\textbackslash stretch\{<factor>\}}. \texttt{\textbackslash hfill} and \texttt{\textbackslash vfill} will take up all the possible spaces after other \texttt{\text hspace} or \texttt{\text vspace} commands are calculated.
 
 If there are multiple \texttt{\textbackslash hfill} or \texttt{\textbackslash vfill}, then the length will be partitioned equally. To assign different weightings to the partition, we can go back and write \texttt{\textbackslash hspace\{\textbackslash stretch\{<factor>\}\}} (similarly for \texttt{\textbackslash vspace}). For example,
 \begin{lstlisting}
@@ -352,7 +360,7 @@ Notice how we have to use the starred forms to circumvent the gobbling. (Try not
 \subsection{Boxes and Rules}
 
 \paragraph{mbox, fbox}
-By calling \texttt{\textbackslash mbox\{<text>\}}, a piece of text may be placed and contained inside a \textit{horizontal box}. This also means that the text will not be disrupted by automatic line breaks or stretched, and can spill out of the main area into the margin. There is also \texttt{\textbackslash fbox\{<text>\}} as a wrapped version of \texttt{\textbackslash mbox} with a frame around it, and we will use it for a visualized comparison: The code
+By calling \texttt{\textbackslash mbox\{<text>\}}, a piece of text may be placed and contained inside a \textit{horizontal box}. This also means that the text will not be disrupted by automatic line breaks or stretched (see \href{https://tex.stackexchange.com/questions/475056/hbox-mbox-difference-what-they-do}{{\TeX{} StackExchange 475056}}), and can spill out of the main area into the margin. There is also \texttt{\textbackslash fbox\{<text>\}} as a wrapped version of \texttt{\textbackslash mbox} with a frame around it, and we will use it for a visualized comparison: The code
 \begin{lstlisting}
 Preparation is the key to success, but a good plan today is better than a perfect plan tomorrow.
 \fbox{Preparation is the key to success, but a good plan today is better than a perfect plan tomorrow.}
@@ -372,7 +380,7 @@ generates \framebox[100pt][c]{I fit inside!} and \\
 These box commands can be manipulated to control the distribution of text.
 
 \paragraph{parbox}
-Meanwhile, \textit{vertical boxes} where the text inside can break just like normal can be constructed by the \texttt{\textbackslash parbox[<alignment>]\{<width>\}\{<text>\}} command. The effect is not hard to inspect, from the input
+Meanwhile, \textit{vertical boxes} where the text inside can break just like normal can be constructed by the \texttt{\textbackslash parbox[<alignment>]\{<width>\}\{<text>\}} command. The effect is not hard to inspect from the input
 \begin{lstlisting}
 that produces \parbox[b]{100pt}{Empty your mind, be formless, shapeless, like water.} ...
 \end{lstlisting}
@@ -383,7 +391,8 @@ Sometimes we may want to raise or lower a text while pretending it still occupie
 \begin{lstlisting}
 \fbox{\raisebox{15pt}[10pt][10pt]{I am a rising star!}} and this is my stage!
 \end{lstlisting}
-\fbox{\raisebox{15pt}[10pt][10pt]{I am a rising star!}} and this is my stage!
+\fbox{\raisebox{15pt}[10pt][10pt]{I am a rising star!}} and this is my stage!\par
+This command can be very useful in achieving several invisible spacing tricks.
 
 \paragraph{Rules}
 Another useful ingredient is the possibility to draw \textit{rules} as lines. The basic command is \texttt{\textbackslash rule\{<horizontal\_extent>\}\{vertical\_extent\}}. For example, \texttt{\textbackslash rule\{5ex\}\{1ex\}} generates this: \rule{5ex}{1ex}. We also have more primitive versions of \texttt{\textbackslash hrule} and \texttt{\textbackslash vrule}. The code below will yield
@@ -394,7 +403,7 @@ Another useful ingredient is the possibility to draw \textit{rules} as lines. Th
 
 \begin{exercisebox}
 \begin{Exercise}
-Use the \texttt{\textbackslash setlength} command to change different lengths and test what the result would look like, e.g. \texttt{\textbackslash setlength\{\textbackslash parindent\}\{5cm\}}.
+Use the \texttt{\textbackslash setlength} command to change different lengths and test what the result would look like, e.g.\ \texttt{\textbackslash setlength\{\textbackslash parindent\}\{5cm\}}.
 \end{Exercise}
 \begin{Exercise}
 Copy your favorite quote or paragraph to the document, and use the commands/techniques introduced in these two sections to make it beautiful and stylish.    
@@ -404,12 +413,12 @@ Copy your favorite quote or paragraph to the document, and use the commands/tech
 \section{Verbatim Mode}
 
 \paragraph{verb}
-To type short inline code pieces, we can use the \textit{verbatim} mode through the \texttt{\textbackslash verb|<content>|} command. This preserves the input exactly as it is typed, without invoking any would-be \LaTeX{} command or special character. For example, entering \texttt{\textbackslash verb|func|} will output \verb|func| here. However, a major pitfall is that \texttt{\textbackslash verb} can fail when it is used inside the argument of a command. Since we may use the \texttt{\textbackslash include} command to import each chapter separately as suggested by Section \ref{subsection:TeXorg}, this will be problematic. An alternative is to use \texttt{\textbackslash texttt\{<content>\}}, with \texttt{\textbackslash textbackslash} as the replacement for \texttt{\textbackslash}, and writing \texttt{\textbackslash \_} for \_, \texttt{\textbackslash \{} and \texttt{\textbackslash \}} for \{ and \}. 
+To type short inline code pieces, we can use the \textit{verbatim} mode through the \texttt{\textbackslash verb|<content>|} command. This preserves the input exactly as it is typed, without invoking any would-be \LaTeX{} command or special character. For example, entering \texttt{\textbackslash verb|func|} will output \verb|func| here. However, a major pitfall is that \texttt{\textbackslash verb} can fail when it is used inside the argument of a command. Since we may use the \texttt{\textbackslash include} command to import each chapter separately as suggested by Section \ref{subsection:TeXorg}, this will be problematic. An alternative is to use \texttt{\textbackslash texttt\{<content>\}}, with \texttt{\textbackslash textbackslash} as the replacement for \texttt{\textbackslash}, and writing \texttt{\textbackslash \_} for \texttt{\_}, \texttt{\textbackslash \{} and \texttt{\textbackslash \}} for \texttt{\{} and \texttt{\}}. 
 
 \paragraph{lstlisting}
 When we need to display larger blocks of code, we can use the \verb|listings| package and its \verb|lstlisting| environment. Actually, it has already been used (shown as yellow areas) in this book many times. A self-explanatory example\footnote{It is a bit involved to make this one work, the option \texttt{escapeinside} is intentionally left out below, but you should look it up.} is
 \begin{lstlisting}
-\begin{lstlisting}
+\begin{lstlisting} % can pass the overriding option [style=<style_name>]
 I guess this counts as a recursion...
 \end{lstlisting/*!\}!*/
 \end{lstlisting}
@@ -427,7 +436,7 @@ To design the appearance of the code blocks, we can define our own \verb|lstlist
     belowskip=0pt}
 \lstset{style=lstTeXstyle} % Set the style
 \end{lstlisting}
-Most of the options above are not hard to know, but you may want to fiddle with the last four of them.
+Most of the options above are not hard to get, but you may want to fiddle with the last four of them.
 
 \begin{exercisebox}
 \begin{Exercise}

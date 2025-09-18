@@ -7,6 +7,7 @@
 
 \usepackage{scrlayer-scrpage}
 \usepackage[fulladjust]{marginnote}
+\usepackage{enumitem}
 
 \KOMAoptions{headsepline=on, captions=besidetop, DIV=last}
 
@@ -32,11 +33,16 @@
 \usepackage[many]{tcolorbox}
 \usepackage{pgfornament}
 \usepackage{amsmath,amssymb,amsthm}
+\usepackage{bm}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{mathtools}
 \usepackage{mdframed}
 \usepackage{lipsum}
 \usepackage{microtype}
 \usepackage{tabularx}
 \usepackage{adjustbox}
+\usepackage{subcaption}
 
 \definecolor{mint}{rgb}{0.24, 0.71, 0.54}
 
@@ -53,17 +59,21 @@
   innertopmargin = 0.5em,
   innerbottommargin = 1em,
   innerrightmargin = 1em,
+  frametitlebelowskip = 0.75em,
   rightmargin = 0pt,
   linewidth= 1ex,
-  skipabove= \baselineskip,
-  skipbelow= \baselineskip,
+  skipabove = \baselineskip,
+  skipbelow = \baselineskip,
+  splittopskip = \baselineskip,
   topline = false,
   rightline = false,
   bottomline = false,
+  nobreak = true,
   backgroundcolor=Mahogany!20,
   linecolor=Mahogany,
   frametitle={\sffamily Exercise(s)},
-  frametitleaboveskip = 1em]{exercisebox}
+  frametitleaboveskip = 1em,
+  frametitlebackgroundcolor=Mahogany!10]{exercisebox}
 
 \usepackage{listings}
 \lstdefinestyle{lstTeXstyle}{
@@ -93,12 +103,19 @@ Copyright ©, C.~L.~Loi, 2025. All rights reserved.}
 
 \begin{document}
 
-\pagenumbering{roman}
+\frontmatter
 \maketitle
 \tableofcontents
-\cleardoubleoddpage
-\pagenumbering{arabic}
+\mainmatter
 \include{ch1_basic_structure}
 \include{ch2_text_format}
+\include{ch3_maths_writing}
+
+\chapter{Various Special Structures in \LaTeX{}}
+\chapter{Self-defined Commands and Environments}
+\chapter{More on Book Layout Design}
+\chapter{Framed Theorems and Exercises}
+\chapter{Plotting with Tikz}
+\chapter{Miscellaneous}
 
 \end{document}

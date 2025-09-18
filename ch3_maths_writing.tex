@@ -1,0 +1,599 @@
+\chapter{The Fundamentals of Writing Mathematics in \LaTeX{}}
+
+\paragraph{Introduction}
+This chapter covers the basic methods about how to typeset and align different mathematical expressions and formulae in \LaTeX{}.
+
+\section{The Two Math Modes}
+
+\subsection{Inline Math Mode and Basic Math Syntax}
+
+\paragraph{Inline Math by \$\$}
+To be able to write mathematical expressions in \LaTeX{}, we need to first enter the so-called \textit{math mode}. There are two types of math mode in \LaTeX{}, and the simpler one will be the \textit{inline} math mode. As its name suggests, it renders the mathematical expressions as a usual part of a paragraph. We can enter the inline mode by enclosing an expression with the dollar signs like \texttt{\$<expression>\$}. For example, typing \texttt{\$3x+4y-z = 5\$} here reaily outputs $3x+4y-z = 5$.
+
+\paragraph{Basic Operators}
+The plus, minus, divide, and equal signs $+$, $-$, $/$, $=$ are just the usual ones and can be typed directly in math mode. Meanwhile, the multiplication sign ($\times$) has to be typed explicitly as \texttt{\textbackslash times}, and we may also use the dot sign ($\cdot$) through \texttt{\textbackslash cdot} instead. By the same logic, round and square brackets in math mode are also simply given by \texttt{()}, \texttt{[]}.
+
+\paragraph{Superscripts and Subscripts}
+Superscripts (e.g.\ raising to a power) and subscripts can be added via \texttt{\^{}\{<superscript>\}} and \texttt{\_\{<subscript>\}}. For example, \verb|C^n_r| is rendered as $C^n_r$.
+
+\paragraph{Fractions, smash}
+Fractions can be typed as \texttt{\textbackslash frac\{<numerator>\}\{<deno\allowbreak minator>\}}, e.g.\ \texttt{\textbackslash frac\{2x\^{}2\}\{3x+1\}} produces $\frac{2x^2}{3x+1}$. However, notice that this \texttt{\textbackslash frac} in the inline mode is shrunk. One workaround is to simply use the slash $/$ instead, but we can also replace \texttt{\textbackslash frac} by \texttt{\textbackslash dfrac}, which gives $\dfrac{2x^2}{3x+1}$. Unfortunately, this leads to another issue where the full-size fraction interferes with the line spacing (the lines directly above and below the \texttt{\textbackslash dfrac} are slightly pushed away if you look closely). A quick fix is to enclose it with the \texttt{\textbackslash smash\{\}} command to tell \LaTeX{} to ignore its extent.
+
+\paragraph{Common Mathematical Functions, Symbols}
+The commands for some notable, frequently used mathematical functions and symbols are summarized in Table \ref{tab:functions} below.
+\begin{table}[ht!]
+\begin{tabularx}{\textwidth}{|p{0.25\textwidth}|>{\raggedright}p{0.25\textwidth}|X|}
+\hline
+Function/Symbol(s) & Command(s) & Description \\
+\hline
+$\sin$, $\cos$, $\tan$, $\csc$, $\sec$, $\cot$ & \texttt{\textbackslash sin()}, \texttt{\textbackslash cos()}, \texttt{\textbackslash tan()}, \texttt{\textbackslash csc()}, \texttt{\textbackslash sec()}, \texttt{\textbackslash cot()} & Trigonometric Functions. \\
+\hline
+$\exp$, $\log$, $\ln$ & \texttt{\textbackslash exp()}, \texttt{\textbackslash log()}, \texttt{\textbackslash ln()} & Exponential and (Natural) Logarithm. \\
+\hline
+$\sqrt{x}$, $\sqrt[3]{x}$ & \texttt{\textbackslash sqrt\{x\}}, \texttt{\textbackslash sqrt[3]\{x\}} & Square (Cubic) Root of $x$. \\
+\hline
+$i$, $e$, $\pi$ & \texttt{i}, \texttt{e}, \texttt{\textbackslash pi} & Important constants: The imaginary number, $e$, and pi. \\
+\hline
+$\alpha$, $\beta$, $\gamma$, $\ldots$ & \texttt{\textbackslash alpha}, \texttt{\textbackslash beta}, \texttt{\textbackslash gamma} & Greek letters. (see the full list at \href{http://www.phys.uri.edu/~nigh/TeX/sym1.html}{http://www.phys.uri.edu/\~{}nigh/\allowbreak TeX/sym1.html}) \\
+\hline
+$\pm$, $\infty$ & \texttt{\textbackslash pm}, \texttt{\textbackslash infty} & The plus/minus sign and infinity symbol. \\
+\hline
+$\sum_i^n$, $\int_a^b$ & \texttt{\textbackslash sum\_\{i\}\^{}\{n\}}, \texttt{\textbackslash int\_\{a\}\^{}\{b\}} & Summation and integral signs with lower and upper limits. \\
+\hline
+\end{tabularx}
+\caption{Commonly used mathematical commands in \LaTeX{}.}
+\label{tab:functions}
+\end{table}
+
+\begin{exercisebox}
+\begin{Exercise}
+Try to reproduce the following mathematical expressions.
+\begin{enumerate}[label=\alph*)]
+    \item $ax^2 + by^2 + c(z-4)^2 = R^2$;
+    \item $g(x) = \frac{1}{e^{-qx}+1}$;
+    \item $A^2_{ij} = A_{ik}A_{kj}$;
+    \item $\int_0^{\infty} \frac{\sin(\pi x)}{x}dx = ?$;\footnotemark
+    \item $\beta\pm\ln(\sqrt{\frac{\alpha}{10}})i$.
+\end{enumerate}
+\end{Exercise}
+\end{exercisebox}
+\footnotetext{To the curious readers, the result is $\pi/2$.}
+
+\subsection{Display Math Mode}
+
+\paragraph{equation}
+The second type of math mode is the \textit{display} math mode, which involves putting the expressions inside an environment on their own. The most frequently used one is the \texttt{equation} group, which processes a single line of equation or formula. For instance,
+\begin{lstlisting}
+\begin{equation}
+f(t) = 1 - e^{-at}
+\end{equation}
+\end{lstlisting}
+results in
+\begin{equation}
+f(t) = 1 - e^{-at}
+\end{equation}
+Notice that the \texttt{equation} is automatically numbered.
+\paragraph{align}
+More often than not, we want to show the detailed steps involved in a calculation. The \texttt{align} environment enables us to write them in multiple lines, in addition to providing the \texttt{\%} character as the anchor for aligning these lines. The \texttt{\textbackslash\textbackslash} symbol is again used as a line break just like in any ordinary text. As an example,
+\begin{lstlisting}
+\begin{align}
+\frac{d}{dx}(2x+3)^5 ={}& [5(2x+3)^4][\frac{d}{dx}(2x+3)] & & \text{(Chain Rule)} \\
+={}& [5(2x+3)^4](2) = 10(2x+3)^4
+\end{align}
+\end{lstlisting}
+will give
+\begin{align}
+\frac{d}{dx}(2x+3)^5 ={}& [5(2x+3)^4][\frac{d}{dx}(2x+3)] & & \text{(Chain Rule)} \\
+={}& [5(2x+3)^4](2) = 10(2x+3)^4
+\end{align}
+There are some points worth mentioning. First, the \texttt{align} environment will create a line number for each individual line by default. Second, the two lines above are aligned via the first $\%$ character in them, as expected. Third, by adding some extra $\%$, we can append any comment to the right. In fact, odd-numbered $\%$ control the exact alignment position and even-numbered $\%$ dictate the partition of pieces. Finally, the \texttt{\{\}} after $=$ are needed for appropriate spacing (try removing them!).
+
+\paragraph{split}
+Sometimes, an entire expression is too long to be captured in a single line and may require us to break it into multiple lines, while still treating it as a whole entity. The \texttt{split} sub-environment then comes in handy. It works like \texttt{align} but can be embedded in another larger \texttt{align} group. For example,
+\begin{lstlisting}
+\begin{align}
+(2x+3)^5 ={}& \sum_{k=0}^{5} C^{5}_k (2x)^k(3)^{5-k}\\
+\begin{split}
+={}& 32x^5 + 240x^4 + 720x^3 \\  
+& + 1080x^2 + 810x + 243
+\end{split}    
+\end{align}
+\end{lstlisting}
+produces
+\begin{align}
+(2x+3)^5 ={}& \sum_{k=0}^{5} C^{5}_k (2x)^k(3)^{5-k}\\
+\begin{split}
+={}& 32x^5 + 240x^4 + 720x^3 \\  
+& + 1080x^2 + 810x + 243
+\end{split}    
+\end{align}
+As you can see, \texttt{split} only occupies a single equation number (in the middle) and the $\%$ inside it can "communicate" with those outside \texttt{split}. 
+\paragraph{aligned}
+On the contrary, we have the related \texttt{aligned}, and the readers can try (strongly recommended as an exercise)
+\begin{lstlisting}
+\begin{align}
+(2x+3)^5 ={}& \sum_{k=0}^{5} C^{5}_k (2x)^k(3)^{5-k}\\
+={}&
+\begin{aligned}
+& 32x^5 + 240x^4 + 720x^3 \\  
+& + 1080x^2 + 810x + 243
+\end{aligned}    
+\end{align}
+\end{lstlisting}
+to see the difference (particularly the $\%$). There is also \texttt{multline}, however, most of the usages are already covered by \texttt{split} and \texttt{aligned}, so we will not discuss it.
+
+\paragraph{Starred Equations}
+Sometimes, the equations may not be worthy of assigning an equation number. By using the starred versions of these environments (\texttt{equation*}, \texttt{align*}, etc.), the equation numbers will be suppressed. For example,
+\begin{lstlisting}
+\begin{equation*}
+1 + 1 = 2
+\end{equation*}
+\end{lstlisting}
+yields
+\begin{equation*}
+1 + 1 = 2
+\end{equation*}
+A quick alternative is to use the \verb|\[<math>\]| shorthand.
+
+\paragraph{nonumber}
+We can also use \texttt{\textbackslash nonumber} to manually prevent numbering for specific lines. For instance,
+\begin{lstlisting}
+\begin{align}
+\int xe^{-x} dx &= -\int x d(e^{-x}) \nonumber \\
+&= -[xe^{-x}] + \int e^{-x} dx & & (\text{Integration by Parts}) \nonumber \\
+&= -xe^{-x} - e^{-x} + C 
+\end{align}
+\end{lstlisting}
+will give
+\begin{align}
+\int xe^{-x} dx &= -\int x d(e^{-x}) \nonumber \\
+&= -[xe^{-x}] + \int e^{-x} dx & & (\text{Integration by Parts}) \nonumber \\
+&= -xe^{-x} - e^{-x} + C \label{eqn:IBP1}
+\end{align}
+
+\paragraph{Equation Numbers Referencing}
+From time to time, we may need to refer to previous equations during the derivation of a new one. This is straightforward if the equations are numbered, where we can explicitly attach a \textit{label} to the specific lines by \texttt{\textbackslash label\{<name>\}}. Subsequently, we can call the equation numbers by \texttt{\textbackslash ref\{<name>\}}. To demonstrate, we may update the integration by parts example in the above paragraph:
+\begin{lstlisting}
+...
+&= -xe^{-x} - e^{-x} + C \label{eqn:IBP1}
+\end{lstlisting}
+then \texttt{(\textbackslash ref\{eqn:IBP1\})} will properly return (\ref{eqn:IBP1}).
+
+It is also possible to achieve letter numbering in the \texttt{subequations} mode, e.g.\
+\begin{lstlisting}
+\begin{subequations}
+\begin{align}
+\cos (2x) &= \cos^2 x - \sin^2 x \\
+\sin (2x) &= 2 \sin x \cos x
+\end{align}
+\end{subequations}
+\end{lstlisting}
+will generate
+\begin{subequations}
+\begin{align}
+\cos (2x) &= \cos^2 x - \sin^2 x \\
+\sin (2x) &= 2 \sin x \cos x
+\end{align}
+\end{subequations}
+
+\paragraph{allowdisplaybreaks}
+When we are using the \texttt{align} environment (or other similar), the blocks may become too lengthy to be included in a single page. By appending the switch \texttt{\textbackslash allowdisplaybreaks} in the preamble, the \LaTeX{} system will then be appointed to break them across multiple pages. This may or may not be desirable and will depend on the situation. As a side note, if an inline expression in a paragraph is too long and hangs outside the main text area, we may add the command \texttt{\textbackslash allowbreak} so that a line break may be inserted there.
+
+\begin{exercisebox}[nobreak=false]
+\begin{Exercise}
+Try to reproduce the paragraphs with numbered equations below. Notice that the enlarged brackets can be obtained by \texttt{\textbackslash left(<math>\textbackslash right)}.
+
+Solving
+\begin{equation}
+x^2\frac{d^2y}{dx^2} - 3x\frac{dy}{dx} + 3y = 0 \label{eqn:exex1}
+\end{equation} 
+Let $z = \ln x$, then
+\begin{align}
+\frac{dy}{dx} &= \frac{dy}{dz}\frac{dz}{dx} = \frac{1}{x}\frac{dy}{dz} \label{eqn:exex2} \\
+\frac{d^2y}{dx^2} &= \frac{d}{dx}\left(\frac{dy}{dx}\right) = \frac{d}{dx}\left(\frac{1}{x}\frac{dy}{dz}\right) && (\text{continuing from (\ref{eqn:exex2})}) \nonumber \\
+&= \frac{1}{x}\frac{d}{dx}\left(\frac{dy}{dz}\right) - \frac{1}{x^2}\frac{dy}{dz} \nonumber \\
+&= \frac{1}{x}\frac{dz}{dx}\frac{d}{dz}\left(\frac{dy}{dz}\right) - \frac{1}{x^2}\frac{dy}{dz} \nonumber \\
+&= \frac{1}{x^2}\frac{d^2y}{dz^2} - \frac{1}{x^2}\frac{dy}{dz} \label{eqn:exex3}
+\end{align}
+Substituting (\ref{eqn:exex2}) and (\ref{eqn:exex3}) into (\ref{eqn:exex1}), we have \ldots
+\end{Exercise} 
+\end{exercisebox}
+
+\section{Advanced Mathematical Expressions and Notations}
+
+\paragraph{amsmath, amssymb, mathtools}
+Before getting into the main section, it is necessary to load the prerequisite \verb|amsmath|, \verb|amssymb|, and \verb|mathtools| packages for the symbols, as well as enhancing the mathematical typesetting.
+
+\subsection{Calculus}
+
+\paragraph{Differentiation and Integral Symbols}
+Table \ref{tab:deintsymbol} below is a list of notable symbols used to denote derivatives and integrals for calculus, aside from Table \ref{tab:functions}.
+
+\begin{table}[ht!]
+\begin{tabularx}{\textwidth}{|p{0.3\textwidth}|>{\raggedright}p{0.3\textwidth}|X|}
+\hline
+Function/Symbol(s) & Command(s) & Description \\
+\hline
+$\partial$, $\partial_y$ & \texttt{\textbackslash partial}, \texttt{\textbackslash partial\_y} & Partial derivatives (with respect to $y$). \\
+\hline
+$\nabla$, $\Delta$ & \texttt{\textbackslash nabla}, \texttt{\textbackslash Delta} & The del and Laplacian operators. \\
+\hline
+$\lim_{x\to 0}$, $\liminf$, $\limsup$ & \texttt{\textbackslash lim\_\{x\textbackslash to 0\}}, \texttt{\textbackslash liminf}, \texttt{\textbackslash limsup} & Limit (inferior and superior). \\
+\hline
+$\iint_S$, $\iiint$, $\oint$ & \texttt{\textbackslash iint\_S}, \texttt{\textbackslash iiint}, \texttt{\textbackslash oint} & Double, triple\footnotemark, and contour integrals. \\
+\hline
+\end{tabularx}
+\caption{Commonly used differentiation and integral symbols.}
+\label{tab:deintsymbol}
+\end{table}
+\footnotetext{If the limits of the multiple integral have to be spelled out explicitly, then just resort to using the original \texttt{\textbackslash int\_\{\}\^{}\{\}} for multiple times.}
+
+\subsection{Logic and Description}
+
+\paragraph{Logic and Set Symbols}
+Meanwhile, Table \ref{tab:logicsetsymbol} below contains a number of commonly used logical operators and set symbols.
+
+\begin{table}[ht!]
+\begin{tabularx}{\textwidth}{|p{0.25\textwidth}|>{\raggedright}p{0.3\textwidth}|X|}
+\hline
+Function/Symbol(s) & Command(s) & Description \\
+\hline
+$<$, $>$, $\leq$, $\geq$, $\ll$, $\gg$ & \texttt{<}, \text{>}, \texttt{\textbackslash leq}, \texttt{\textbackslash geq}, \texttt{\textbackslash ll}, \texttt{\textbackslash gg} & (Much) Smaller and greater than (or equal to). \\
+\hline
+$\neq$ & \texttt{\textbackslash neq} & Not equal to. \\
+\hline
+$\equiv$, $\coloneq$ & \texttt{\textbackslash equiv}, \texttt{\textbackslash coloneq} & Equivalence, Definition of a quantity. \\
+\hline
+$\approx$, $\sim$ & \texttt{\textbackslash approx}, \texttt{\textbackslash sim} & Approximately equal to, similar to. \\
+\hline
+$\min$, $\max$ & \texttt{\textbackslash min}, \texttt{\textbackslash max} & Minimum and Maximum. \\
+\hline
+$\forall$, $\exists$, $\nexists$ & \texttt{\textbackslash forall}, \texttt{\textbackslash exists}, \texttt{\textbackslash nexists} & For all, (not) exists. \\
+\hline
+$\in$, $\notin$ & \texttt{\textbackslash in}, \texttt{\textbackslash notin} & In/not in a set. \\
+\hline 
+$\subset$, $\subseteq$ & \texttt{\textbackslash subset}, \texttt{\textbackslash subseteq} & Being a subset of (or equal to) another set.\\
+\hline
+$\cup^{n}_{i=1}$, $\cap^{n}_{i=1}$ & \texttt{\textbackslash cup\^{}\{n\}\_\{i=1\}}, \texttt{\textbackslash cap\^{}\{n\}\_\{i=1\}} & Union and Intersection. \\
+\hline
+$\emptyset$ & \texttt{\textbackslash emptyset} & The empty set. \\
+\hline
+$\perp$ & \texttt{\textbackslash perp} & Perpendicular/orthogonal to. \\
+\hline
+$\binom{n}{k}$ & \texttt{\textbackslash binom\{n\}\{k\}} & The binomial coefficient. \\
+\hline
+\ldots, $\cdots$, $\ddots$, $\vdots$ & \texttt{\textbackslash ldots}, \texttt{\textbackslash cdots}, \texttt{\textbackslash ddots}, \texttt{\textbackslash vdots} & Various ellipses. \\
+\hline
+\end{tabularx}
+\caption{Some important logical and set symbols.}
+\label{tab:logicsetsymbol}
+\end{table}
+
+\paragraph{Arrows and Braces} The subsequent Table \ref{tab:arrowbrace} shows different methods of making \textit{arrows} and \textit{braces}, possibly with text above/below them.
+
+\begin{table}[ht!]
+\begin{tabularx}{\textwidth}{|p{0.25\textwidth}|>{\raggedright}p{0.45\textwidth}|X|}
+\hline
+Function/Symbol(s) & Command(s) & Description \\
+\hline
+$\leftarrow$, $\rightarrow$, $\leftrightarrow$ & \texttt{\textbackslash leftarrow}, \texttt{\textbackslash rightarrow}, \texttt{\textbackslash leftrightarrow} & Single arrows. \\
+\hline
+$\Leftarrow$, $\Rightarrow$, $\Leftrightarrow$ & \texttt{\textbackslash Leftarrow}, \texttt{\textbackslash Rightarrow}, \texttt{\textbackslash Leftrightarrow} & Double arrows. \\
+\hline
+$\xleftarrow[l]{u}$, $\xrightarrow[l]{u}$, $\xleftrightarrow[l]{u}$ & \texttt{\textbackslash xleftarrow[l]\{u\}}, \texttt{\textbackslash xrightarrow[l]\{u\}}, \texttt{\textbackslash xleftrightarrow[l]\{u\}} & Single arrows with labels. \\
+\hline
+$\xLeftarrow[l]{u}$, $\xRightarrow[l]{u}$, $\xLeftrightarrow[l]{u}$ & \texttt{\textbackslash xLeftarrow[l]\{u\}}, \texttt{\textbackslash xRightarrow[l]\{u\}}, \texttt{\textbackslash xLeftrightarrow[l]\{u\}} & Double arrows with labels. \\
+\hline
+$\overleftarrow{xyz}, \overrightarrow{xyz}$ & \texttt{\textbackslash overleftarrow\{xyz\}}, \texttt{\textbackslash overrightarrow\{xyz\}} & Over-arrows. \\
+\hline
+$\overline{xyz}, \underline{xyz}$ & \texttt{\textbackslash overline\{xyz\}}, \texttt{\textbackslash underline\{xyz\}} & Overline and Underline. \\
+\hline
+$\overbrace{xyz}^{abc}$, $\underbrace{xyz}_{abc}$ & \texttt{\textbackslash overbrace\{xyz\}\^{}\{abc\}}, \texttt{\textbackslash underbrace\{xyz\}\_\{abc\}} & Overbrace and underbrace with labels. \\
+\hline
+\end{tabularx}
+\caption{Arrows and braces in \LaTeX{}.}
+\label{tab:arrowbrace}
+\end{table}
+
+\paragraph{Delimiters}
+Simple \textit{delimiters} can be typed directly in math mode (except the curly brackets \{\} that require \texttt{\textbackslash\{\textbackslash\}}), like
+\begin{lstlisting}
+\begin{align*}
+&\frac{1}{N}(1+\frac{n}{N}) & & [\ln|x|]_a^b & & \{x|f(x) \neq 0\} 
+\end{align*}
+\end{lstlisting}
+outputs
+\begin{align*}
+&\frac{1}{N}(1+\frac{n}{N}) & & [\ln|x|]_a^b & & \{x|f(x) \neq 0\}  
+\end{align*}
+However, if the content inside the delimiters is too tall, then we can append \texttt{\textbackslash left} and \texttt{\textbackslash right} before the delimiters on both sides to match the height. Note that they must be balanced. For example,
+\begin{lstlisting}
+\begin{equation*}
+\left[p + a\left(\frac{n}{V}\right)^2\right](V-nb) = nRT
+\end{equation*}
+\end{lstlisting}
+is rendered as
+\begin{equation*}
+\left[p + a\left(\frac{n}{V}\right)^2\right](V-nb) = nRT
+\end{equation*}
+
+\begin{exercisebox}
+\begin{Exercise}
+Try to type the following statements.
+\begin{enumerate}[label=\alph*)]
+    \item $\oint M dx + Ndy = \iint (\frac{\partial N}{\partial x} - \frac{\partial M}{\partial y}) dxdy$;
+    \item $\mu \ll \nu \implies \mu(A) = 0$, $\forall A|\nu(A) = 0$;
+    \item $A \subseteq B \cup (A \cap B^c)$.
+\end{enumerate}
+\end{Exercise}
+\end{exercisebox}
+
+\subsection{Vectors and Matrices}
+
+\paragraph{Denoting Vectors}
+The most essential object in linear algebra is undoubtedly \textit{vectors}, and we need a standard way to denote and distinguish them. One possible solution is to use an overhead arrow: the command \texttt{\textbackslash vec\{v}\} will output $\vec{v}$. For longer objects, we can instead use \texttt{\textbackslash overrightarrow} introduced in the last subsection. Another approach is to use boldface, which can be applied to general mathematical symbols if we load the \verb|bm| package: \texttt{\textbackslash bm\{v\}} will then produce $\bm{v}$.
+
+\paragraph{Unit Vectors}
+For unit vectors, we often use the hat symbol to denote them, e.g.\ \texttt{\textbackslash hat\{v\}} gives $\hat{v}$. Particularly, for the three-dimensional standard unit vectors $\hat{\imath}$, $\hat{\jmath}$, $\hat{k}$, we use \texttt{\textbackslash hat\{\textbackslash imath\}}, \texttt{\textbackslash hat\{\textbackslash jmath\}}, and \texttt{\textbackslash hat\{k\}} where we use the versions \texttt{\textbackslash imath}: $\imath$, \texttt{\textbackslash jmath}: $\jmath$ for the first two without the usual dot at the top for placing the hat. 
+
+\paragraph{Matrices and Determinants: bmatrix, vmatrix}
+Another class of objects closely related to vectors is \textit{matrices}. To typeset a matrix in \LaTeX{}, we use the \texttt{bmatrix} environment provided by the \verb|amsmath| package. For example,
+\begin{lstlisting}
+\begin{align*}
+\begin{bmatrix}
+1 & 2 & 3 \\
+4 & 5 & 6
+\end{bmatrix}
+\end{align*}    
+\end{lstlisting}
+outputs
+\begin{align*}
+\begin{bmatrix}
+1 & 2 & 3 \\
+4 & 5 & 6
+\end{bmatrix}
+\end{align*}
+where \texttt{\%} separates the entries into columns and \texttt{\textbackslash\textbackslash} marks the end of a row. By replacing \texttt{bmatrix} by \texttt{matrix}, \texttt{pmatrix}, or \texttt{Bmatrix}, the delimiters become nil, round, and curly brackets correspondingly. Particularly, we have the \texttt{vmatrix} group to represent determinants. For instance, writing
+\begin{lstlisting}
+\begin{align*}
+\det(A) =
+\begin{vmatrix}
+a & b \\
+c & d
+\end{vmatrix} = ad-bc
+\end{align*}
+\end{lstlisting}
+leads to
+\begin{align*}
+\det(A) = 
+\begin{vmatrix}
+a & b \\
+c & d
+\end{vmatrix} = ad-bc
+\end{align*}
+
+As a supplement, we can manipulate the ellipses symbols to denote a matrix of an arbitrary shape. The following
+\begin{lstlisting}
+\begin{align*}
+A_{m \times n} = 
+\begin{bmatrix}
+a_{11} & a_{12} & a_{13} & \cdots & a_{1n} \\
+a_{21} & a_{22} & a_{23} &        & a_{2n} \\
+a_{31} & a_{32} & a_{33} &        & a_{3n} \\
+\vdots &        &        & \ddots & \vdots \\
+a_{m1} & a_{m2} & a_{m3} & \cdots & a_{mn}
+\end{bmatrix}
+\end{align*}
+\end{lstlisting}
+produces
+\begin{align*}
+A_{m \times n} = 
+\begin{bmatrix}
+a_{11} & a_{12} & a_{13} & \cdots & a_{1n} \\
+a_{21} & a_{22} & a_{23} &        & a_{2n} \\
+a_{31} & a_{32} & a_{33} &        & a_{3n} \\
+\vdots &        &        & \ddots & \vdots \\
+a_{m1} & a_{m2} & a_{m3} & \cdots & a_{mn}
+\end{bmatrix}
+\end{align*}
+A column vector can be represented by a matrix consisting of a single column.
+
+\paragraph{array}
+For an advanced control of matrices, we can use the \verb|array| environment instead. Let's first see how the code will look in the scenario of Gaussian Elimination, and then break down the details. Given
+\begin{lstlisting}
+\begin{align*}
+\left[\begin{array}{@{}wc{10pt}wc{10pt}wc{10pt}|r}
+1 & 2 & 1 & -1 \\
+2 & 5 & 3 & 2 \\
+0 & 1 & 1 & 0
+\end{array}\right] 
+& \to 
+\left[\begin{array}{@{}wc{10pt}wc{10pt}wc{10pt}|r}
+1 & 2 & 1 & 1 \\
+0 & 1 & 1 & 4 \\
+0 & 1 & 1 & 0
+\end{array}\right] 
+& & R_2 - 2R_1 \to R_2
+\end{align*}    
+\end{lstlisting}
+the output will be
+\begin{align*}
+\left[\begin{array}{@{}wc{10pt}wc{10pt}wc{10pt}|r}
+1 & 2 & 1 & -1 \\
+2 & 5 & 3 & 2 \\
+0 & 1 & 1 & 0
+\end{array}\right] 
+& \to 
+\left[\begin{array}{@{}wc{10pt}wc{10pt}wc{10pt}|r}
+1 & 2 & 1 & 1 \\
+0 & 1 & 1 & 4 \\
+0 & 1 & 1 & 0
+\end{array}\right] 
+& & R_2 - 2R_1 \to R_2
+\end{align*}
+The \verb|array| group typesets each entry just like the \verb|matrix| one. However, notice the input string \texttt{\{@\{\}wc\{10pt\}wc\{10pt\}wc\{10pt\}|r\}} before the main content. \texttt{@\{\}} replaces the default left padding with an empty space. \texttt{wc} indicates the entries along that column to take a fixed width (\verb|w|) of $10$ pt and are centered (\verb|c|). This is repeated for the first three columns to the left. A bar \texttt{|} then generates a vertical separating line at the desired location. (For a horizontal line, put \texttt{\textbackslash hline} between the rows inside.) Finally, \texttt{r} makes the entries right-aligned (similarly with \verb|l|) in the last column with a varying width, and we surround the \verb|array| environment with tall delimiters (see last subsection) manually.
+
+\subsection{Other Formatting Trivia}
+
+\paragraph{abs, norm from physics}
+The \verb|physics| package provides many symbols well-known in the area of physics. Particularly, it defines \texttt{\textbackslash abs\{<expression>\}} and \texttt{\textbackslash norm\{<expression>\}} commands for absolute value and norm (length/magnitude), which are quite convenient even for other usages. For example, 
+\begin{lstlisting}
+$\norm{\bm{x}}_1 = \sum_{i=1}^n\abs{x_i}$
+\end{lstlisting}
+gives $\norm{\bm{x}}_1 = \sum_{i=1}^n\abs{x_i}$.
+
+\paragraph{mathbb, mathcal}
+Two other types of symbols that may be of interest come from \texttt{\textbackslash mathbb\{<character>\}} and \texttt{\textbackslash mathcal\{<character>\}} for sets and classes. For example, the set of all real numbers is commonly denoted by $\mathbb{R}$ (\texttt{\textbackslash mathbb\{R\}}), while the class of continuously differentiable functions is denoted by $\mathcal{C}^1$ (\texttt{\textbackslash mathcal\{C\}\^{}1}).
+
+\paragraph{siunitx}
+For other science applications, the physical quantities involved are often accompanied by units. The \verb|siunitx| helps facilitate the typesetting of units and expressing the exponents. For example, \texttt{\textbackslash si\{\textbackslash N\} = \textbackslash si\{\textbackslash kg \textbackslash per \textbackslash m \textbackslash per \textbackslash square \textbackslash s\}} is interpreted as $\si{\N} = \si{\kg \per \m \per \square \s}$, while \texttt{\textbackslash SI\{4.184e3\}\{\textbackslash J \textbackslash per \textbackslash kg \textbackslash per \textbackslash K\}} generates \SI{4.184e3}{\J \per \kg \per \K}.
+
+\paragraph{System of Equations}
+To typeset a system of equations, we can use either \texttt{aligned} with a large curly bracket to the left, or the \texttt{cases} environment. There will be slight differences between these two methods. For instance,
+\begin{lstlisting}
+\begin{align*}
+\left\{\begin{aligned}
+3x + 4y + 5z &= 6 \\
+x - 2y + 3z &= -4 \\
+x^2 + y^2 &= 1
+\end{aligned}\right.
+\end{align*}
+\end{lstlisting}
+will produce (notice that we need \texttt{\textbackslash right.} at the end to make a placeholder delimiter to the right for balance)
+\begin{align*}
+\left\{\begin{aligned}
+3x + 4y + 5z &= 6 \\
+x - 2y + 3z &= -4 \\
+x^2 + y^2 &= 1
+\end{aligned}\right.
+\end{align*}
+Alternatively, we can write
+\begin{lstlisting}
+\begin{align*}
+\begin{cases}
+3x + 4y + 5z &= 6 \\
+x - 2y + 3z &= -4 \\
+x^2 + y^2 &= 1
+\end{cases}
+\end{align*}
+\end{lstlisting}
+to achieve
+\begin{align*}
+\begin{cases}
+3x + 4y + 5z &= 6 \\
+x - 2y + 3z &= -4 \\
+x^2 + y^2 &= 1
+\end{cases}
+\end{align*}
+As its name suggests, \verb|cases| is actually designed to represent the values of a variable in different cases, e.g.\ we may write
+\begin{lstlisting}
+\begin{align*}
+\begin{aligned}
+y(x) = 
+\begin{cases}
+1 & x \in \mathbb{Q} \\
+0 & x \notin \mathbb{Q}
+\end{cases}
+\end{aligned}
+\end{align*}
+\end{lstlisting}
+to get
+\begin{align*}
+\begin{aligned}
+y(x) = 
+\begin{cases}
+1 & x \in \mathbb{Q} \\
+0 & x \notin \mathbb{Q}
+\end{cases}
+\end{aligned}
+\end{align*}
+
+\paragraph{Spacing in Math Mode}
+In math mode, we often employ pre-defined commands instead of \texttt{\textbackslash hspace} or \texttt{\textbackslash vspace} to adjust the spacing. They are shown in Table \ref{tab:mathspace} below.
+
+\begin{table}[ht!]
+\begin{tabularx}{\textwidth}{|p{0.2\textwidth}|>{\raggedright}p{0.5\textwidth}|X|}
+\hline
+Command & Description & Effect \\
+\hline
+\texttt{\textbackslash quad} & Space of $1$ em in the current maths font size ($= 18$ mu) & a\quad b \\
+\hline
+\texttt{\textbackslash qquad} & Double of \texttt{\textbackslash quad} ($= 36$ mu) & a\qquad b \\
+\hline
+\texttt{\textbackslash ,} & $3/18$ of \texttt{\textbackslash quad}/$3$ mu & a\,b \\
+\hline
+\texttt{\textbackslash :} & $4/18$ of \texttt{\textbackslash quad}/$4$ mu & a\:b \\
+\hline
+\texttt{\textbackslash ;} & $5/18$ of \texttt{\textbackslash quad}/$5$ mu & a\;b \\
+\hline
+\texttt{\textbackslash !} & $-3/18$ of \texttt{\textbackslash quad}/$-3$ mu & a\!b \\
+\hline
+\texttt{\textbackslash (space)} & Space as in normal text & a\ b \\
+\hline
+\end{tabularx}
+\caption{Spacing commands in math mode.}
+\label{tab:mathspace}
+\end{table}
+
+\paragraph{Sizes}
+We can control the font size in either math mode with the usual size commands in Table \ref{tab:fontsize}. For the inline mode, we can write something like
+\begin{lstlisting}
+{\Large$N(0,1) \sim e^{-x^2/2}$}
+\end{lstlisting}
+to get {\Large$N(0,1) \sim e^{-x^2/2}$}. On the other hand, for the display mode, we may put the size command before the math environment, e.g.\
+\begin{lstlisting}
+\footnotesize
+\begin{align*}
+\mathcal{L}[y^{(n)}](s) &= s^n Y(s) - s^{n-1}y(0) - s^{n-2}y'(0) - \cdots - y^{(n-1)}(0) \\
+&= s^n Y(s) - \sum_{k=0}^{n-1} s^{(n-1)-k}y^{(k)}(0)
+\end{align*}
+\normalsize % Back to default font size
+\end{lstlisting}
+will yield
+\footnotesize
+\begin{align*}
+\mathcal{L}[y^{(n)}](s) &= s^n Y(s) - s^{n-1}y(0) - s^{n-2}y'(0) - \cdots - y^{(n-1)}(0) \\
+&= s^n Y(s) - \sum_{k=0}^{n-1} s^{(n-1)-k}y^{(k)}(0)
+\end{align*}
+\normalsize
+
+\paragraph{mathcolor}
+To apply colors in math mode, we can replace the \texttt{\textbackslash textcolor} command with \texttt{\textbackslash mathcolor}. For example,
+\begin{lstlisting}
+\begin{align*}
+\mathcolor{Blue}{\frac{\partial \vec{u}}{\partial t}} + \mathcolor{Green}{\vec{u}\cdot\nabla\vec{u}} = \mathcolor{Red}{\vec{F}} 
+\end{align*}
+\end{lstlisting}
+is displayed as
+\begin{align*}
+\mathcolor{Blue}{\frac{\partial \vec{u}}{\partial t}} + \mathcolor{Green}{\vec{u}\cdot\nabla\vec{u}} = \mathcolor{Red}{\vec{F}} 
+\end{align*}
+
+\begin{exercisebox}
+\begin{Exercise}
+Reproduce the following output.
+\begin{align*}
+&\left\{\begin{aligned}
+x + 2y &= 3 \\
+x - 3y &= -2 \\
+-x + y &= 1
+\end{aligned}\right.
+& & \Leftrightarrow
+&\begin{bmatrix}
+1 & 2 \\
+1 & -3 \\
+-1 & 1
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y
+\end{bmatrix}
+&=
+\begin{bmatrix}
+3 \\
+-2 \\
+1
+\end{bmatrix}
+\end{align*}
+\end{Exercise}
+\end{exercisebox}
