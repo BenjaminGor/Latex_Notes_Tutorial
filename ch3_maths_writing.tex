@@ -1,4 +1,5 @@
 \chapter{The Fundamentals of Writing Mathematics in \LaTeX{}}
+\label{chap:maths}
 
 \paragraph{Introduction}
 This chapter covers the basic methods about how to typeset and align different mathematical expressions and formulae in \LaTeX{}.
@@ -288,7 +289,7 @@ $\overleftarrow{xyz}, \overrightarrow{xyz}$ & \texttt{\textbackslash overleftarr
 \hline
 $\overline{xyz}, \underline{xyz}$ & \texttt{\textbackslash overline\{xyz\}}, \texttt{\textbackslash underline\{xyz\}} & Overline and Underline. \\
 \hline
-$\overbrace{xyz}^{abc}$, $\underbrace{xyz}_{abc}$ & \texttt{\textbackslash overbrace\{xyz\}\^{}\{abc\}}, \texttt{\textbackslash underbrace\{xyz\}\_\{abc\}} & Overbrace and underbrace with labels. \\
+\raisebox{-10pt}{\smash{$\overbrace{xyz}^{abc}$},} $\underbrace{xyz}_{abc}$ & \texttt{\textbackslash overbrace\{xyz\}\^{}\{abc\}}, \texttt{\textbackslash underbrace\{xyz\}\_\{abc\}} & Overbrace and underbrace with labels. \\
 \hline
 \end{tabularx}
 \caption{Arrows and braces in \LaTeX{}.}
@@ -572,7 +573,7 @@ is displayed as
 \begin{exercisebox}
 \begin{Exercise}
 Reproduce the following output.
-\begin{align*}
+\begin{align}
 &\left\{\begin{aligned}
 x + 2y &= 3 \\
 x - 3y &= -2 \\
@@ -594,6 +595,6 @@ y
 -2 \\
 1
 \end{bmatrix}
-\end{align*}
+\end{align}
 \end{Exercise}
 \end{exercisebox}
