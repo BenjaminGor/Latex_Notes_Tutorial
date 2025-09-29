@@ -1,7 +1,199 @@
 \chapter{Self-defined Commands and Environments}
 
+\paragraph{Introduction}
+This chapter concerns the possibility for users to define new commands and environments in \LaTeX{}, by leveraging flow control just like any other programming language.
+
 \section{Self-defined Commands}
 
-\section{If-then-else Statements}
+\paragraph{newcommand*}
+The main way to define our own commands (\textit{macros}) is to invoke the \texttt{\textbackslash newcommand*\{<command\_name>\}[<no.\_arg>]\{<code>\}}\footnote{There is an unstarred version, but just sticking to the starred version will be adequate.} statement. The necessity arises mainly when we want to repeatedly apply the same action, in addition to ensuring code readability and maintenance. Now, let's see a simple example of highlighting keywords in a particular style:
+\begin{lstlisting}
+\newcommand*{\mykeyword}[1]{\textcolor{Red}{\textbf{#1}}}    
+\end{lstlisting}
+\newcommand*{\mykeyword}[1]{\textcolor{Red}{\textbf{#1}}}
+This definition can be put either in the preamble (preferable) or any suitable location in the main document. Writing \texttt{\textbackslash mykeyword\{Attention!\}} then gives \mykeyword{Attention!} The \texttt{\#1} part indicates where the first argument will go during the code execution, and the logic is similar when there are multiple arguments. Remember that when calling any command, each argument requires exactly one pair of curly brackets to receive it.
+
+\paragraph{Optional Arguments}
+As in many programming languages, there can also be optional arguments that may come with a default value when defining a command. The syntax will become \texttt{\textbackslash newcommand*\{<command\_name>\}[<no.\_arg>]\allowbreak[<default\_value>]\{<code>\}}. For example, if we define 
+\begin{lstlisting}
+\newcommand*{\homoeqn}[2][0]{$f(#2x,#2y) = #2^{#1}f(x,y)$}    
+\end{lstlisting}
+\newcommand*{\homoeqn}[2][0]{$f(#2x,#2y) = #2^{#1}f(x,y)$}
+Then \texttt{\textbackslash homoeqn\{t\}} gives \homoeqn{t} while \texttt{\textbackslash homoeqn[1]\{s\}} gives \homoeqn[1]{s}. When interpreting indices in the code statement, optional arguments will take precedence over the compulsory arguments. In this case, \texttt{\#1} represents the optional argument with the default value of $0$, which has been overridden by the new option $1$ within the square brackets during the second call.
+
+\paragraph{renewcommand*}
+If we want to edit a command that is already defined by us or another package, we will need to use the \texttt{\textbackslash renewcommand*} statement to properly update and overwrite the original command. Its has the same format as \texttt{\textbackslash newcommand*}. Using the same example, we can write
+\begin{lstlisting}
+\renewcommand*{\mykeyword}[1]{\textcolor{Green}{\textit{\textbf{#1}}}}    
+\end{lstlisting}
+\renewcommand*{\mykeyword}[1]{\textcolor{Green}{\textit{\textbf{#1}}}}
+Writing \texttt{\textbackslash mykeyword\{Okay!\}} now then gives \mykeyword{Okay!}
+
+\begin{exercisebox}
+\begin{Exercise}
+Create a command that takes two arguments and outputs a sentence in the form of:
+There are \texttt{<no.\_of\_population>} (comma-separated) people in \texttt{<city>}. The \texttt{\textbackslash num[group-separator=\{,\}]} command by the \texttt{siunitx} package will be useful for processing the first argument. Try to execute it multiple times with different inputs.
+\end{Exercise}
+\end{exercisebox}
+
+\section{Flow Control}
+
+\subsection{If-then-else Statements}
+
+\paragraph{ifthen}
+Commands/functions are rather boring if there is no constraint or checking imposed. As you probably know, \textit{if-then-else} statements are one of the major flow control constructs in all programming languages, and \LaTeX{} is no exception. With these, we can produce more complex outcomes with commands. While there are primitive \TeX{} syntax such as \texttt{\textbackslash if} and \texttt{\textbackslash else} for that, it is easier and more natural (at least in my opinion) if we use the verbose \texttt{\textbackslash ifthenelse} construct provided by the \texttt{ifthen} package. The format is
+\begin{lstlisting}
+\ifthenelse{<boolean_test>}{<then clause>}{<else clause>}
+\end{lstlisting}
+The first argument contains a test that evaluates to some \textit{boolean} value (true or false). If the test returns true, then the "then clause" in the second argument is executed. Otherwise, if it is false, then the "else clause" in the third argument is executed instead. The most basic test is to compare two quantities, and here is a very simple example: if we type
+\begin{lstlisting}
+\ifthenelse{1 > 2}{Preposterous!}{Of course not...}    
+\end{lstlisting}
+we should see "\ifthenelse{1 > 2}{Preposterous!}{Of course not...}".
+
+\paragraph{pgfmath}
+When designing a boolean test for the \texttt{\textbackslash ifthenelse} statement above, we often need a way to compute the results of math expressions for comparison. The native \TeX{} does offer some commands such as \texttt{\textbackslash numexpr} or \texttt{\textbackslash dimexpr} for that, but here we will utilize the \texttt{pgfmath} package to parse math expressions. The usage mainly takes the form of \texttt{\textbackslash pgfmathparse\{<expression>\}}. For instance, \texttt{\textbackslash pgfmathparse\{2+2\}\textbackslash pgfmathresult} returns \pgfmathparse{2+2}\pgfmathresult{} where the \texttt{\textbackslash pgfmathresults} command stores the last value processed and prints it out. Alternatively, we can save it to a macro by \texttt{\textbackslash pgfmathsetmacro\{<macro>\}\allowbreak\{<expression>\}}. Using the same example, we can write something like
+\begin{lstlisting}
+\pgfmathsetmacro{\myans}{2+2}    
+\end{lstlisting}
+\pgfmathsetmacro{\myans}{2+2} 
+typing \texttt{\textbackslash myans} then gives \myans.
+
+To learn more about how a \texttt{pgfmath} expression should be formatted, see \href{https://tikz.dev/math-parsing}{https://\allowbreak tikz.dev/math-parsing}.
+
+\paragraph{lengthtest}
+Subsequently, we can design a command that checks equality and looks like
+\begin{lstlisting}
+\newcommand*{\myequal}[2]{\pgfmathsetmacro{\Lhs}{#1}\pgfmathsetmacro{\Rhs}{#2}% <- this % is needed to consume the spacing 
+\ifthenelse{\lengthtest{\Lhs pt = \Rhs pt}}{#1 is equal to #2}{#1 is not equal to #2.}}
+\end{lstlisting}
+\newcommand*{\myequal}[2]{\pgfmathsetmacro{\Lhs}{#1}\pgfmathsetmacro{\Rhs}{#2}%
+\ifthenelse{\lengthtest{\Lhs pt = \Rhs pt}}{#1 is equal to #2}{#1 is not equal to #2.}}
+Typing \texttt{\textbackslash myequal\{2*3\}\{6\}} then outputs "\myequal{2*3}{6}" as expected. Notice that in the \texttt{ifthenelse} boolean test, we have not directly done the naive comparison as \texttt{\textbackslash Lhs = \textbackslash Rhs}. This is because the original method only handles integers, but the \texttt{pgfmath} calculation produces float numbers. To circumvent this, we must use the \texttt{\textbackslash lengthtest} command, which is designed to compare decimal dimensions, and we will only need to add the same length unit to both sides. (\href{https://tex.stackexchange.com/questions/84625/compare-numbers-with-comma-as-decimal-points}{\TeX{} StackExchange 84625})
+
+\paragraph{\textbackslash AND, \textbackslash OR, \textbackslash NOT}
+In an \texttt{ifthenelse} test, we may need to compose different booleans using logical operators. There are the self-explanatory \texttt{\textbackslash AND}, \texttt{\textbackslash OR}, and \texttt{\textbackslash NOT} for that. As a demonstration,
+\begin{lstlisting}
+\ifthenelse{\NOT \(1 = 2\) \AND \(0 = 0\)}{These make sense!}{What?}
+\end{lstlisting}
+gives "\ifthenelse{\NOT \(1 = 2\) \AND \(0 = 0\)}{These make sense!}{What?}". We enclose each smaller test with \texttt{\textbackslash( \textbackslash)}. Note that there is no precedence rule in \texttt{ifthen} and the evaluation goes from left to right straightly, except when using \texttt{\textbackslash( \textbackslash)}.
+
+\paragraph{equal, isundefined}
+There are two other boolean tests that can be helpful: \texttt{\textbackslash equal\{<string>\}\{<string>\}} and \texttt{\textbackslash isundefined\{<command\_name>\}}, which check whether two strings are equal and if a command exists, respectively. A quick use is to determine if a string is empty by \texttt{\textbackslash equal\{<string>\}\{\}}. 
+
+\subsection{For Loops}
+
+\paragraph{pgffor}
+Another essential type of flow control is \textit{for loops}, which repeatedly execute a code block over some range of values. The \texttt{pgffor} offers this functionality with the \texttt{\textbackslash foreach} construct. The format goes like
+\begin{lstlisting}
+\foreach \<variable> in {<range>} {
+    % do something
+}   
+\end{lstlisting}
+A toy example will be
+\begin{lstlisting}
+\foreach \x in {5,...,1} {
+    \\ \x!}
+Time is up! \\
+\end{lstlisting}
+that outputs \foreach \x in {5,...,1} {
+    \\ \x!}
+Time is up! \\
+The \texttt{\{5, ..., 1\}} part is a shorthand for \texttt{\{5, 4, 3, 2, 1\}} and it also works for ascending order or other patterns.\footnote{For a general discussion, see \href{https://tex.stackexchange.com/questions/142188/using-computations-with-foreach-in-tikz}{\TeX{} StackExchange 142188}.}
+
+We can also simultaneously loop over multiple variables by separating them with \texttt{/}, for example:
+\begin{lstlisting}
+\foreach \y/\z in {1/2, 2/3, 3/5, 4/7} {
+    \\ Prime $\y \rightarrow \z$}
+\end{lstlisting}
+produces
+\foreach \y/\z in {1/2, 2/3, 3/5, 4/7} {
+    \\ Prime $\y \rightarrow \z$}
+
+\paragraph{Nested Loops}
+Moreover, we can produce nested loops as in other programming languages. For instance, the block
+\begin{lstlisting}
+\foreach \ii in {0,...,2} {\\%
+    \foreach \jj in {1,...,4} {%
+    (\ii, \jj)%    
+    }
+}
+\end{lstlisting}
+will generate the following pattern:
+\foreach \ii in {0,...,2} {\\%
+    \foreach \jj in {1,...,4} {%
+    (\ii, \jj)%    
+    }
+}
+
+\paragraph{count}
+When iterating over a range of values, the corresponding index can be saved into a variable as \texttt{count}. For example, the previous example of printing out the first four primes can be replaced by the following equivalent snippet:
+\begin{lstlisting}
+\foreach \z [count=\y] in {2, 3, 5, 7} {
+    \\ Prime $\y \rightarrow \z$}    
+\end{lstlisting}
+
+\paragraph{evaluate}
+Also, in a \texttt{\textbackslash foreach} loop, calculations can be applied over the iterated variable by the \texttt{evaluate} option. As an illustrative example, this loop
+\begin{lstlisting}
+\foreach \x [evaluate=\x as \y using \x^2] in {1,...,10} {
+    \\ $\x ^2 = \y$}
+\end{lstlisting}
+readily outputs
+\foreach \x [evaluate=\x as \y using \x^2] in {1,...,10} {
+    \\ $\x ^2 = \y$}
+
+\paragraph{remember}
+Another feature of a \texttt{\textbackslash foreach} loop is the \texttt{remember} option, which stores the current variable and recalls it in the next iteration. Stealing the example from the \textbf{PGF} User Manual: 
+\begin{lstlisting}
+\foreach \x [remember=\x as \lastx (initially A)] in {B,...,H}{\lastx$\to$\x, }
+\end{lstlisting}
+produces
+\foreach \x [remember=\x as \lastx (initially A)] in {B,...,H}{\lastx$\to$\x, }in the expected order.
+
+\paragraph{breakforeach}
+An important component of any for loop is the ability to break it given some certain condition. This is done by the \texttt{\textbackslash breakforeach} command. This will be used in combination with an \texttt{\textbackslash ifthenelse} statement. For example, the code snippet
+\begin{lstlisting}
+\foreach \x in {1,...,100} {%
+\ifthenelse{\NOT \(\x = 13\)}{\x, }{13 is an unlucky number! Stop! \breakforeach}
+}    
+\end{lstlisting}
+outputs
+\foreach \x in {1,...,100} {%
+\ifthenelse{\NOT \(\x = 13\)}{\x, }{Wait, 13 is an unlucky number! Stop! \breakforeach}
+}
+
+\begin{exercisebox}
+\begin{Exercise}
+Define a command that converts Celsius temperature to Fahrenheit and prints a warning if the Fahrenheit temperature is higher than 100 degrees.
+\end{Exercise}
+\begin{Exercise}
+By manipulating all the tools introduced in this chapter, efficiently imitate the following outputs. The \texttt{int} and \texttt{Mod} operators for \texttt{pgfmath} will be useful.
+\foreach \x in {1,...,20} {%
+\pgfmathsetmacro{\diva}{int(Mod(\x, 3))}%
+\pgfmathsetmacro{\divb}{int(Mod(\x, 5))}%
+\\ \ifthenelse{\(\diva = 0\) \AND \(\divb = 0\)}{\x{} is divisible by both 3 and 5.}{
+\ifthenelse{\diva = 0}{\x{} is divisible by 3.}{\x{} is not divisible by 3.}
+\ifthenelse{\divb = 0}{\x{} is divisible by 5.}{\x{} is not divisible by 5.}}}
+\end{Exercise}
+\end{exercisebox}
 
 \section{Self-defined Environments}
+
+\paragraph{newenvironment*} Similarly, we can also define our own environments by the \texttt{\textbackslash newenvironment*\{env\_name\}\{begin\}\{end\}} method. \texttt{begin}/\texttt{end} stores the code to be run before the start/after the end of the new environment. For example, by defining
+\begin{lstlisting}
+\newenvironment*{mylargeblueeqn}{\color{Blue}\LARGE\begin{equation}}{\end{equation}}   
+\end{lstlisting}
+\newenvironment*{mylargeblueeqn}{\color{Blue}\LARGE\begin{equation}}{\end{equation}}   
+Then writing
+\begin{lstlisting}
+\begin{mylargeblueeqn}
+1+1 = 2
+\end{mylargeblueeqn}    
+\end{lstlisting}
+displays the expected blue, magnified equation:\footnote{Note that replacing \texttt{equation} with \texttt{align} instead will cause an error, read \href{https://tex.stackexchange.com/questions/236664/newenvironment-error-with-beginalign-and-endalign}{\TeX{} StackExchange 236664}.}
+\begin{mylargeblueeqn}
+1+1 = 2
+\end{mylargeblueeqn}
+
+\paragraph{renewenvironment*} There is also the concurrent \texttt{\textbackslash renewenvironment*} for renewing the definition of an environment. However, we seldom need to (re)define an environment on our own: In a math document, the interface provided by the \texttt{tcolorbox} package (see Chapter ??) will fulfill most of the usages. So we will keep this section short.

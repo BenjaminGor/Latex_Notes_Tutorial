@@ -1,7 +1,7 @@
 \chapter{Various Special Structures in \LaTeX{}}
 
 \paragraph{Introduction}
-This chapter presents different special environments in \LaTeX{} apart from the display math mode and verbatim previously, such as lists, figures, tables, and minipages.
+This chapter presents different special environments in \LaTeX{} apart from the display math mode and verbatim form previously, such as lists, figures, tables, and minipages.
 
 \section{Lists}
 
@@ -92,7 +92,7 @@ To import figures into the document, we need to load the \verb|graphics| package
 \begin{lstlisting}
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=0.4\linewidth]{graphics/Ada_Lovelace_portrait.jpg} % Replace the path with your own file.
+\includegraphics[width=0.4\linewidth]{graphics/Ada_Lovelace_portrait.jpg} % replace the path with your own file
 \caption{The portrait of Ada Lovelace.}
 \label{fig:ada}
 \end{figure}    
@@ -106,7 +106,7 @@ To import figures into the document, we need to load the \verb|graphics| package
 First, we need to enclose the \texttt{\textbackslash includegraphics} command within a \verb|figure| environment. The \verb|ht!| option indicates that priority is given to put the figure structure exactly in the place where the code is inserted (\verb|h|: here), or at the top of a page (\verb|t|). The \verb|width| option enforces the width of the image to the input value (and similarly there are \verb|height| and \verb|scale|). The \verb|caption| command unsurprisingly generates the caption, while the \verb|label| command works as it is in math mode and allows us to reference it by writing \texttt{\textbackslash ref\{fig:ada\}}.
 
 \paragraph{subcaption}
-We can construct a set of subfigures within an overarching figure by utilizing the \verb|subcaption| package and \verb|subfigure| groups. To illustrate, the following code is deployed to generate Figure \ref{fig:TC1} below: 
+We can construct a set of subfigures within an overarching figure by utilizing the \verb|subcaption| package and \verb|subfigure| groups. To illustrate, the following code is deployed to generate Figure \ref{fig:TC1}: 
 \begin{lstlisting}
 \begin{figure}[ht!]
 \centering
@@ -142,10 +142,10 @@ The \verb|b| option sets the vertical alignment of \verb|subfigure| at the botto
 \label{fig:TC1}
 \end{figure}
 
-\paragraph{ContinuedFloat} To make a longer figure of subfigures that spans multiple pages, we can simply arrange them into separate \verb|figure| environments and call the \texttt{\textbackslash ContinuedFloat} command in all the subsequent ones. Continuing from the last example, we may have
+\paragraph{ContinuedFloat} To make a longer figure of subfigures that spans multiple pages, we can simply arrange them into separate \verb|figure| environments and call the \texttt{\textbackslash ContinuedFloat} command in all the subsequent \verb|figure| groups. Continuing from the last example, we may have
 \begin{lstlisting}
 \begin{figure}[hb!]
-\ContinuedFloat % Here!
+\ContinuedFloat % here!
 \caption{(Cont.) The infrared satellite images of various Tropical Cyclones affecting Hong Kong.}
 \centering
 \begin{subfigure}[b]{0.45\textwidth}
@@ -299,7 +299,7 @@ Recreate any one of the tables in Chapter \ref{chap:maths}.
 \end{Exercise}
 \end{exercisebox}
 
-\section{Minipages}
+\section{Minipages and Multiple Columns}
 
 \paragraph{minipage}
 Sometimes we may want to partition the content into smaller blocks that are embedded within the current page, and can be placed or ordered (e.g.\ parallel) in the way we want. The \verb|minipage| environment basically acts like a more versatile version of a \verb|parbox| environment and serves this purpose. For example, something like
@@ -337,7 +337,7 @@ The \verb|[b]| option indicates the baseline is set at the bottom, and hence the
 \colchunk[2]{\lipsum[9]}
 \end{parcolumns}
 \end{lstlisting}
-to get
+to get\\
 \begin{parcolumns}{2}
 \colchunk[1]{\lipsum[6]}
 \colchunk[2]{\lipsum[7]}
@@ -346,8 +346,6 @@ to get
 \colchunk[2]{\lipsum[9]}
 \end{parcolumns}
 where the first argument of the environment clearly indicates the number of columns and the \texttt{\textbackslash colplacechunks} command releases the loaded \texttt{\textbackslash colchunk[<col\allowbreak\_no.>]} and goes to the next paragraph.
-
-\section{Multiple Columns}
 
 \paragraph{multicol} A task closely related to what \verb|parcolumns| does above is to typeset a single, continuous stream of text along multiple columns, like in many academic papers. The \texttt{multicol} package is designed for this and will carry out the automatic splitting. For example, by encapsulating the text inside the \verb|multicols| environment as
 \begin{lstlisting}
@@ -361,10 +359,16 @@ A mechanical and mathematical genius, Zhuge is credited with inventing a bow for
 \begin{multicols}{2}
 Zhuge Liang (born 181, Yangdu [now Yinan, Shandong province], China--died August 234, Wuzhangyuan [now in Shaanxi province], China) was a celebrated adviser to Liu Bei, founder of the Shu-Han dynasty (221--263/264).
 
+Quick Facts: \\
+Wade-Giles romanization: Chu-ko Liang \\
+Courtesy name: Kongming \\
+Born: 181, Yangdu [now Yinan, Shandong province], China \\
+Died: August 234, Wuzhangyuan [now in Shaanxi province], China (aged 53)
+
 Zhuge, to whom supernatural powers often are ascribed, has been a favoured character of many Chinese plays and stories. Legend states that Liu Bei, then a minor military figure, heard of Zhuge Liang’s great wisdom and came three times to the wilderness retreat to which Zhuge had retired to seek him out as an adviser. It is known that Zhuge helped Liu organize a large army and found a dynasty. Liu was so impressed with Zhuge’s wisdom that on his deathbed Liu urged his son to depend on Zhuge’s advice and urged Zhuge to ascend the throne himself if the prince were unable to rule. Some historical accounts indicate that Zhuge died from illness while leading a military campaign in 234.
 
-A mechanical and mathematical genius, Zhuge is credited with inventing a bow for shooting several arrows at once and with perfecting the Eight Dispositions, a series of military tactics. In the Sanguozhi yanyi (Romance of the Three Kingdoms), the great 14th-century historical novel, Zhuge is one of the main characters; he is portrayed as being able to control the wind and foretell the future.
+A mechanical and mathematical genius, Zhuge is credited with inventing a bow for shooting several arrows at once and with perfecting the Eight Dispositions, a series of military tactics. In the Sanguozhi yanyi (Romance of the Three Kingdoms), the great 14th-century historical novel, Zhuge is one of the main characters; he is portrayed as being able to control the wind and foretell the future. (Source: Encyclopaedia Britannica)
 \end{multicols}
 
 
-\paragraph{twocolumn} We can also pass the \verb|twocolumn=true| option to \texttt{\textbackslash KOMAoptions} to demand the entire book to be formatted in two columns globally. However, note that it will greatly mess up the layout of this book.
+\paragraph{twocolumn} We can also pass the \verb|twocolumn=true| option to \texttt{\textbackslash KOMAoptions} to demand the entire book to be formatted in two columns globally. However, note that it will greatly mess up the layout of this book. (The decision to adapt such a format should be made at an early time!)
