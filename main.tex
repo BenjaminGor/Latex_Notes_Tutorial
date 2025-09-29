@@ -21,6 +21,7 @@
 
 \addtokomafont{chapterprefix}{\itshape\color{white}}
 \renewcommand*{\chapterformat}{\raggedleft\colorbox{RoyalBlue}{\parbox[b][66pt]{66pt}{\vfill\centering{\large\chapapp}\\[-6pt]\thechapter\vfill}}}
+\renewcommand*{\chapterheadstartvskip}{\vspace*{2em}}
 \renewcommand*{\chapterheadendvskip}{\pgfornament[width=\textwidth]{88}\par}
 
 \renewcommand*{\sectionformat}{\colorbox{black}{\textcolor{white}{\thesection}}\enskip}
@@ -45,6 +46,9 @@
 \usepackage{subcaption}
 \usepackage{parcolumns}
 \usepackage{multicol}
+\usepackage{ifthen}
+\usepackage{pgfmath}
+\usepackage{pgffor}
 
 \definecolor{mint}{rgb}{0.24, 0.71, 0.54}
 
@@ -56,27 +60,32 @@
 \renewcommand*{\ExerciseSkipBefore}{\dimexpr.5\baselineskip}
 \renewcommand*{\ExerciseSkipAfter}{\dimexpr.5\baselineskip}
 
-\newmdenv[leftmargin = 0pt,
-  innerleftmargin = 1em,
-  innertopmargin = 0.5em,
-  innerbottommargin = 1em,
-  innerrightmargin = 1em,
-  frametitlebelowskip = 0.75em,
-  rightmargin = 0pt,
-  linewidth= 1ex,
-  skipabove = \baselineskip,
-  skipbelow = \baselineskip,
-  splittopskip = \baselineskip,
-  topline = false,
-  rightline = false,
-  bottomline = false,
-  nobreak = true,
-  backgroundcolor=Mahogany!20,
-  linecolor=Mahogany,
-  frametitle={\sffamily Exercise(s)},
-  frametitleaboveskip = 1em,
-  frametitlebackgroundcolor=Mahogany!10]{exercisebox}
-
+\newtcolorbox{exercisebox}[1][]{
+  colback=Mahogany!20, 
+  colbacktitle=Mahogany!10,
+  coltitle=black,
+  colframe=Mahogany,
+  fonttitle=\bfseries,
+  title=Exercise(s),
+  boxrule=0pt,
+  leftrule=1ex,
+  left=0pt,
+  right=0pt,
+  before=0pt,
+  after=0pt,
+  boxsep=1ex,
+  toptitle=1ex,
+  bottomtitle=1ex,
+  top=0pt,
+  left=1ex,
+  right=1ex,
+  bottom=0.5ex,
+  pad after break=1.5ex,
+  sharp corners,
+  breakable,
+  before skip=\topsep,
+  after skip=\topsep, #1}
+ 
 \usepackage{listings}
 \lstdefinestyle{lstTeXstyle}{
     language=[latex]TeX, 
@@ -109,6 +118,7 @@ Copyright ©, C.~L.~Loi, 2025. All rights reserved.}
 \maketitle
 \tableofcontents
 \mainmatter
+
 \include{ch1_basic_structure}
 \include{ch2_text_format}
 \include{ch3_maths_writing}
