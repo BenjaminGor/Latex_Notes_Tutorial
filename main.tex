@@ -12,22 +12,19 @@
 \KOMAoptions{headsepline=on, captions=besidetop, DIV=last}
 
 \pagestyle{scrheadings}
-%\automark[chapter]{chapter}
-%\automark*[section]{}
+\automark[section]{chapter}
 \setkomafont{pagehead}{\color{RoyalBlue}\slshape\bfseries}
 \renewcommand*{\chaptermarkformat}{\chapapp~\thechapter\autodot~--~}
 \ofoot*{}
 \cfoot*{\pagemark}
 
 \addtokomafont{chapterprefix}{\itshape\color{white}}
-\renewcommand*{\chapterformat}{\raggedleft\colorbox{RoyalBlue}{\parbox[b][66pt]{66pt}{\vfill\centering{\large\chapapp}\\[-6pt]\thechapter\vfill}}}
-\renewcommand*{\chapterheadstartvskip}{\vspace*{2em}}
+\renewcommand*{\chapterformat}{\raggedleft\colorbox{RoyalBlue}{\parbox[b][2.8em]{2.8em}{\vfill\centering{\large\chapapp}\\[-0.4em]\thechapter\vfill}}}
+\renewcommand*{\chapterheadstartvskip}{\addvspace{2em}}
 \renewcommand*{\chapterheadendvskip}{\pgfornament[width=\textwidth]{88}\par}
 
 \renewcommand*{\sectionformat}{\colorbox{black}{\textcolor{white}{\thesection}}\enskip}
-\makeatletter
-\renewcommand*\sectionlinesformat[4]{\makebox[0pt][l]{\rule[-\fboxsep]{\textwidth}{1pt}}\@hangfrom{#3}\parbox[b]{0.85\textwidth}{\linespread{1}\selectfont#4}}
-\makeatother
+\renewcommand*{\sectionlinesformat}[4]{\makebox[0pt][l]{\rule[-\fboxsep]{\textwidth}{1pt}}#3\parbox[b]{0.85\textwidth}{\linespread{1}\selectfont#4}}
 
 \usepackage{graphicx}
 \usepackage[svgnames, dvipsnames]{xcolor}
@@ -102,6 +99,19 @@
 \lstset{style=lstTeXstyle}
 
 \usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    linkcolor = black,
+    urlcolor = blue!90!Green,
+    pdfauthor = Benjamin Loi,
+    pdftitle = How to Reproduce this Book Exactly with LATEX,
+    pdfsubject = v1.0.0,
+    pdfkeywords = {Mathematics, LATEX}
+}
+
+\usepackage[open,openlevel=1,atend,numbered]{bookmark}
+
+\renewcommand{\footnoterule}{\rule{0.8\textwidth}{1pt}\vspace*{1ex}}
 
 \title{How to Reproduce this Book Exactly with \LaTeX}
 \subtitle{A Self-contained Tutorial on Writing Mathematical Notes}
@@ -115,17 +125,16 @@ Copyright ©, C.~L.~Loi, 2025. All rights reserved.}
 \begin{document}
 
 \frontmatter
-\maketitle
-\tableofcontents
-\mainmatter
+\include{ch0}
 
+\mainmatter
 \include{ch1_basic_structure}
 \include{ch2_text_format}
 \include{ch3_maths_writing}
 \include{ch4_list_figure}
 \include{ch5_commands_envs}
+\include{ch6_design_layout}
 
-\chapter{More on Book Layout Design}
 \chapter{Framed Theorems and Exercises}
 \chapter{Plotting with Tikz}
 \chapter{Miscellaneous}

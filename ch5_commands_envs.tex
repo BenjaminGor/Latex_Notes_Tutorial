@@ -152,7 +152,7 @@ produces
 \foreach \x [remember=\x as \lastx (initially A)] in {B,...,H}{\lastx$\to$\x, }in the expected order.
 
 \paragraph{breakforeach}
-An important component of any for loop is the ability to break it given some certain condition. This is done by the \texttt{\textbackslash breakforeach} command. This will be used in combination with an \texttt{\textbackslash ifthenelse} statement. For example, the code snippet
+An important component of any for loop is the ability to \textit{break} it given some certain condition. This is done by the \texttt{\textbackslash breakforeach} command. This will be used in combination with an \texttt{\textbackslash ifthenelse} statement. For example, the code snippet
 \begin{lstlisting}
 \foreach \x in {1,...,100} {%
 \ifthenelse{\NOT \(\x = 13\)}{\x, }{13 is an unlucky number! Stop! \breakforeach}
@@ -185,13 +185,13 @@ By manipulating all the tools introduced in this chapter, efficiently imitate th
 \newenvironment*{mylargeblueeqn}{\color{Blue}\LARGE\begin{equation}}{\end{equation}}   
 \end{lstlisting}
 \newenvironment*{mylargeblueeqn}{\color{Blue}\LARGE\begin{equation}}{\end{equation}}   
-Then writing
+\footnote{Note that replacing \texttt{equation} with \texttt{align} instead will throw an error, read \href{https://tex.stackexchange.com/questions/236664/newenvironment-error-with-beginalign-and-endalign}{\TeX{} StackExchange 236664}.} Then writing
 \begin{lstlisting}
 \begin{mylargeblueeqn}
 1+1 = 2
 \end{mylargeblueeqn}    
 \end{lstlisting}
-displays the expected blue, magnified equation:\footnote{Note that replacing \texttt{equation} with \texttt{align} instead will cause an error, read \href{https://tex.stackexchange.com/questions/236664/newenvironment-error-with-beginalign-and-endalign}{\TeX{} StackExchange 236664}.}
+displays the expected blue, magnified equation:
 \begin{mylargeblueeqn}
 1+1 = 2
 \end{mylargeblueeqn}
