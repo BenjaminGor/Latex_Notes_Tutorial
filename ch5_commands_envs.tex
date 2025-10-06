@@ -164,10 +164,14 @@ outputs
 }
 
 \begin{exercisebox}
+
 \begin{Exercise}
 Define a command that converts Celsius temperature to Fahrenheit and prints a warning if the Fahrenheit temperature is higher than 100 degrees.
 \end{Exercise}
+\setboolean{firstanswerofthechapter}{true}
 \begin{Exercise}
+\phantomsection
+\label{exer:modulo}
 By manipulating all the tools introduced in this chapter, efficiently imitate the following outputs. The \texttt{int} and \texttt{Mod} operators for \texttt{pgfmath} will be useful.
 \foreach \x in {1,...,20} {%
 \pgfmathsetmacro{\diva}{int(Mod(\x, 3))}%
@@ -176,6 +180,17 @@ By manipulating all the tools introduced in this chapter, efficiently imitate th
 \ifthenelse{\diva = 0}{\x{} is divisible by 3.}{\x{} is not divisible by 3.}
 \ifthenelse{\divb = 0}{\x{} is divisible by 5.}{\x{} is not divisible by 5.}}}
 \end{Exercise}
+\begin{Answer}[ref=exer:modulo]
+\begin{lstlisting}
+\foreach \x in {1,...,20} {%
+\pgfmathsetmacro{\diva}{int(Mod(\x, 3))}%
+\pgfmathsetmacro{\divb}{int(Mod(\x, 5))}%
+\\ \ifthenelse{\(\diva = 0\) \AND \(\divb = 0\)}{\x{} is divisible by both 3 and 5.}{
+\ifthenelse{\diva = 0}{\x{} is divisible by 3.}{\x{} is not divisible by 3.}
+\ifthenelse{\divb = 0}{\x{} is divisible by 5.}{\x{} is not divisible by 5.}}}
+\end{lstlisting}
+\end{Answer}
+\setboolean{firstanswerofthechapter}{false}
 \end{exercisebox}
 
 \section{Self-defined Environments}
