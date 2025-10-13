@@ -177,6 +177,13 @@
     {\theExercise)}
 }
 
+\newboolean{firstanswerofthechapter}  
+\renewcommand{\AnswerHeader}{\ifthenelse{\boolean{firstanswerofthechapter}}
+    {\textbf{Answers for Chapter \thechapter}\par\vspace{1ex}%
+     \theExercise)}
+    {\theExercise)}
+}
+
 \title{How to Reproduce this Book Exactly with \LaTeX}
 \subtitle{A Self-contained Tutorial on Writing Mathematical Notes}
 \author{C.~L.~Loi}
