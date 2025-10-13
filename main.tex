@@ -82,6 +82,61 @@
   breakable,
   before skip=\topsep,
   after skip=\topsep, #1}
+\newtcolorbox{mybox}[1][]{
+  colback=Green!20, 
+  colframe=Gray,
+  coltitle=Yellow,
+  title=This is my box,
+  boxrule=1pt,
+  leftrule=1ex,
+  boxsep=1ex,
+  left=1ex,
+  right=1ex,
+  sharp corners,
+  breakable,
+  before skip=\topsep,
+  after skip=\topsep, #1}
+
+\newtcbtheorem[number within=chapter]{thm}{Theorem}{
+  colback=Green!20,
+  colframe=Green!50,
+  fonttitle=\bfseries,
+  boxrule=1pt,
+  boxsep=1ex,
+  left=1ex,
+  right=1ex,
+  pad after break=1.5ex,
+  sharp corners,
+  breakable,
+  before skip=\topsep,
+  after skip=\topsep}{thm}
+\tcbset{common/.style={
+  colback=Green!20,
+  colframe=Green!50,
+  fonttitle=\bfseries,
+  coltitle=black,
+  theorem style=plain,
+  boxrule=1pt,
+  boxsep=1ex,
+  left=1ex,
+  right=1ex,
+  pad after break=1.5ex,
+  sharp corners,
+  breakable,
+  before skip=\topsep,
+  after skip=\topsep}
+}
+\newtcbtheorem[use counter from=thm]{defn}{Definition}{common}{defn}
+\tcbuselibrary{theorems}
+
+\tcolorboxenvironment{proof}{
+  blank,
+  breakable,
+  borderline west={0.5ex}{2pt}{black},
+  left=2ex,
+  before skip=\topsep,
+  after skip=\topsep}
+\newenvironment*{solution}{\begin{proof}[Solution]}{\end{proof}}
  
 \usepackage{listings}
 \lstdefinestyle{lstTeXstyle}{
@@ -111,13 +166,24 @@
 
 \usepackage[open,openlevel=1,atend,numbered]{bookmark}
 
-\renewcommand{\footnoterule}{\rule{0.8\textwidth}{1pt}\vspace*{1ex}}
+\usepackage{pgfplots}
+
+\setfootnoterule{0.8\textwidth}
+
+\newboolean{firstanswerofthechapter}  
+\renewcommand{\AnswerHeader}{\ifthenelse{\boolean{firstanswerofthechapter}}
+    {\textbf{Answers for Chapter \thechapter}\par\vspace{1ex}%
+     \theExercise)}
+    {\theExercise)}
+}
 
 \title{How to Reproduce this Book Exactly with \LaTeX}
 \subtitle{A Self-contained Tutorial on Writing Mathematical Notes}
 \author{C.~L.~Loi}
 \lowertitleback{"How to Reproduce this Book Exactly with \LaTeX"\\
 Copyright ©, C.~L.~Loi, 2025. All rights reserved.}
+
+\usetikzlibrary{calc, angles, quotes, intersections, decorations.pathmorphing, decorations.shapes, arrows.meta, decorations.markings, patterns}
 
 %\setcounter{tocdepth}{}
 \allowdisplaybreaks
@@ -134,9 +200,16 @@ Copyright ©, C.~L.~Loi, 2025. All rights reserved.}
 \include{ch4_list_figure}
 \include{ch5_commands_envs}
 \include{ch6_design_layout}
+\include{ch7_thm_ex}
+\include{ch8_tikz_plot}
 
-\chapter{Framed Theorems and Exercises}
-\chapter{Plotting with Tikz}
 \chapter{Miscellaneous}
+
+\backmatter
+\cleardoubleoddpage
+\chapter*{Answers to Exercises}
+\addcontentsline{toc}{chapter}{Answers to Exercises}
+\ohead{Answer to Exercises}
+\shipoutAnswer
 
 \end{document}

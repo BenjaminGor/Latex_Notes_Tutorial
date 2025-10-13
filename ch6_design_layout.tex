@@ -167,6 +167,8 @@ Design your own title page.
 
 \section{Footnotes and Markings}
 
+(Line numbers?)
+
 \subsection{Footnotes}
 
 \paragraph{Footnotes}
@@ -188,10 +190,7 @@ If there are more than one \texttt{\textbackslash footnotemark} before a \texttt
 \footnotetext{Try removing the patch above, and the numbering will clash.}
 
 \paragraph{Separating Line for Footnotes} 
-To customize the appearance of the separating line above the footnotes, we can call \texttt{\textbackslash renewcommand*\{\textbackslash footnoterule\}\allowbreak\{<code>\}}. For example, this book uses
-\begin{lstlisting}
-\renewcommand{\footnoterule}{\rule{0.8\textwidth}{1pt}\vspace*{1ex}}
-\end{lstlisting}
+To customize the appearance of the separating line above the footnotes, we can call \texttt{\textbackslash renewcommand*\{\textbackslash footnoterule\}\allowbreak\{<code>\}}. However, a short-cut is to do \texttt{\textbackslash setfootnoterule<length>}, where it is set to $0.8$ times \texttt{\textbackslash textwidth} in this book.
 
 \paragraph{Referencing Footnote}
 A footnote can be labeled and referenced as well. Just put \texttt{\textbackslash label\{<label\_name>\}} inside the footnote and use \texttt{\textbackslash ref} as for other elements.
