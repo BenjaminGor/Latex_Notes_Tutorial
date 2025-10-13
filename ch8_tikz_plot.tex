@@ -1,0 +1,900 @@
+\chapter{Plotting with Tikz (Part I)}
+
+\paragraph{Introduction} This chapter introduces the usage of the \textbf{TikZ} engine to draw various mathematical plots and diagrams in \LaTeX{}.
+
+\section{Basic Drawing Syntax}
+
+\subsection{Coordinates and Nodes} 
+
+\paragraph{Cartesian Coordinates}
+To create a \textbf{TikZ} plot, we first have to import the \texttt{pgfplots} package and initialize a \texttt{tikzpicture} environment. We will start by specifying \textit{coordinates} and labeling that point on the plot as a \textit{node}. A simple example is given in Figure \ref{fig:coordnodes} below, and the corresponding code is
+\begin{lstlisting}
+\begin{tikzpicture}
+\draw[help lines] (0,0) grid (4,3);
+\coordinate (A) at (2,1);
+\coordinate (B) at (3,3);
+\node at (A) {\Large $(2,1)$};
+\node at (B) {\footnotesize Another point}; % equivalently, directly use \node at (3,3) {\footnotesize Another point};
+\end{tikzpicture}    
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \draw[help lines] (0,0) grid (4,3);
+    \coordinate (A) at (2,1);
+    \coordinate (B) at (3,3);
+    \node at (A) {\Large $(2,1)$};
+    \node at (B) {\footnotesize Another point};
+    \end{tikzpicture}
+    \caption{Simple Cartesian coordinates as nodes in TikZ.}
+    \label{fig:coordnodes}
+\end{figure}
+The \texttt{\textbackslash draw[help lines]} sketches helper grids for refining the positioning. The \texttt{\textbackslash coordinate (<name>) at (<coordinates>)} syntax marks the coordinates of a point internally for later use. Here we use the simplest Cartesian $xy$-coordinates. The \texttt{\textbackslash node at (<coordinates>) \{<text>\}} then puts a node, possibly with some text, at the corresponding position.
+
+\paragraph{Polar Coordinates}
+Another common type of coordinates is the polar coordinates, whose expression is
+\texttt{(angle:radius)} where \texttt{angle} is relative to the positive $x$-axis. This is illustrated in the following Figure \ref{fig:coordpolar}:
+\begin{lstlisting}
+\begin{tikzpicture}
+\draw[help lines] (0,0) grid (4,3);
+\coordinate (O) at (0,0);
+\coordinate[label=above:$A$] (A) at (30:4);
+\node at (O) [below left] {$O$}; % below left can be replaced by anchor=north east
+\node at (A) [circle,fill,inner sep=2pt] {};
+\end{tikzpicture}
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \draw[help lines] (0,0) grid (4,3);
+    \coordinate (O) at (0,0);
+    \coordinate[label=above:$A$] (A) at (30:4);
+    \node at (O) [below left] {$O$};
+    \node at (A) [circle,fill,inner sep=2pt] {};
+    \end{tikzpicture}
+    \caption{Defining a point in TikZ using polar form instead.}
+    \label{fig:coordpolar}
+\end{figure}
+Point $A$ is then positioned at $(4\cos{30^\circ},4\sin{30^\circ}) = (2\sqrt{3},2)$.
+
+There are also some other new things. We can place the node text $O$ below and to the left of the origin coordinates by adding \texttt{[below left]} (as you may have guessed, there are also \texttt{right}, \texttt{above}, and their combinations) before it. However, notice that it will also displace the node. Another labeling method is to provide the \texttt{[label=<position>:<text>]} option when calling \texttt{\textbackslash coordinate}, which has been applied to point $A$. Then, we can make a dot to denote the point by using \texttt{\textbackslash node} with the set of options \texttt{[circle,fill,inner sep=2pt]} so it fills a small circle with size $2$ pt.
+
+\subsection{Drawing Paths}
+
+\paragraph{Straight Lines}
+Given some coordinates, a natural next step is to connect them with curves. We will deal with the simplest case of straight lines first. The basic \textit{path} syntax is \verb|(coordinates) -- (coordinates)|, and can be stacked as we like. This is demonstrated in Figure \ref{fig:path1} on the next page.
+\begin{lstlisting}
+\begin{tikzpicture}
+\draw[help lines] (-3,-3) grid (3,3);
+\coordinate[label=$A$] (A) at (2,1);
+\coordinate[label=$B$] (B) at (-2,0);
+\coordinate[label=below:$C$] (C) at (1,-1);
+\draw[blue,dashed] (-1,-3) -- node[midway,sloped]{Cut} (3,3);
+\path[red,draw] (A) -- (B) -- (C) -- cycle;
+\end{tikzpicture}    
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \draw[help lines] (-3,-3) grid (3,3);
+    \coordinate[label=$A$] (A) at (2,1);
+    \coordinate[label=$B$] (B) at (-2,0);
+    \coordinate[label=below:$C$] (C) at (1,-1);
+    \draw[blue,dashed] (-1,-3) -- node[midway,sloped,above]{Cut} (3,3);
+    \path[red,draw] (A) -- (B) -- (C) -- cycle;
+    \end{tikzpicture}
+    \caption{Drawing a line and a closed path as a triangle.}
+    \label{fig:path1}
+\end{figure}
+We have two possible methods to draw a line. The first one is to just use the \texttt{\textbackslash draw} command, whereas the second one is more verbose and uses the \texttt{\textbackslash path} command combined with the \texttt{draw} option. For the triangle, the \texttt{cycle} alias tells the path to travel back to the initial point. Other takeaways are that we can supply color (\texttt{red}, \texttt{blue}) and line style (\texttt{dashed}, \texttt{dotted}) when drawing the path, and we can put a label over the line by adding the \texttt{node} syntax after the \verb|--| part with the options \texttt{midway} (or \texttt{pos=0.5}, to put it in the middle) and \texttt{sloped} (sloped with respect to the line).
+
+\paragraph{Relative Coordinates}
+Sometimes it is more convenient to specify coordinates relative to the previous one when constructing a path. This is done by adding the incremental \verb|++| after \verb|--|. Figure \ref{fig:relativecoords} below is an illustrative example.
+\begin{lstlisting}
+\begin{tikzpicture}
+\draw[help lines] (-3,-3) grid (3,3);
+\coordinate[label=below right:$O$] (O) at (0,0);
+\draw[Green, line width=1.5] (O) -- (2,1) coordinate[at end](A) --++ (-1.5,1) coordinate[at end](B) --++ (-3,-3) coordinate[at end](C) --++ (-30:2) coordinate[at end](D) -- cycle;
+\node[right] at (A) {$A$}; \node[above] at (B) {$B$}; \node[left] at (C) {$C$};\node[below] at (D) {$D$};
+\end{tikzpicture}    
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \draw[help lines] (-3,-3) grid (3,3);
+    \coordinate[label=below right:$O$] (O) at (0,0);
+    \draw[Green, line width=1.5] (O) -- (2,1) coordinate[at end](A) --++ (-1.5,1) coordinate[at end](B) --++ (-3,-3) coordinate[at end](C) --++ (-30:2) coordinate[at end](D) -- cycle;
+    \node[right] at (A) {$A$}; \node[above] at (B) {$B$}; \node[left] at (C) {$C$};\node[below] at (D) {$D$};
+    \end{tikzpicture}
+    \caption{Connecting a path with relative coordinates.}
+    \label{fig:relativecoords}
+\end{figure}
+where we have used incremental coordinates: Cartesian for the second and third segments, and polar for the fourth segment. We may append the \texttt{coordinate[at end]} constructs (can be omitted) at each step to remember their coordinates for subsequent labeling. In addition, we can supply the \texttt{line width} parameter (may be substituted by short keywords like \texttt{thin}, \texttt{thick}, etc.), which is self-explanatory.
+
+\paragraph{Fill}
+Apart from drawing lines, we may also want to fill the area bounded by them. This is done by either the \texttt{fill} (or \texttt{filldraw}) command or appending the \texttt{fill=<color>} option to the \texttt{draw} command. This is demonstrated by Figure \ref{fig:filldraw} on the next page.
+\begin{lstlisting}
+\begin{tikzpicture}
+\draw[help lines] (-4,-4) grid (4,4);
+\coordinate[label={[xshift=7]$A$}] (A) at (3,-1);
+\coordinate[label=$B$] (B) at (2,2);
+\coordinate[label={[yshift=-3]below:$C$}] (C) at (-1,-4);
+\coordinate[label={[xshift=-7]$D$}] (D) at (-3,-1);
+\coordinate[label=$E$] (E) at (-2,3);
+\draw[Orange, line width=2, fill=Gray, fill opacity=0.5] (A) \foreach \P in {B,...,E} { -- (\P)} -- cycle; % equivalent to \draw (A) -- (B) -- (C) -- (D) -- (E) -- cycle;
+\end{tikzpicture}
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \draw[help lines] (-4,-4) grid (4,4);
+    \coordinate[label={[xshift=7]$A$}] (A) at (3,-1);
+    \coordinate[label=$B$] (B) at (2,2);
+    \coordinate[label={[yshift=-3]below:$C$}] (C) at (-1,-4);
+    \coordinate[label={[xshift=-7]$D$}] (D) at (-3,-1);
+    \coordinate[label=$E$] (E) at (-2,3);
+    \draw[Orange, line width=2, fill=Gray, fill opacity=0.5] (A) \foreach \P in {B,...,E} {-- (\P)} -- cycle; % equivalent to \draw (A) -- (B) -- (C) -- (D) -- (E) -- cycle;
+    \end{tikzpicture}
+    \caption{Filling the area enclosed by a path with color.}
+    \label{fig:filldraw}
+\end{figure}
+We can specify the fill color opacity with the \texttt{fill opacity} option. Notice that we have utilized the PGF for-loop functionality to simplify chaining the path. Finally, we have added the \texttt{xshift} and \texttt{yshift} parameters to fine-tune the positioning of labels.
+
+\begin{exercisebox}
+\begin{Exercise}
+\phantomsection%
+\label{exer:star}%
+Try to draw and fill a star shape using TikZ. An example is given below as Figure \ref{fig:star}.
+\end{Exercise}
+\end{exercisebox}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \draw[line width=1.5, fill=Yellow] (-18:2) \foreach \d in {0,72,144,216} {-- (\d+18:4) -- (\d+54:2)} -- (306:4) -- cycle;
+    \node at (0,0) {\Huge ;)};
+    \end{tikzpicture}
+    \caption{The example star for Exercise \ref{exer:star}.}
+    \label{fig:star}
+\end{figure}
+
+\subsection{Shapes}
+
+\paragraph{Rectangles, Circles, Ellipses}
+Often, we have to draw some simple shapes like rectangles, circles, and ellipses. In TikZ, it is easily done by writing exactly \texttt{rectangle}, \texttt{circle}, and \texttt{ellipse} with the appropriate dimensions after them. This is illustrated in Figure \ref{fig:shape1}.
+\begin{lstlisting}
+\begin{tikzpicture}
+\draw[help lines] (-2,-3) grid (5,5);
+\coordinate[label=$O$] (O) at (0,0);
+\draw[Blue] (O) circle (1.5); % at origin with radius = 1.5
+\coordinate (A) at (3,2);
+\draw[Red] (A) ellipse (1 and 2); % with x/y-axis = 1 and 2
+\draw[Green] (1.5,-1.5) rectangle (3.5,-2.5); % two opposite vertices
+\end{tikzpicture}
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \draw[help lines] (-3,-3) grid (5,5);
+    \coordinate[label=$O$] (O) at (0,0);
+    \draw[Blue] (O) circle (1.5); % at origin with radius = 1.5
+    \coordinate (A) at (3,2);
+    \draw[Red] (A) ellipse (1 and 2); % with x/y-axis = 1 and 2
+    \draw[Green] (1.5,-1.5) rectangle (3.5,-2.5); % two opposite vertices
+    \end{tikzpicture}
+    \caption{Drawing various simple shapes in Tikz.}
+    \label{fig:shape1}
+\end{figure}
+There are also other shapes like \texttt{parabola}.
+
+\paragraph{Rotation}
+Another useful functionality is to rotate lines and shapes. We can use either \texttt{rotate=<degree>} or the more advanced \texttt{rotate around={<degree>:\allowbreak<about\_coordinates>}} to achieve that (the former is a special case of the latter with the reference coordinates determined implicitly, usually the origin). Their difference is demonstrated in Figure \ref{fig:rotate}.
+\begin{lstlisting}
+\begin{tikzpicture}
+\draw[help lines] (-3,-3) grid (5,5);
+\coordinate[label=$O$] (O) at (0,0);
+\coordinate[label=$A$] (A) at (3,0);
+\draw[Gray] (A) ellipse (2 and 1);
+\draw[Red, dashed, rotate=45] (A) ellipse (2 and 1);
+\draw[Blue, dashed, rotate around={60:(O)}] ([rotate around={60:(O)}]A) ellipse (2 and 1); % an extra rotate around is needed in front of A
+\draw[Blue, dashed, rotate=60] (1,0) -- (5,0);
+\draw[Red, dashed, rotate around={45:(A)}] (1,0) -- (5,0);
+\end{tikzpicture}    
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \draw[help lines] (-3,-3) grid (5,5);
+    \coordinate[label=$O$] (O) at (0,0);
+    \coordinate[label=$A$] (A) at (3,0);
+    \draw[Gray] (A) ellipse (2 and 1);
+    \draw[Red, dashed, rotate=45] (A) ellipse (2 and 1);
+    \draw[Blue, dashed, rotate around={60:(O)}] ([rotate around={60:(O)}]A) ellipse (2 and 1); % an extra rotate around is needed in front of A
+    \draw[Blue, dashed, rotate=60] (1,0) -- (5,0);
+    \draw[Red, dashed, rotate around={45:(A)}] (1,0) -- (5,0);
+    \end{tikzpicture}
+    \caption{Two different kinds of coordinate rotation in Tikz.}
+    \label{fig:rotate}
+\end{figure}
+
+\paragraph{Clipping}
+Sometimes we may want to fill a limited area within a shape clipped by some other shape. This can be done by the \texttt{clip} construct. Here we draw a Venn diagram as an illustrative example in Figure \ref{fig:clipping}.
+\begin{lstlisting}
+\begin{tikzpicture}
+\draw[Red] (0,0) circle (2) node{A};
+\begin{scope}
+\clip (0,0) circle (2);
+\fill[Green!25] (2.5,0) circle (2);
+\end{scope}
+\draw[Blue] (2.5,0) circle (2) node{B};
+\end{tikzpicture}
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \draw[Red] (0,0) circle (2) node{A};
+    \begin{scope}
+    \clip (0,0) circle (2);
+    \fill[Green!25] (2.5,0) circle (2);
+    \end{scope}
+    \draw[Blue] (2.5,0) circle (2) node{B};
+    \end{tikzpicture}
+    \caption{A Venn diagram created by clipping.}
+    \label{fig:clipping}
+\end{figure}
+Be aware that clipping is cumulative, and we will have to limit its effect within a local \texttt{scope} so that the blue circle to the right can be drawn without being clipped wrongly.
+
+\paragraph{Perpendicular Lines}
+A convenient feature in TikZ is to draw a line perpendicular to another line without the need to do the manual calculation by loading the extra TikZ library \texttt{calc} with
+\begin{lstlisting}
+\usetikzlibrary{calc}    
+\end{lstlisting}
+The intersection point for that perpendicular line will then be automatically computed by it along the lines of \texttt{\$(A)!(B)!(C)\$}. This is showcased in Figure \ref{fig:perp} above.
+\begin{lstlisting}
+\begin{tikzpicture}
+\coordinate[label={below:$O$}] (O) at (0,0); 
+\node at (O) [circle,fill,inner sep=1pt] {};
+\coordinate[label=$A$] (A) at (-1,2);
+\coordinate[label=$B$] (B) at (4,1);
+\coordinate[label=$C$] (C) at ($(A)!(O)!(B)$);
+\draw (A) -- (B);
+\draw[dashed] (O) -- (C);
+\draw let \p1 = ($(C)-(O)$) in (O) circle ({veclen(\x1,\y1)});
+\end{tikzpicture}
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \coordinate[label={below:$O$}] (O) at (0,0); 
+    \node at (O) [circle,fill,inner sep=1pt] {};
+    \coordinate[label=$A$] (A) at (-1,2);
+    \coordinate[label=$B$] (B) at (4,1);
+    \coordinate[label=$C$] (C) at ($(A)!(O)!(B)$);
+    \draw (A) -- (B);
+    \draw[dashed] (O) -- (C);
+    \draw let \p1 = ($(C)-(O)$) in (O) circle ({veclen(\x1,\y1)});
+    \end{tikzpicture}
+    \caption{Demonstration of drawing perpendicular lines, in addition to calculating the distance between two coordinates.}
+    \label{fig:perp}
+\end{figure}
+Alternatively, the special case of vertical/horizontal perpendicular lines can be done by the \texttt{|-} and \texttt{-|} syntax. We further use the \texttt{calc} library with its \texttt{let \ldots in} syntax (using \texttt{\textbackslash p1} to denote the displacement vector resulting from the \texttt{\$\$} calculation and \texttt{\textbackslash x1,\textbackslash y1} for its $x$/$y$-component), and the \texttt{veclen} function to compute the length of it, a.k.a.\ the radius of the circle tangent to the line.
+
+\paragraph{Angles}
+For geometry purposes, we often need to label angles, like in a triangle or polygon. The \texttt{angles} TikZ library is exactly made for this. Similar to above, we import it via writing
+\begin{lstlisting}
+\usetikzlibrary{angles, quotes}    
+\end{lstlisting}
+and then we can draw angles as some \texttt{pic} (refer to ?? later) with the construct in the form of \verb|{angle = A--B--C}|, demonstrated in the following code for Figure \ref{fig:righttrig} below:
+\begin{lstlisting}
+\begin{tikzpicture}
+\coordinate[label={left:$A$}] (A) at (-1,0);
+\coordinate[label={below right:$B$}] (B) at (3,0);
+\coordinate[label=$C$] (C) at (3,3);
+\draw (A) -- (B) -- (C) -- cycle;
+\pic [draw,angle radius=10] {right angle = A--B--C};
+\pic [draw,"$\theta$",angle radius=15,angle eccentricity=1.5] {angle = B--A--C};
+\end{tikzpicture}
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \coordinate[label={left:$A$}] (A) at (-1,0);
+    \coordinate[label={below right:$B$}] (B) at (3,0);
+    \coordinate[label=$C$] (C) at (3,3);
+    \draw (A) -- (B) -- (C) -- cycle;
+    \pic [draw,angle radius=10] {right angle = A--B--C};
+    \pic [draw,"$\theta$",angle radius=15,angle eccentricity=1.5] {angle = B--A--C};
+    \end{tikzpicture}
+    \caption{Drawing a right-angled triangle with the angles labeled.}
+    \label{fig:righttrig}
+\end{figure}
+The \texttt{angle radius} option controls the extent of the angle marking, and \texttt{angle eccentricity} determines the distance of the angle and its label ($\theta$ in this example). 
+
+\paragraph{Arcs}
+While drawing circles is not a rare task, sometimes we will need to draw just an arc. It is not hard to do so in TikZ with the \texttt{arc} shape, the syntax of which is
+\begin{lstlisting}
+\draw (x,y) arc (start_angle:stop_angle:radius);
+\end{lstlisting}
+The arc will start from point \texttt{(x,y)} as a part of the arc with an initial angle, stopping angle, and radius as indicated by the inputs. An example is shown in Figure \ref{fig:arcs} above.
+\begin{lstlisting}
+\begin{tikzpicture}
+\coordinate[label={left:$O$}] (O) at (0,0);
+\coordinate[label={right:$A$}] (A) at (4,0);
+\draw (O) -- (A) arc (0:30:4) --++ (-150:1.5) arc (30:210:0.5) coordinate[at end] (B) -- cycle;
+\draw[dashed] (B) --++ (30:1);
+\pic[draw,"$30^\circ$",angle radius=20,angle eccentricity=1.75] {angle = A--O--B};
+\end{tikzpicture}
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \coordinate[label={left:$O$}] (O) at (0,0);
+    \coordinate[label={right:$A$}] (A) at (4,0);
+    \draw (O) -- (A) arc (0:30:4) --++ (-150:1.5) arc (30:210:0.5) coordinate[at end] (B) -- cycle;
+    \draw[dashed] (B) --++ (30:1);
+    \pic[draw,"$30^\circ$",angle radius=20,angle eccentricity=1.75] {angle = A--O--B};
+    \end{tikzpicture}
+    \caption{Drawing multiple arcs in one diagram involving relative coordinates.}
+    \label{fig:arcs}
+\end{figure}
+
+\section{Advanced Controls on Paths}
+
+\subsection{Curves}
+
+\paragraph{Bézier Control Curves}
+Up until now, we have been drawing only straight lines or segments. A reasonable expectation is to go one step further and construct curved paths. In TikZ, it is implemented as \textit{Bézier control curves} that take one or two control points, with either one of the following syntaxes:
+\begin{lstlisting}
+\draw <starting_coords> .. controls <control_coords> .. <end_coords>;
+\draw <starting_coords> .. controls <control_coords_1> and <control_coords_2> .. <end_coords>;
+\end{lstlisting}
+A schematic diagram is given as Figure \ref{fig:curves1} above, and the code to produce that example is
+\begin{lstlisting}
+\begin{tikzpicture}
+\coordinate[label={below:$A$}] (A) at (-1,0);
+\coordinate[label=$B$] (B) at (3,1);
+\coordinate[label={[Gray]$C_1$}] (C1) at (0,2);
+\coordinate[label={[Gray]left:$C_2$}] (C2) at (2,0);
+\draw (A) .. controls (C1) and (C2) .. (B);
+\draw[dashed, Gray] (A) -- (C1);
+\draw[dashed, Gray] (B) -- (C2);
+\end{tikzpicture}    
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \coordinate[label={below:$A$}] (A) at (-1,0);
+    \coordinate[label=$B$] (B) at (3,1);
+    \coordinate[label={[Gray]$C_1$}] (C1) at (0,2);
+    \coordinate[label={[Gray]left:$C_2$}] (C2) at (2,0);
+    \draw (A) .. controls (C1) and (C2) .. (B);
+    \draw[dashed, Gray] (A) -- (C1);
+    \draw[dashed, Gray] (B) -- (C2);
+    \end{tikzpicture}
+    \caption{The anatomy of a Bézier control curve.}
+    \label{fig:curves1}
+\end{figure}
+
+\paragraph{in and out}
+An alternative way to draw a curve is to use the \texttt{to} operation plus the \texttt{in=<degree>, out=<degree>} construct. It is not difficult to guess that the \texttt{in} and \texttt{out} options represent the direction of the incoming/outgoing ray as degrees of angles (relative to the $x$-axis). This is demonstrated in Figure \ref{fig:curves2} above.
+\begin{lstlisting}
+\begin{tikzpicture}
+\coordinate[label={below:$A$}] (A) at (-1,-1);
+\coordinate[label={below right:$B$}] (B) at (2,1);
+\coordinate[label=$C$] (C) at (3,-2);
+\draw (A) to[in=165, out=120] (B) to [in=225, out=-90] (C);
+\draw[dashed, Gray] (A) --++ (120:2) coordinate[at end] (Aa);
+\draw[dashed, Gray] (A) --++ (0:2) coordinate[at end] (X1);
+\pic[draw,"$120^\circ$",Gray,angle radius=15,angle eccentricity=1.75] {angle = X1--A--Aa};
+\draw[dashed, Gray] (B) --++ (165:2) coordinate[at end] (Ba);
+\draw[dashed, Gray] (B) --++ (0:2) coordinate[at end] (X2);
+\pic[draw,"$165^\circ$",Gray,angle radius=15,angle eccentricity=1.75] {angle = X2--B--Ba};
+\end{tikzpicture}    
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \coordinate[label={below:$A$}] (A) at (-1,-1);
+    \coordinate[label={below right:$B$}] (B) at (2,1);
+    \coordinate[label=$C$] (C) at (3,-2);
+    \draw (A) to[in=165, out=120] (B) to [in=225, out=-90] (C);
+    \draw[dashed, Gray] (A) --++ (120:2) coordinate[at end] (Aa);
+    \draw[dashed, Gray] (A) --++ (0:2) coordinate[at end] (X1);
+    \pic[draw,"$120^\circ$",Gray,angle radius=15,angle eccentricity=1.75] {angle = X1--A--Aa};
+    \draw[dashed, Gray] (B) --++ (165:2) coordinate[at end] (Ba);
+    \draw[dashed, Gray] (B) --++ (0:2) coordinate[at end] (X2);
+    \pic[draw,"$165^\circ$",Gray,angle radius=15,angle eccentricity=1.75] {angle = X2--B--Ba};
+    \end{tikzpicture}
+    \caption{Another way to draw control curves specified by angles.}
+    \label{fig:curves2}
+\end{figure}
+
+\paragraph{Intersection}
+It is handy if we can mark the intersection point(s) of two different curves. This can be delegated to the TikZ library \texttt{intersections}. To use it, we need to give a name to those curves with the \texttt{name path} option, and then we can invoke the \texttt{name intersections} option that refers to the intersection points as \texttt{(intersection-<number>)}. For instance, Figure \ref{fig:intersect} can be produced by
+\begin{lstlisting}
+\begin{tikzpicture}
+\draw[name path=myellipse, rotate=30] (0,0) ellipse (2 and 1);
+\draw[name path=mycurve] (-2,1) to[in=120, out=-45] (2,0) to[in=-90, out=-60] (0.5,-0.5);
+\fill[Red, name intersections={of=myellipse and mycurve}]
+    (intersection-1) circle (2pt) node[above]{1}
+    (intersection-2) circle (2pt) node[right]{2}
+    (intersection-3) circle (2pt) node[below]{3};
+\end{tikzpicture}    
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \draw[name path=myellipse, rotate=30] (0,0) ellipse (2 and 1);
+    \draw[name path=mycurve] (-2,1) to[in=120, out=-45] (2,0) to[in=-90, out=-60] (0.5,-0.5);
+    \fill[Red, name intersections={of=myellipse and mycurve}]
+    (intersection-1) circle (2pt) node[above]{1}
+    (intersection-2) circle (2pt) node[right]{2}
+    (intersection-3) circle (2pt) node[below]{3};
+    \end{tikzpicture}
+    \caption{Labeling intersection points between an ellipse and an arbitrary curve.}
+    \label{fig:intersect}
+\end{figure}
+
+\begin{exercisebox}
+\begin{Exercise}
+\phantomsection%
+\label{exer:arcgeo}%
+Try to reproduce the (essence of) geometry in Figure \ref{fig:arcgeo}. The \verb|shorten >=<length>| (the space is needed!) option may be useful.
+\end{Exercise}
+\end{exercisebox}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \coordinate[label={left:$O$}] (O) at (0,0);
+    \node[circle,fill,inner sep=1pt] at (O) {};
+    \draw[rotate=25, name path=arc] (4,0) arc (0:50:4);
+    \draw[rotate=50, dashed, name path=line] (3.8,2) -- (3.8,-2);
+    \path[name intersections={of=arc and line}] coordinate[label={above:$A$}] (A) at (intersection-1) coordinate[label={right:$B$}] (B) at (intersection-2);
+    \node[circle,fill,inner sep=1pt] at (A) {};
+    \node[circle,fill,inner sep=1pt] at (B) {};
+    \coordinate[label={[Red]below:$C$}] (C) at ($(A)!(O)!(B)$);
+    \draw[shorten >=-1cm] (O) -- (C);
+    \draw[dashed] (A) -- (O) -- (B);
+    \node[Red,circle,fill,inner sep=1pt] at (C) {};
+    \pic [draw,"$\phi$",angle radius=20,angle eccentricity=1.75] {angle = C--O--A};
+    \pic [draw,"$\phi$",angle radius=20,angle eccentricity=1.75] {angle = B--O--C};
+    \pic [draw,angle radius=8] {right angle = A--C--O};
+    \end{tikzpicture}
+    \caption{The "Bow" diagram for Exercise \ref{exer:arcgeo}.}
+    \label{fig:arcgeo}
+\end{figure}
+
+\subsection{Decorations}
+
+\paragraph{Decorations/Morphing}
+An interesting effect that can be applied to curves is decorations (or morphing, generating variations along them. This is done by loading the TikZ library \texttt{decorations.pathmorphing}. The simplest usage is via \texttt{decorate, decoration=<shape>} that applies the morphing to the entire path, illustrated by Figure \ref{fig:deco1} on the next page.
+\begin{lstlisting}
+\begin{tikzpicture}
+\coordinate (O) at (0,0);
+\draw[Blue,line width=1.5] (O) circle (2.5);
+\draw[Red,decorate,decoration={zigzag,segment length=2ex,amplitude=0.5em}] (O) circle (2.5);
+\end{tikzpicture}
+\end{lstlisting}
+Notice that we have also passed some other options to adjust the shape of the zigzagging line.
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \coordinate (O) at (0,0);
+    \draw[Blue,line width=1.5] (O) circle (2.5);
+    \draw[Red,decorate,decoration={zigzag,segment length=2ex,amplitude=0.5em}] (O) circle (2.5);
+    \end{tikzpicture}
+    \caption{A circle decorated by the zigzag effect.}
+    \label{fig:deco1}
+\end{figure}
+
+\paragraph{Decorating Subpaths}
+The previous syntax will decorate the entire path. If we want to apply the effect only on some parts of it, then we can put the \texttt{decorate} statement to enclose each of them correspondingly. Figure \ref{fig:deco2} is shown above as an example.
+\begin{lstlisting}
+\begin{tikzpicture}
+\draw decorate[decoration=saw] {(0,0) -- (2,1)} -- (4,-1) decorate[decoration={coil,aspect=1.5}] {-- (6,0)};
+\end{tikzpicture}    
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \draw decorate[decoration=saw] {(0,0) -- (2,1)} -- (4,-1) decorate[decoration={coil,aspect=1.5}] {-- (6,0)};
+    \end{tikzpicture}
+    \caption{Different decorations on individual segments.}
+    \label{fig:deco2}
+\end{figure}
+
+\paragraph{Positioning and Extent of Decorations}
+Furthermore, we can fine-tune the positioning, as well as the starting/ending points of a decoration. This is achieved by supplying the \texttt{raise} (displacement across the path), \texttt{pre length} (starts after), and \texttt{post length} (ends before) options, demonstrated by Figure \ref{fig:deco3}.
+\begin{lstlisting}
+\begin{tikzpicture}
+\draw[decoration={pre length=9mm,post length=12mm,raise=-3mm,crosses}] decorate{(0,0) -- (5,1)}; % requires the extra library decorations.shapes too for the cross symbols
+\end{tikzpicture}    
+\end{lstlisting}
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\draw[decoration={pre length=9mm,post length=12mm,raise=-3mm,crosses}] decorate{(0,0) -- (5,1)};
+\end{tikzpicture}
+\caption{Fine-tuning a decoration of crosses.}
+\label{fig:deco3}
+\end{figure}
+There are many more possible choices for decorations; Unfortunately, we don't have the scope to include all of them.
+
+\subsection{Arrows}
+
+\paragraph{Arrow Tips}
+To draw arrows, we need to load the \texttt{arrows.meta} TikZ library. Then we can specify the type of arrow tip during a \texttt{\textbackslash draw} command. The syntax is easier to understand by directly looking at the examples in Figure \ref{fig:arrow1}.
+\begin{lstlisting}
+\begin{tikzpicture}
+\draw[->] (0,0) --++ (3,0);
+\draw[Blue, >-{>[length=3ex, width=2ex]}] (0,-1) --++ (3,0);
+\draw[Red, -{Stealth[scale=3, angle'=90]}] (0,-2) --++ (3,0);
+\draw[Green, {Latex}-{Latex[]Latex[reversed]}] (0,-3) to[out=-15,in=-165]++ (3,0);
+\end{tikzpicture}
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \draw[->] (0,0) --++ (3,0);
+    \draw[Blue, >-{>[length=3ex, width=2ex]}] (0,-1) --++ (3,0);
+    \draw[Red, -{Stealth[scale=3, angle'=90]}] (0,-2) --++ (3,0);
+    \draw[Green, {Latex}-{Latex[]Latex[reversed]}] (0,-3) to[out=-15,in=-165]++ (3,0);
+    \end{tikzpicture}
+    \caption{Different types of arrow tips and related options.}
+    \label{fig:arrow1}
+\end{figure}
+The two most frequently used named arrow tips are \texttt{Stealth} and \texttt{Latex}. Aside from \texttt{length}, \texttt{width}, \texttt{scale}, and \texttt{angle'} (remember the \texttt{'}!), there are many more keys like \texttt{inset}, \texttt{slant}, \texttt{left}, and \texttt{right}, etc.
+
+It is also possible to set the global arrow style using \texttt{\textbackslash tikzset}, like \texttt{\textbackslash tikzset\{\allowbreak>=\{Stealth\}\}}, which changes the type for all arrow tips to \texttt{Stealth}. Or, we can do it for an individual path by moving \texttt{>=\{<arrow\_type>\}} inside the corresponding \texttt{\textbackslash draw} option.
+
+\paragraph{Arrow in the Middle}
+More often than not, we would like to put the arrow in the middle of a line. We can utilize the \texttt{decorations.markings} TikZ library for that. An example is given by Figure \ref{fig:arrow2} above.
+\begin{lstlisting}
+\begin{tikzpicture}
+\draw[postaction={decorate}, decoration={markings,
+      mark=at position 0.35 with {\arrow{Latex[Red,scale=2]}},
+      mark=at position 0.5 with {\arrow{Stealth[Blue,scale=2.5]}},
+      mark=at position 0.8 with {\arrow{Latex[Green,scale=3]}}}] 
+      (0,1) .. controls (1,-3) and (3,1) .. (5,-2);
+\end{tikzpicture}    
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \draw[postaction={decorate}, decoration={markings,
+    mark=at position 0.35 with {\arrow{Latex[Red,scale=2]}},
+    mark=at position 0.5 with {\arrow{Stealth[Blue,scale=2.5]}},
+    mark=at position 0.8 with {\arrow{Latex[Green,scale=3]}},
+    }] (0,1) .. controls (1,-3) and (3,1) .. (5,-2);
+    \end{tikzpicture}
+    \caption{Marking multiple arrow tips along a curve.}
+    \label{fig:arrow2}
+\end{figure}
+We need to first supply the \texttt{markings} keyword to the decoration option, then we can add the arrow \texttt{mark}s as \texttt{\textbackslash arrow\{<arrow\_type>\}} at the corresponding relative positions along the curve. A new thing is that the \texttt{decorate} keyword is now placed in the \texttt{postaction} option, which indicates that the decorations are laid on the original curve that is kept.
+
+\begin{exercisebox}
+\begin{Exercise}
+\phantomsection%
+\label{exer:pendulum}%
+Draw the pendulum diagram in Figure \ref{fig:pendulum}.
+\end{Exercise}
+\begin{Exercise}
+\phantomsection%
+\label{exer:closedint}%
+Try to reproduce the closed integration path in Figure \ref{fig:closedint}.
+\end{Exercise}
+\end{exercisebox}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \coordinate (O) at (0,0);
+    \draw (O) --++ (-110:4) node (A) {};
+    \draw[Red, thick, -Stealth] (A) --++ (0,-1.5) node[below left]{$mg$}; 
+    \draw[blue, thick, -Stealth] (A) --++ (70:1.4) node[above left]{$T$};
+    \draw[fill=Green!20] (-110:4) circle (0.5) node{$m$};
+    \draw[dashed] (O) --++ (-90:4) node (B) {};
+    \draw[dashed, Gray, <->] (-120:5) arc (-120:-60:5);
+    \pic[draw,"$\theta$",angle radius=20,angle eccentricity=1.6] {angle=A--O--B};
+    \end{tikzpicture}
+    \caption{The pendulum schematic for Exercise \ref{exer:pendulum}.}
+    \label{fig:pendulum}
+\end{figure}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \coordinate[label={below left:$O$}] (O) at (0,0);
+    \draw[-Latex, thick] (O) -- (5,0) node[right]{$x$};
+    \draw[-Latex, thick] (O) -- (0,5) node[above]{$y$};
+    \coordinate[label={left:$A$}] (A) at (1,1);
+    \coordinate[label=$B$] (B) at (4,4);
+    \draw[Green, very thick, postaction={decorate}, decoration={markings,
+    mark=at position 0.25 with {\arrow{Latex}},
+    mark=at position 0.75 with {\arrow{Latex}}}] (A) .. controls (2,4) and (3,3) .. (B) .. controls (5,0) and (3,2) .. (A);
+    \end{tikzpicture}
+    \caption{The integration path for Exercise \ref{exer:closedint}.}
+    \label{fig:closedint}
+\end{figure}
+
+\section{Styles and Pics}
+
+\paragraph{Styles and Nodes}
+It is convenient if we can repeatedly apply some style to similar objects in TikZ. This can be done by providing the name and attributes of that style at the beginning of the \texttt{tikzpicture}. Figure \ref{fig:stylenode} here demonstrates the usage.
+\begin{lstlisting}
+\begin{tikzpicture}[myrectangle/.style={rectangle, minimum width=3cm, minimum height=1.5cm, draw=black, fill=Mahogany!20}]
+\node[myrectangle] (myA) at (0,0) {$A$}; % using style defined above
+\node[rectangle, minimum width=3cm, minimum height=1.5cm, draw=black, 
+fill=RoyalBlue!20] (myB) at (4,-3) {$B$}; % equivalent syntax except the fill color
+\draw (myA.east) -- (myB.north);
+\end{tikzpicture}
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[myrectangle/.style={rectangle, minimum width=3cm, minimum height=1.5cm, draw=black, fill=Mahogany!20}]
+    \node[myrectangle] (myA) at (0,0) {$A$}; % using style defined above, 
+    \node[rectangle, minimum width=3cm, minimum height=1.5cm, draw=black, 
+    fill=RoyalBlue!20] (myB) at (4,-3) {$B$}; % equivalent syntax except the fill color
+    \draw (myA.east) -- (myB.north);
+    \end{tikzpicture}
+    \caption{Two styled rectangle nodes.}
+    \label{fig:stylenode}
+\end{figure}
+Here we have created two nodes that are in the shape of a rectangle. The \texttt{minimum width} and \texttt{minimum height} keys work exactly as their name suggest and maintain the extent of the rectangles beyond the node text. We additionally draw a line between the two nodes with the anchors (at where the two ends of the line are fixed) stated (optional) as directions.
+
+\paragraph{Pics - Small Pictures}
+Similarly, it will be handy if we can insert and reuse the same piece of drawing that is needed many times. This is known as a \texttt{pic} (small picture) in TikZ, and we have been using this feature for labeling angles. To define a \texttt{pic}, we do it like it is a style by \texttt{<pic\_name>/.pic=\{<drawing\_code>\}}. Then we can append the \texttt{pic} after a path. This is illustrated by the damper defined for the mechanical system (Reference: \href{https://tex.stackexchange.com/questions/476076/drawing-mechanical-systems-mass-damper-spring-in-latex}{\TeX{} StackExchange 476076}) in the subsequent Figure \ref{fig:mechanic}.
+\begin{lstlisting}
+\begin{tikzpicture}
+    [dampic/.pic={
+    \fill[pgftransparent!0] (-0.1,-0.3) rectangle (0.3,0.3);
+    \draw (-0.3,0.3) -| (0.3,-0.3) -- (-0.3,-0.3);
+    \draw[line width=1mm] (-0.1,-0.3) -- (-0.1,0.3);},
+    spring/.style={decorate,decoration={zigzag,pre length=0.4cm,post length=0.4cm,segment length=2mm,amplitude=3mm}},
+    mass/.style={rectangle,minimum height=1.6cm, minimum width=2.4cm, draw=black, fill=brown!50},
+    ground/.style={fill,pattern=north east lines,draw=none}]
+\node[mass] (mass1) at (0,0) {$m$};
+\node[mass] (mass2) at (4,0) {$m$};
+\draw ($(mass1.east)+(0,0.5cm)$) -- ($(mass2.west)+(0,0.5cm)$) pic[midway,sloped]{dampic};
+\draw[spring] ($(mass1.east)-(0,0.5cm)$) -- ($(mass2.west)-(0,0.5cm)$);
+\node[ground,minimum width=3mm,minimum height=2.5cm] (g1) at (-3,0) {};
+\draw (g1.north east) -- (g1.south east);
+\draw ($(mass1.west)+(0,0.5cm)$) -- ($(g1.east)+(0,0.5cm)$) pic[midway,sloped]{dampic};
+\draw[spring] ($(mass1.west)-(0,0.5cm)$) -- ($(g1.east)-(0,0.5cm)$);
+\end{tikzpicture}
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[dampic/.pic={
+    \fill[pgftransparent!0] (-0.1,-0.3) rectangle (0.3,0.3);
+    \draw (-0.3,0.3) -| (0.3,-0.3) -- (-0.3,-0.3);
+    \draw[line width=1mm] (-0.1,-0.3) -- (-0.1,0.3);},
+    spring/.style={decorate,decoration={zigzag,pre length=0.4cm,post length=0.4cm,segment length=2mm,amplitude=3mm}},
+    mass/.style={rectangle,minimum height=1.6cm, minimum width=2.4cm, draw=black, fill=brown!50},
+    ground/.style={fill,pattern=north east lines,draw=none}]
+    \node[mass] (mass1) at (0,0) {$m$};
+    \node[mass] (mass2) at (4,0) {$m$};
+    \draw ($(mass1.east)+(0,0.5cm)$) -- ($(mass2.west)+(0,0.5cm)$) pic[midway,sloped]{dampic};
+    \draw[spring] ($(mass1.east)-(0,0.5cm)$) -- ($(mass2.west)-(0,0.5cm)$);
+    \node[ground,minimum width=3mm,minimum height=2.5cm] (g1) at (-3,0) {};
+    \draw (g1.north east) -- (g1.south east);
+    \draw ($(mass1.west)+(0,0.5cm)$) -- ($(g1.east)+(0,0.5cm)$) pic[midway,sloped]{dampic};
+    \draw[spring] ($(mass1.west)-(0,0.5cm)$) -- ($(g1.east)-(0,0.5cm)$);
+    \end{tikzpicture}
+    \caption{A schematic for a mechanical mass-spring-damper system.}
+    \label{fig:mechanic}
+\end{figure}
+There are some other points worth mentioning. The special \texttt{pgftransparent!0} color code is an alias equivalent to the white color, and covers the original path under it. We also need to load the \texttt{patterns} TikZ library to produce the hatching lines (\texttt{pattern=north east lines}) for the ground style. Also, we have used the \texttt{\$\$} syntax to carry out coordinate calculations in deriving the starting/ending points of the connecting lines.
+
+\paragraph{every node/path}
+An even more convenient shortcut is to assign the same style for every node/path (of the same kind) at once. This is unsurprisingly done by providing the \texttt{every node}/\texttt{every path} name, and is readily showcased in Figure \ref{fig:everynode} below.
+\begin{lstlisting}
+\begin{tikzpicture}[every node/.style={circle,black,solid,draw=black,fill=Red!20,minimum size=30pt}, 
+every rectangle node/.style={black,solid,draw=black,fill=Blue!20,minimum height=15pt, minimum width=30pt},
+every path/.style={Green,dashed}]
+\node (A) at (0,0) {$A$}; 
+\node (B) at (2,-1) {$B$};
+\node[rectangle] (C) at (-0.5,-2) {$C$};
+\node (D) at (3,-3) {$D$};
+\draw (A) -- (B) -- (C) -- (D);
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[every node/.style={circle,black,solid,draw=black,fill=Red!20,minimum size=30pt}, 
+    every rectangle node/.style={black,solid,draw=black,fill=Blue!20,minimum height=15pt, minimum width=30pt},
+    every path/.style={Green,dashed}]
+    \node (A) at (0,0) {$A$}; 
+    \node (B) at (2,-1) {$B$};
+    \node[rectangle] (C) at (-0.5,-2) {$C$};
+    \node (D) at (3,-3) {$D$};
+    \draw (A) -- (B) -- (C) -- (D);
+    \end{tikzpicture}
+    \caption{Reusing styles for every node and path.}
+    \label{fig:everynode}
+\end{figure}
+Notice that \texttt{every path} affects node texts and lines as well, and we have to override them in \texttt{every node} for it to work as intended.
+
+\paragraph{show path construction}
+We can further break down a path into the corresponding components (lines, curves, etc.) and execute certain code for each of them every time they occur. This is accomplished by the \texttt{show path construction} key for \texttt{decoration}, demonstrated by the contour integration plot in Figure \ref{fig:complexcontour} as follows.
+\begin{lstlisting}
+\begin{tikzpicture}
+\newcommand*{\gap}{0.3}
+\newcommand*{\bigradius}{3}
+\newcommand*{\littleradius}{0.7}
+
+\draw[very thick,-Latex] (-1.15*\bigradius, 0) -- (1.15*\bigradius, 0);
+\draw[very thick, decorate, decoration={zigzag, segment length=0.5cm, amplitude=0.2cm}] (0, 0) -- (1.15*\bigradius, 0);
+\draw[very thick,-Latex] (0, -1.15*\bigradius) -- (0, 1.15*\bigradius);
+\draw[red, thick, postaction=decorate, decoration={show path construction, curveto code={
+    \draw[decorate, decoration={markings, mark=at position 0.75 with {\arrow{Latex[Red,scale=1.25]}}}] 
+    (\tikzinputsegmentfirst) .. controls (\tikzinputsegmentsupporta) and (\tikzinputsegmentsupportb) .. (\tikzinputsegmentlast);},
+    lineto code={
+    \draw[decorate, decoration={markings, mark=at position 0.65 with {\arrow{Latex[Red,scale=1.25]}}}] 
+    (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast);}
+    }]  
+let
+\n1 = {asin(\gap/2/\bigradius)},
+\n2 = {asin(\gap/2/\littleradius)}
+in (\n1:\bigradius) arc (\n1:360-\n1:\bigradius) node[pos=0.4,below right]{$\Gamma$} -- (-\n2:\littleradius) arc (-\n2:-360+\n2:\littleradius) -- (\n1:\bigradius);
+\end{tikzpicture}
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \newcommand*{\gap}{0.3}
+    \newcommand*{\bigradius}{3}
+    \newcommand*{\littleradius}{0.7}
+    \draw[very thick,-Latex] (-1.15*\bigradius, 0) -- (1.15*\bigradius, 0);
+    \draw[very thick, decorate, decoration={zigzag, segment length=0.5cm, amplitude=0.2cm}] (0, 0) -- (1.15*\bigradius, 0);
+    \draw[very thick,-Latex] (0, -1.15*\bigradius) -- (0, 1.15*\bigradius);
+    \draw[red, thick, postaction=decorate, decoration={show path construction, curveto code={
+    \draw[decorate, decoration={markings, mark=at position 0.75 with {\arrow{Latex[Red,scale=1.25]}}}] 
+    (\tikzinputsegmentfirst) .. controls (\tikzinputsegmentsupporta) and (\tikzinputsegmentsupportb) .. (\tikzinputsegmentlast);},
+    lineto code={
+    \draw[decorate, decoration={markings, mark=at position 0.65 with {\arrow{Latex[Red,scale=1.25]}}}] 
+    (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast);}
+    }]  
+    let
+    \n1 = {asin(\gap/2/\bigradius)},
+    \n2 = {asin(\gap/2/\littleradius)}
+    in (\n1:\bigradius) arc (\n1:360-\n1:\bigradius) node[pos=0.4,below right]{$\Gamma$} -- (-\n2:\littleradius) arc (-\n2:-360+\n2:\littleradius) -- (\n1:\bigradius);
+    \end{tikzpicture}
+    \caption{A standard complex contour integration path with a branch cut over the positive $x$-axis.}
+    \label{fig:complexcontour}
+\end{figure}
+The code is a bit complex, and we will have it explained step by step. As their names suggest, the \texttt{curveto code}/\texttt{lineto code} part will be applied to every curve/line. The main purpose of involving \texttt{\textbackslash tikzinputsegmentfirst}, \texttt{\textbackslash tikzinputsegmentlast}, \texttt{\textbackslash tikzinputsegmentsupporta}, in addition to \texttt{\textbackslash tikzinputsegmentsupportb}, is to replicate the curve/line internally, which can be left untouched as a template. Then the \texttt{decorate} and \texttt{markings} parts are the same as previously to put an arrow mark along each replicated path segment. Finally, to draw the actual contour, we use \texttt{\textbackslash newcommand} and the \texttt{let \ldots in} syntax to store lengths as variables and compute the coordinates for the turning points (copying \href{https://tex.stackexchange.com/questions/103176/drawing-complex-integration}{\TeX{} StackExchange 103176}).
+
+\section{Plotting Functions}
+
+\paragraph{Axis Settings}
+To plot a function or graph in TikZ, we have to configure an \texttt{axis} scope first.  There are many options to customize an axis, some of which are showcased in the two examples in Figure \ref{fig:axis} above.
+\begin{lstlisting}
+\begin{tikzpicture}
+\begin{axis}[xlabel=$x$, ylabel=$y$, xmin=-1, xmax=5, ymin=-10, ymax=10, ytick={-7.5,-2.5,2.5,7.5}, minor x tick num=4, grid=major, axis lines=center, axis line style={line width=1.2pt}, width=\textwidth]
+    
+\end{axis}
+\end{tikzpicture}
+\begin{axis}[ymode=log, xlabel=$t$, ylabel=Concentration, x label style={at={(axis description cs:1.1,0.2)}}, minor ytick={10^(0.1), 10^(0.3)}, major grid style={line width=.5pt,draw=black!66}, grid=both, enlarge x limits={0.4,upper}, width=\textwidth]
+
+\end{axis}
+\end{lstlisting}
+\begin{figure}
+\centering
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[xlabel=$x$, ylabel=$y$, xmin=-1, xmax=5, ymin=-10, ymax=10, ytick={-7.5,-2.5,2.5,7.5}, minor x tick num=4, grid=major, axis lines=center, axis line style={line width=1.2pt}, width=\textwidth]
+    
+\end{axis}
+\end{tikzpicture}
+\caption{A typical axis.}
+\end{subfigure}
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[ymode=log, xlabel=$t$, ylabel=Concentration, x label style={at={(axis description cs:1.1,0.2)}}, minor ytick={10^(0.1), 10^(0.3)}, major grid style={line width=.5pt,draw=black!66}, grid=both, enlarge x limits={0.4,upper}, width=\textwidth]
+
+\end{axis}
+\end{tikzpicture}
+\caption{A semi-logarithmic axis.}
+\end{subfigure}
+\caption{Two example TikZ axes.}
+\label{fig:axis}
+\end{figure}
+Most of the options are not hard to comprehend, maybe except \texttt{axis description cs:}, which refers to the position relative to the axis frame, and \texttt{enlarge limits}, which extends the axis limits by the amount indicated. The biggest difference between the two example axes is perhaps the appearance of the axis lines, produced by the option \texttt{axis lines=center} in the first one.
+
+\paragraph{Plotting Simple Functions}
+Of course, an axis is nothing if there are no data or functions plotted on it. To add points or graphs on it, we can use the \texttt{\textbackslash addplot} command. For points, we may add a list of \texttt{coordinates} after that; while for functions, we can simply enter the expression in PGF format. We can control the \texttt{domain} of \texttt{x} and the number of points (\texttt{samples}) used in drawing. Both of these are demonstrated in Figure \ref{fig:halflife} on the next page.
+\begin{lstlisting}
+\begin{tikzpicture}
+\begin{axis}[xlabel=$T$, ylabel=$N$, title=Half-life Experiment, xmin=0, xmax=3, ymin=0, ymax=1, enlargelimits=0.1, legend pos=south west, width=0.9\textwidth, height=0.6\textwidth]
+\addplot[Red, only marks]
+coordinates {
+(0,1) (0.2,0.86) (0.6,0.67) (0.9,0.53)
+(1.4,0.37) (1.7,0.29) (2.5,0.17)};
+\addplot[Blue, domain=0:4, samples=100]{(1/2)^(x)} node[pos=0.6,above,sloped] {$N = (1/2)^T$};
+\legend{Measurements, Theoretical}
+\end{axis}   
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[xlabel=$T$, ylabel=$N$, title=Half-life Experiment, xmin=0, xmax=3, ymin=0, ymax=1, enlargelimits=0.1, legend pos=south west, width=0.9\textwidth, height=0.6\textwidth]
+    \addplot[Red, only marks]
+    coordinates {
+    (0,1) (0.2,0.86) (0.6,0.67) (0.9,0.53)
+    (1.4,0.37) (1.7,0.29) (2.5,0.17) 
+    };
+    \addplot[Blue, domain=0:4, samples=100]{(1/2)^(x)} node[pos=0.6,above,sloped] {$N = (1/2)^T$};
+    \legend{Measurements, Theoretical}
+    \end{axis}
+    \end{tikzpicture}
+\caption{The half-life process as an example plot.}
+\label{fig:halflife}
+\end{figure}
+We have also adjusted the size of the figure and made a legend.
+
+\begin{exercisebox}
+\begin{Exercise}
+\phantomsection%
+\label{exer:axisex}%
+Try to reproduce the following plot in Figure \ref{fig:axisex}. Notice that to draw with usual TikZ commands but now inside an axis, we can call the axis coordinate system with the syntax \texttt{axis cs:<coords>}.
+\end{Exercise}
+\end{exercisebox}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[xlabel=$x$, ylabel=$y$, axis lines=center, xmin=0, xmax=10, ymin=0, ymax=4, width=0.7\textwidth, height=0.4\textwidth, clip=false]
+    \addplot[Blue, domain=3:10, samples=100] {2+sin(deg(pi*(x-3)))} node[pos=0.65,above]{$y=2+\sin(\pi (x-3))$};
+    \addplot[Red, domain=0:3] {1} node[midway,above]{$y=1$};
+    \draw[Green,dashed] (axis cs:3,0) -- (axis cs:3,4) node[right]{$x=3$};
+    \draw[Green, fill=Green] (axis cs:3,3) circle[radius=3pt] node[left]{$(3,3)$};
+    \draw[Blue] (axis cs:3,2) circle[radius=3pt];
+    \draw[Red] (axis cs:3,1) circle[radius=3pt];
+    \end{axis}
+    \end{tikzpicture}
+    \caption{The plot for Exercise \ref{exer:axisex}.}
+    \label{fig:axisex}
+\end{figure}
+
+\paragraph{Parametric Equations}
+A natural generalization of \texttt{\textbackslash addplot} is to draw parametric curves where the command now treats \texttt{x} as the parameter and accepts two equations. We will borrow the famous cycloid to illustrate the usage in Figure \ref{fig:cycloid}.
+\begin{lstlisting}
+\begin{tikzpicture}
+\newcommand*{\ap}{0.7}
+\begin{axis}[xlabel=$x$, ylabel=$y$, axis lines=center, xmin=0, xmax=8, ymin=0, ymax=1.7, width=0.8\textwidth, height=0.25\textwidth]
+\addplot[very thick, domain=0:5*pi, samples=100] ({\ap*(x - sin(deg(x))},{\ap*(1 - cos(deg(x)))});
+\node[align=left] at (axis cs:2.5,0.5) {$x = a(t-\sin(t))$,\\ $y = a(1-\cos(t))$};
+\end{axis}
+\end{tikzpicture}
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \newcommand*{\ap}{0.7}
+    \begin{axis}[xlabel=$x$, ylabel=$y$, axis lines=center, xmin=0, xmax=8, ymin=0, ymax=1.7, width=0.8\textwidth, height=0.25\textwidth]
+    \addplot[very thick, domain=0:5*pi, samples=100] ({\ap*(x - sin(deg(x))},{\ap*(1 - cos(deg(x)))});
+    \node[align=left] at (axis cs:2.5,0.5) {$x = a(t-\sin(t))$,\\ $y = a(1-\cos(t))$};
+    \end{axis}
+    \end{tikzpicture}
+    \caption{A parametric cycloid graph.}
+    \label{fig:cycloid}
+\end{figure}
+
+\paragraph{Vector Fields}
+The final topic to introduce in this chapter is about drawing a vector field using the \texttt{\textbackslash addplot3} function (used for 3D plotting, more in the next chapter) with the \texttt{quiver} option. This is illustrated in Figure \ref{fig:clockvec} below, with the vector field defined by $(y/\sqrt{x^2+y^2}, -x/\sqrt{x^2+y^2})$.
+\begin{lstlisting}
+\begin{tikzpicture}
+\begin{axis}[xlabel=$x$, ylabel=$y$, xmin=-3, xmax=3, ymin=-3, ymax=3, view={0}{90}]
+\addplot3[blue, domain=-2.5:2.5, quiver={u={y/(x^2+y^2)^0.5}, v={-x/(x^2+y^2)^0.5}, scale arrows=0.3}, -stealth, samples=20] {0};
+\end{axis}
+\end{tikzpicture}
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[xlabel=$x$, ylabel=$y$, xmin=-3, xmax=3, ymin=-3, ymax=3, view={0}{90}]
+    \addplot3[blue, domain=-2.5:2.5, quiver={u={y/(x^2+y^2)^0.5}, v={-x/(x^2+y^2)^0.5}, scale arrows=0.3}, -stealth, samples=20] {0};
+    \end{axis}
+    \end{tikzpicture}
+    \caption{A clockwise rotational vector field.}
+    \label{fig:clockvec}
+\end{figure}
+The \texttt{u} and \texttt{v} keys represent the velocities along the $x$/$y$-axes, and we have set the scale, type, and density for the arrows. Finally, \texttt{view=\{0\}\{90\}} is needed for the \texttt{axis} since we have invoked the 3D plotting method and need to reset the camera to look downward overhead.

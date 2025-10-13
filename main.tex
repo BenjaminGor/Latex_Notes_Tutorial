@@ -132,8 +132,8 @@
 \tcolorboxenvironment{proof}{
   blank,
   breakable,
-  borderline west={0.5ex}{0pt}{black},
-  left=1.5ex,
+  borderline west={0.5ex}{2pt}{black},
+  left=2ex,
   before skip=\topsep,
   after skip=\topsep}
 \newenvironment*{solution}{\begin{proof}[Solution]}{\end{proof}}
@@ -166,7 +166,16 @@
 
 \usepackage[open,openlevel=1,atend,numbered]{bookmark}
 
-\renewcommand{\footnoterule}{\rule{0.8\textwidth}{1pt}\vspace*{1ex}}
+\usepackage{pgfplots}
+
+\setfootnoterule{0.8\textwidth}
+
+\newboolean{firstanswerofthechapter}  
+\renewcommand{\AnswerHeader}{\ifthenelse{\boolean{firstanswerofthechapter}}
+    {\textbf{Answers for Chapter \thechapter}\par\vspace{1ex}%
+     \theExercise)}
+    {\theExercise)}
+}
 
 \newboolean{firstanswerofthechapter}  
 \renewcommand{\AnswerHeader}{\ifthenelse{\boolean{firstanswerofthechapter}}
@@ -180,6 +189,8 @@
 \author{C.~L.~Loi}
 \lowertitleback{"How to Reproduce this Book Exactly with \LaTeX"\\
 Copyright ©, C.~L.~Loi, 2025. All rights reserved.}
+
+\usetikzlibrary{calc, angles, quotes, intersections, decorations.pathmorphing, decorations.shapes, arrows.meta, decorations.markings, patterns}
 
 %\setcounter{tocdepth}{}
 \allowdisplaybreaks
@@ -197,8 +208,8 @@ Copyright ©, C.~L.~Loi, 2025. All rights reserved.}
 \include{ch5_commands_envs}
 \include{ch6_design_layout}
 \include{ch7_thm_ex}
+\include{ch8_tikz_plot}
 
-\chapter{Plotting with Tikz}
 \chapter{Miscellaneous}
 
 \backmatter

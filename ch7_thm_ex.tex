@@ -109,8 +109,8 @@ Notice that we have set \texttt{theorem style=plain} (there are more possible va
 \tcolorboxenvironment{proof}{
   blank,
   breakable,
-  borderline west={0.5ex}{0pt}{black},
-  left=1.5ex,
+  borderline west={0.5ex}{2pt}{black},
+  left=2ex,
   before skip=\topsep,
   after skip=\topsep} 
 \end{lstlisting}
@@ -149,8 +149,8 @@ Moreover, we can copy it with "Proof" replaced by "Solution" as
 
 \begin{exercisebox}
 \begin{Exercise}
-\phantomsection
-\label{exer:colorbox}
+\phantomsection%
+\label{exer:colorbox}%
 Design your own color box to display any example problem, followed by a worked solution.
 \end{Exercise}
 \end{exercisebox}
@@ -162,7 +162,7 @@ The essence of any math book is its exercises. To deliver exercises and their so
 \begin{lstlisting}
 \usepackage[lastexercise,answerdelayed]{exercise}
 \end{lstlisting}
-Then we can typeset any exercise within the \texttt{Exercise} environment. As an example, the last exercise was created by
+Then we can typeset any exercise within the \texttt{Exercise} environment, which we have been doing for so long. As an example, the last exercise was created by
 \begin{lstlisting}
 \begin{exercisebox}
 \begin{Exercise}
