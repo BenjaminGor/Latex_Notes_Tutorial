@@ -177,20 +177,15 @@
     {\theExercise)}
 }
 
-\newboolean{firstanswerofthechapter}  
-\renewcommand{\AnswerHeader}{\ifthenelse{\boolean{firstanswerofthechapter}}
-    {\textbf{Answers for Chapter \thechapter}\par\vspace{1ex}%
-     \theExercise)}
-    {\theExercise)}
-}
-
 \title{How to Reproduce this Book Exactly with \LaTeX}
 \subtitle{A Self-contained Tutorial on Writing Mathematical Notes}
 \author{C.~L.~Loi}
 \lowertitleback{"How to Reproduce this Book Exactly with \LaTeX"\\
 Copyright ©, C.~L.~Loi, 2025. All rights reserved.}
 
-\usetikzlibrary{calc, angles, quotes, intersections, decorations.pathmorphing, decorations.shapes, arrows.meta, decorations.markings, patterns}
+\usetikzlibrary{calc, angles, quotes, intersections, decorations.pathmorphing, decorations.shapes, arrows.meta, decorations.markings, patterns, matrix, positioning, backgrounds, tikzmark, shapes.geometric}
+\usepackage{tikz-3dplot}
+\usepackage{circuitikz}
 
 %\setcounter{tocdepth}{}
 \allowdisplaybreaks
@@ -209,6 +204,7 @@ Copyright ©, C.~L.~Loi, 2025. All rights reserved.}
 \include{ch6_design_layout}
 \include{ch7_thm_ex}
 \include{ch8_tikz_plot}
+\include{ch9_more_tikz}
 
 \chapter{Miscellaneous}
 

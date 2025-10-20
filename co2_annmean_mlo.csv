@@ -1,0 +1,110 @@
+# --------------------------------------------------------------------
+# USE OF NOAA GML DATA
+#
+# These data are made freely available to the public and the scientific
+# community in the belief that their wide dissemination will lead to
+# greater understanding and new scientific insights. To ensure that GML
+# receives fair credit for their work please include relevant citation
+# text in publications. We encourage users to contact the data providers,
+# who can provide detailed information about the measurements and
+# scientific insight.  In cases where the data are central to a
+# publication, coauthorship for data providers may be appropriate.
+#
+#
+#
+# Contact:  Xin Lan (xin.lan@noaa.gov)
+#
+# File Creation: Fri Sep  5 12:11:00 2025
+#
+#
+# --------------------------------------------------------------------
+#
+#
+# See gml.noaa.gov/ccgg/trends/ for additional details.
+#
+# Data from March 1958 through April 1974 have been obtained by C. David Keeling
+# of the Scripps Institution of Oceanography (SIO) and were obtained from the
+# Scripps website (scrippsco2.ucsd.edu).
+#
+# The estimated uncertainty in the annual mean is the standard deviation
+# of the differences of annual mean values determined independently by
+# NOAA/ESRL and the Scripps Institution of Oceanography.
+#
+# NOTE: In general, the data presented for the last year are subject to change,
+# depending on recalibration of the reference gas mixtures used, and other quality
+# control procedures. Occasionally, earlier years may also be changed for the same
+# reasons.  Usually these changes are minor.
+#
+# CO2 expressed as a mole fraction in dry air, micromol/mol, abbreviated as ppm
+#
+# NOTE: Due to the eruption of the Mauna Loa Volcano, measurements from Mauna Loa Observatory
+# were suspended as of Nov. 29, 2022 and resumed in July 2023.
+# Observations starting from December 2022 to July 4, 2023 are from a site at the
+# Maunakea Observatories, approximately 21 miles north of the Mauna Loa Observatory.
+year,mean,unc
+1959,315.98,0.12
+1960,316.91,0.12
+1961,317.64,0.12
+1962,318.45,0.12
+1963,318.99,0.12
+1964,319.62,0.12
+1965,320.04,0.12
+1966,321.37,0.12
+1967,322.18,0.12
+1968,323.05,0.12
+1969,324.62,0.12
+1970,325.68,0.12
+1971,326.32,0.12
+1972,327.46,0.12
+1973,329.68,0.12
+1974,330.19,0.12
+1975,331.13,0.12
+1976,332.03,0.12
+1977,333.84,0.12
+1978,335.41,0.12
+1979,336.84,0.12
+1980,338.76,0.12
+1981,340.12,0.12
+1982,341.48,0.12
+1983,343.15,0.12
+1984,344.87,0.12
+1985,346.35,0.12
+1986,347.61,0.12
+1987,349.31,0.12
+1988,351.69,0.12
+1989,353.20,0.12
+1990,354.45,0.12
+1991,355.70,0.12
+1992,356.54,0.12
+1993,357.21,0.12
+1994,358.96,0.12
+1995,360.97,0.12
+1996,362.74,0.12
+1997,363.88,0.12
+1998,366.84,0.12
+1999,368.54,0.12
+2000,369.71,0.12
+2001,371.32,0.12
+2002,373.45,0.12
+2003,375.98,0.12
+2004,377.70,0.12
+2005,379.98,0.12
+2006,382.09,0.12
+2007,384.02,0.12
+2008,385.83,0.12
+2009,387.64,0.12
+2010,390.10,0.12
+2011,391.85,0.12
+2012,394.06,0.12
+2013,396.74,0.12
+2014,398.81,0.12
+2015,401.01,0.12
+2016,404.41,0.12
+2017,406.76,0.12
+2018,408.72,0.12
+2019,411.65,0.12
+2020,414.21,0.12
+2021,416.41,0.12
+2022,418.53,0.12
+2023,421.08,0.12
+2024,424.61,0.12
