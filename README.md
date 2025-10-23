@@ -4,6 +4,8 @@ This is the repository for the e-book <em>"How to Reproduce this Book Exactly wi
 
 <b>The newest updated PDF can be downloaded from [here](https://github.com/BenjaminGor/Latex_Notes_Tutorial/blob/main/Latex_Demo.pdf).</b>
 
+![Book Cover Latex.png](https://github.com/BenjaminGor/Latex_Notes_Tutorial/blob/main/Book%20Cover%20Latex.png)
+
 <h2>Contributing to the Project</h2>
 
 Again, feel free to open an issue if you have any problems or suggestions about the book!
