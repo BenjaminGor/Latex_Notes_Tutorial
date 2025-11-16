@@ -1,10 +1,12 @@
 \chapter{Framed Theorems and Exercises}
+\label{chap:box}
 
 \paragraph{Introduction} This chapter touches on how to make beautiful, colored frames around theorems, examples, and so on. The typesetting and management of exercises and answers will also be discussed. 
 
 \section{Colored Boxes for Theorems and Proofs}
+\label{sec:colorbox}
 
-\paragraph{Colored Boxes by (new)tcolorbox}
+\paragraph{Making Colored Boxes}
 We will start by generating a simple colored box first, which is most easily done by importing the \texttt{tcolorbox} package. Then we can define the design of the box by the \texttt{\textbackslash newtcolorbox} command. An illustrative template is
 \begin{lstlisting}
 \newtcolorbox{mybox}[1][]{
@@ -32,14 +34,14 @@ produces the following box:
 \begin{mybox}
 The content goes here.
 \end{mybox}
-\texttt{colback}, \texttt{colframe}, and \texttt{coltitle} denote the color of the background, frame, and title correspondingly. \texttt{boxrule} (\texttt{leftrule}) is the width of bounding lines (on the left), and \texttt{boxsep} indicates the overall padding around the title and content. \texttt{left}/\texttt{right} further refines the padding to the left/right. The meanings of the \texttt{sharp corners} and \texttt{breakable} keywords are not hard to guess: the box will have sharp corners instead of rounded ones, and it can break across pages. Finally, \texttt{before skip} and \texttt{after skip} indicate the vertical spacing to other objects before and after the entire box. The \texttt{[1][]} part is added so that the box can receive an optional argument, which can override the given setting of the box via putting \texttt{\#1} at the end of the \texttt{\textbackslash newtcolorbox} option list. 
+\texttt{colback}, \texttt{colframe}, and \texttt{coltitle} denote the color of the background, frame, and title correspondingly. \texttt{boxrule} (\texttt{leftrule}) is the width of bounding lines (at the left), and \texttt{boxsep} indicates the overall padding around the title and content. \texttt{left}/\texttt{right} further refines the padding to the left/right. The meanings of the \texttt{sharp corners} and \texttt{breakable} keywords are not hard to guess: the box will have sharp corners instead of rounded ones, and it can break across pages. Finally, \texttt{before skip} and \texttt{after skip} indicate the vertical spacing to other objects before and after the entire box. The \texttt{[1][]} part is added so that the box can receive an optional argument, which can override the given setting of the box via putting \texttt{\#1} at the end of the \texttt{\textbackslash newtcolorbox} option list. 
 
-\paragraph{Colored Numbered Theorems/Examples by newtcbtheorem}
+\paragraph{Colored Numbered Theorems/Examples}
 The readers are probably concerned more about how to construct a colored, numbered box for theorems, examples, definitions, and the like. This requires us to pass
 \begin{lstlisting}
 \tcbuselibrary{theorems}
 \end{lstlisting}
-and then we can use the \texttt{\textbackslash newtcbtheorem[<init>]\{<name>\}\{<display\_\allowbreak name>\}\{<options>\}\{<prefix>\}} construct. The \texttt{init} part sets up the way of numbering, while the \texttt{options} part is just like the previous input lists for \texttt{\textbackslash newtcolorbox}. For example, we can define
+and then we can use the \texttt{\textbackslash newtcbtheorem[<init>]\{<name>\}\{<display\_\allowbreak name>\}\{<options>\}\{<prefix>\}} construct. The \texttt{init} part sets up the way of numbering, the \texttt{name} is referred to when an instance of the box environment has to be made, while the \texttt{options} part is just like the previous input lists for \texttt{\textbackslash newtcolorbox}. For example, we can define
 \begin{lstlisting}
 \newtcbtheorem[number within=chapter]{thm}{Theorem}{
   colback=Green!20,
@@ -71,12 +73,12 @@ If $f(x)$ is continuous on $[a,b]$ and differentiable on $(a,b)$, then there exi
 f'(c) = \frac{f(b)-f(a)}{b-a}
 \end{equation}
 \end{thm}
-We can refer to this theorem as Theorem \ref{thm:mvt} by \texttt{\textbackslash ref\{thm:mvt\}} (\texttt{prefix:alias}). It is also possible to supply additional options to override the base setting of the colored box.
+We can refer to this theorem as Theorem \ref{thm:mvt} by \texttt{\textbackslash ref\{thm:mvt\}} (\texttt{prefix:\allowbreak alias}). It is also possible to supply additional options to override the base setting of the colored box.
 
 \paragraph{Shared Numbering for Definitions and the Others}
 Another feature that may be useful is to enable shared numbering for definitions, lemmas, corollaries, properties, and so on. To do so, we can invoke the \texttt{\textbackslash newtcbtheorem} command again and pass the keyword \texttt{use counter from=} for the \texttt{init} option:
 \begin{lstlisting}
-\tcbset{common/.style={
+\tcbset{mycommon/.style={
   colback=Green!20,
   colframe=Green!50,
   fonttitle=\bfseries,
@@ -84,7 +86,7 @@ Another feature that may be useful is to enable shared numbering for definitions
   theorem style=plain,
   ...}
 }
-\newtcbtheorem[use counter from=thm]{defn}{Definition}{common}{defn}
+\newtcbtheorem[use counter from=thm]{defn}{Definition}{mycommon}{defn}
 \end{lstlisting}
 Here we use \texttt{\textbackslash tcbset} to save the style for repeated use. Then
 \begin{lstlisting}
@@ -104,7 +106,7 @@ f(x) = f(a) + \frac{f'(a)}{1!}(x-a) + \frac{f''(a)}{2!}(x-a)^2 + \frac{f'''(a)}{
 \end{defn}
 Notice that we have set \texttt{theorem style=plain} (there are more possible values, like \texttt{break}), see if you can figure out where the difference is.
 
-\paragraph{Proofs with tcolorboxenvironment} For proofs or worked steps, their setting will often be slightly different. We can load the \texttt{amsthm} package, which comes along with the \texttt{proof} environment, and apply \texttt{\textbackslash tcolorboxenvironment} on it. The template will be
+\paragraph{Proofs} For proofs or worked steps, their setting will often be slightly different. We can load the \texttt{amsthm} package, which comes along with the \texttt{proof} environment, and apply \texttt{\textbackslash tcolorboxenvironment} on it. The template will be
 \begin{lstlisting}
 \tcolorboxenvironment{proof}{
   blank,
@@ -114,7 +116,7 @@ Notice that we have set \texttt{theorem style=plain} (there are more possible va
   before skip=\topsep,
   after skip=\topsep} 
 \end{lstlisting}
-The \texttt{borderline west} option draws a long, thin black line to the left. Then, writing
+The \texttt{blank} keyword initializes just the frame and the \texttt{borderline west} option draws a long black line to the left. Then, writing
 \begin{lstlisting}
 \begin{proof}
 Consider $\vec{w} = \vec{u} + t\vec{v}$, ...
@@ -162,12 +164,12 @@ The essence of any math book is its exercises. To deliver exercises and their so
 \begin{lstlisting}
 \usepackage[lastexercise,answerdelayed]{exercise}
 \end{lstlisting}
-Then we can typeset any exercise within the \texttt{Exercise} environment, which we have been doing for so long. As an example, the last exercise was created by
+Then we can typeset any exercise within the \texttt{Exercise} environment, which we have been doing for a long time. As an example, the last exercise was created by
 \begin{lstlisting}
 \begin{exercisebox}
 \begin{Exercise}
-\phantomsection
-\label{exer:colorbox}
+\phantomsection%
+\label{exer:colorbox}%
 Design your own color box to display any example problem, followed by a worked solution.
 \end{Exercise}
 \end{exercisebox}
@@ -175,11 +177,11 @@ Design your own color box to display any example problem, followed by a worked s
 where \texttt{exercisebox} here is a self-defined\footnote{The actual implementation can be checked from my raw source code.} colored box environment generated by \texttt{newtcolorbox} as introduced in the last section. We can refer to this exercise as Exercise \ref{exer:colorbox} via its label \texttt{\textbackslash ref\{exer:colorbox\}}. As an extra note, to ensure the internal referencing link to the exercise is correct, we need a patch by inserting \texttt{\textbackslash phantomsection} at its start before \texttt{label}.
 
 \paragraph{Answers}
-To typeset the answer for an exercise, we can use the \texttt{Answer} environment supplied with the corresponding label of that exercise. Here we will take Exercise \ref{exer:modulo} as a demonstration, where we can write
+To typeset the answer for an exercise, we can use the \texttt{Answer} environment supplied with the corresponding label of that exercise to the \texttt{ref} option. Here we will take Exercise \ref{exer:modulo} as a demonstration, where we can write
 \begin{lstlisting}
 \begin{Exercise}
-\phantomsection
-\label{exer:modulo}
+\phantomsection%
+\label{exer:modulo}%
 ... % the exercise
 \end{Exercise}
 \begin{Answer}[ref=exer:modulo]
@@ -200,10 +202,10 @@ The \texttt{answerdelayed} option saves all the answers until the end, and we ca
 \paragraph{Headers for Answers} The default headers for answers may be too plain. To customize them, we can use the solution proposed in \href{https://tex.stackexchange.com/questions/369265/math-book-how-to-write-exercise-and-answers}{\TeX{} StackExchange 369265} which involves declaring a boolean variable \texttt{firstanswerofthechapter} by \texttt{\textbackslash newboolean} in the \texttt{ifthen} package. A minimal version is
 \begin{lstlisting}
 \newboolean{firstanswerofthechapter}  
-\renewcommand{\AnswerHeader}{\ifthenelse{\boolean{firstanswerofthechapter}}
+\renewcommand*{\AnswerHeader}{\ifthenelse{\boolean{firstanswerofthechapter}}
     {\textbf{Answers for Chapter \thechapter}\par\vspace{1ex}%
      \theExercise)}
     {\theExercise)}
 }
 \end{lstlisting}
-Then we can update the \texttt{\textbackslash AnswerHeader} command with an if-then-else statement. We can call \texttt{\textbackslash setboolean\{firstanswerofthechapter\}\{true\}} whenever we are at the first answer in a chapter, then \texttt{\textbackslash AnswerHeader} will first print the heading "Answers for Chapter \texttt{\textbackslash thechapter}" where \texttt{\textbackslash thechapter} is the chapter counter, and proceed to print the exercise number stored by \texttt{\textbackslash theExercise} with a round bracket to the right. Afterwards, reset \texttt{\textbackslash setboolean\{first\allowbreak answerofthechapter\}\{false\}} and the \texttt{\textbackslash AnswerHeader} will just consist of the exercise number.
+This updates the \texttt{\textbackslash AnswerHeader} command with an if-then-else statement. Then, we can call \texttt{\textbackslash setboolean\{firstanswerofthechapter\}\{true\}} whenever we are at the first answer in a chapter, then \texttt{\textbackslash AnswerHeader} will first print the heading "Answers for Chapter \texttt{\textbackslash thechapter}" where \texttt{\textbackslash thechapter} is the chapter counter, and proceed to print the exercise number stored by \texttt{\textbackslash theExercise} with a round bracket to the right. Afterwards, reset \texttt{\textbackslash setboolean\{first\allowbreak answerofthechapter\}\{false\}} and the \texttt{\textbackslash AnswerHeader} will just consist of the exercise number.
