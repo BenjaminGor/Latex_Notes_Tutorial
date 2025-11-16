@@ -6,7 +6,6 @@
 \linespread{1.25}
 
 \usepackage{scrlayer-scrpage}
-\usepackage[fulladjust]{marginnote}
 \usepackage{enumitem}
 
 \KOMAoptions{headsepline=on, captions=besidetop, DIV=last}
@@ -14,6 +13,7 @@
 \pagestyle{scrheadings}
 \automark[section]{chapter}
 \setkomafont{pagehead}{\color{RoyalBlue}\slshape\bfseries}
+\setkomafont{caption}{\itshape}
 \renewcommand*{\chaptermarkformat}{\chapapp~\thechapter\autodot~--~}
 \ofoot*{}
 \cfoot*{\pagemark}
@@ -24,7 +24,7 @@
 \renewcommand*{\chapterheadendvskip}{\pgfornament[width=\textwidth]{88}\par}
 
 \renewcommand*{\sectionformat}{\colorbox{black}{\textcolor{white}{\thesection}}\enskip}
-\renewcommand*{\sectionlinesformat}[4]{\makebox[0pt][l]{\rule[-\fboxsep]{\textwidth}{1pt}}#3\parbox[b]{0.85\textwidth}{\linespread{1}\selectfont#4}}
+\renewcommand*{\sectionlinesformat}[4]{\makebox[0pt][l]{\rule[-\fboxsep-\fboxrule]{\textwidth}{\fboxrule}}#3\parbox[b]{0.85\textwidth}{\linespread{1}\selectfont#4}}
 
 \usepackage{graphicx}
 \usepackage[svgnames, dvipsnames]{xcolor}
@@ -35,7 +35,6 @@
 \usepackage{physics}
 \usepackage{siunitx}
 \usepackage{mathtools}
-\usepackage{mdframed}
 \usepackage{lipsum}
 \usepackage{microtype}
 \usepackage{tabularx}
@@ -46,6 +45,26 @@
 \usepackage{ifthen}
 \usepackage{pgfmath}
 \usepackage{pgffor}
+\usepackage{lineno}
+\usepackage{imakeidx}
+\makeindex[intoc, options=-s myindexstyle]
+\usepackage{CJKutf8}
+\usepackage[style=ieee]{biblatex}
+\addbibresource{references.bib}
+\nocite{*}
+
+\begin{filecontents}[overwrite]{myindexstyle.ist}
+headings_flag 1
+heading_prefix
+ "\\bigskip\\par\\penalty-50\\textbf{"
+heading_suffix
+ "}\\\\[\\medskipamount]"
+symhead_positive "Symbols"
+symhead_negative "symbols"
+numhead_positive "Numbers"
+numhead_negative "numbers"
+delim_0 ",\~"
+\end{filecontents}
 
 \definecolor{mint}{rgb}{0.24, 0.71, 0.54}
 
@@ -110,7 +129,7 @@
   breakable,
   before skip=\topsep,
   after skip=\topsep}{thm}
-\tcbset{common/.style={
+\tcbset{mycommon/.style={
   colback=Green!20,
   colframe=Green!50,
   fonttitle=\bfseries,
@@ -126,7 +145,7 @@
   before skip=\topsep,
   after skip=\topsep}
 }
-\newtcbtheorem[use counter from=thm]{defn}{Definition}{common}{defn}
+\newtcbtheorem[use counter from=thm]{defn}{Definition}{mycommon}{defn}
 \tcbuselibrary{theorems}
 
 \tcolorboxenvironment{proof}{
@@ -158,6 +177,7 @@
     colorlinks,
     linkcolor = black,
     urlcolor = blue!90!Green,
+    citecolor = blue!90!Green,
     pdfauthor = Benjamin Loi,
     pdftitle = How to Reproduce this Book Exactly with LATEX,
     pdfsubject = v1.0.0,
@@ -171,7 +191,7 @@
 \setfootnoterule{0.8\textwidth}
 
 \newboolean{firstanswerofthechapter}  
-\renewcommand{\AnswerHeader}{\ifthenelse{\boolean{firstanswerofthechapter}}
+\renewcommand*{\AnswerHeader}{\ifthenelse{\boolean{firstanswerofthechapter}}
     {\textbf{Answers for Chapter \thechapter}\par\vspace{1ex}%
      \theExercise)}
     {\theExercise)}
@@ -193,9 +213,10 @@ Copyright ©, C.~L.~Loi, 2025. All rights reserved.}
 \begin{document}
 
 \frontmatter
-\include{ch0}
+\include{front_matter}
 
 \mainmatter
+\include{ch0_install}
 \include{ch1_basic_structure}
 \include{ch2_text_format}
 \include{ch3_maths_writing}
@@ -205,14 +226,9 @@ Copyright ©, C.~L.~Loi, 2025. All rights reserved.}
 \include{ch7_thm_ex}
 \include{ch8_tikz_plot}
 \include{ch9_more_tikz}
-
-\chapter{Miscellaneous}
+\include{ch10_misc}
 
 \backmatter
-\cleardoubleoddpage
-\chapter*{Answers to Exercises}
-\addcontentsline{toc}{chapter}{Answers to Exercises}
-\ohead{Answer to Exercises}
-\shipoutAnswer
+\include{back_matter}
 
 \end{document}

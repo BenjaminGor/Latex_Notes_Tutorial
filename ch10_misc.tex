@@ -1,0 +1,120 @@
+\setchapterpreamble[u]{\medskip\KOMAoptions{sfdefaults=false}\dictum[Winston Churchill]{It is not even the beginning of the end. But it is perhaps the end of the beginning.}}
+\chapter{Miscellaneous}
+
+\newcommand*{\titlepic}{}
+\newcommand*{\puttitlepic}[2][\paperwidth]{\renewcommand*{\titlepic}{\includegraphics[width=#1]{#2}}}
+
+\puttitlepic{graphics/sight_hohenschwangau-castle.jpg}
+\DeclareNewLayer[align=lt,voffset=0.25\paperheight,background,mode=picture,contents={\putUL{\titlepic}}]{titlepiclayer}
+\newpairofpagestyles[scrheadings]{Styledpages}{\AddLayersToPageStyle{plain.Styledpages}{titlepiclayer}}
+
+\paragraph{Introduction}
+This chapter touches on some minor details about how to enhance a \LaTeX{} book. 
+
+\pagestyle{Styledpages}
+
+\section{Custom Page Style and Design}
+
+\paragraph{Inserting Pictures to (Chapter) Pages}
+Many books will have a banner placed on the first page of a chapter. To achieve the same effect, we need to declare our own page style, and before that, we also need a way to store and update the banner picture for different chapters. This may be done by defining two commands:
+\begin{lstlisting}
+\newcommand*{\titlepic}{}
+\newcommand*{\puttitlepic}[2][\paperwidth]{\renewcommand*{\titlepic}{\includegraphics[width=#1]{#2}}}    
+\end{lstlisting}
+The \texttt{\textbackslash titlepic} command stores and displays the picture (empty by default), which can be modified by the \texttt{\textbackslash puttitlepic} command at any time. Then, we can define the new page style, in addition to the background layer, as follows.
+\begin{lstlisting}
+\puttitlepic{graphics/sight_hohenschwangau-castle.jpg} % replace it with any image path
+\DeclareNewLayer[align=lt,voffset=0.25\paperheight,background,mode=picture,contents={\putUL{\titlepic}}]{titlepiclayer}
+\newpairofpagestyles[scrheadings]{Styledpages}{\AddLayersToPageStyle{plain.Styledpages}{titlepiclayer}}
+\pagestyle{Styledpages} % don't forget to actually use the new page style
+\end{lstlisting}
+The \texttt{\textbackslash DeclareNewLayer} command prepares the layer that contains the picture indicated by \texttt{\textbackslash titlepic}. We need to set the \texttt{background} flag and change the \texttt{mode} to \texttt{picture}. The \texttt{\textbackslash titlepic} is subsequently provided in the \texttt{\textbackslash putUL} command to put it at the upper-left corner. Furthermore, the \texttt{align} and \texttt{voffset} options fine-tune the positioning of the block. Eventually, we declare the desired new page style via the \texttt{\textbackslash newpairofpagestyles[<inherit>]\{<name>\}\allowbreak\{<content>\}} statement. We inherit the pre-existing \texttt{scrheadings} style and add the layer with the \texttt{\textbackslash AddLayersToPageStyle\{<pagestyle>\}\{<layer>\}} construct to the derived \texttt{plain} style, which is used in a chapter page. By the same essence, we can also decorate different parts of any page.
+
+\section{Quotation Boxes}
+
+\paragraph{Dictum at the Start of Chapter}
+To insert some famous quote with KOMA-Script, we simply need to use the \texttt{\textbackslash dictum[<author>]\{<quote>\}} syntax. And to place it just below the chapter heading, we can supply the dictum with the \texttt{\textbackslash setchapterpreamble[<position>]} command right before the \texttt{\textbackslash chapter} declaration. In this chapter, the following code is used:
+\begin{lstlisting}
+\setchapterpreamble[u]{\medskip\KOMAoptions{sfdefaults=false}\dictum[Winston Churchill]{It is not even the beginning of the end. But it is perhaps the end of the beginning.}}
+\chapter{Miscellaneous}
+\end{lstlisting}
+to display Churchill's speech at the very beginning. Notice that we have locally activated \texttt{\textbackslash KOMAoptions\{sfdefaults=false\}} to preserve the usual serif font since a dictum by default uses sans-serif via \texttt{\textbackslash maybesffamily} (see Section \ref{sec:appearch}). Moreover, a \texttt{\textbackslash medskip} is added to properly adjust the vertical spacing from the header line.
+
+\paragraph{Beautiful Quotes} It is also straightforward to write any quote as a dictum in the main text. However, we will go one step further to customize and decorate the quote box. We will put it inside a \texttt{tikzpicture} and make use of \texttt{pgfornament} for that. Let's take a look at the nice-looking example below.\par
+{\centering\begin{tikzpicture}
+\renewcommand*{\raggeddictum}{}
+\renewcommand*{\dictumwidth}{0.8\textwidth}
+\node (quote) {\dictum[Steven Kotler, The Rise of Superman]{We really have no idea how deep our reservoir runs, no clear estimate of where our limits lie.}};
+\node at (quote.north east) {\pgfornament[width=1cm,symmetry=v]{39}};
+\node at (quote.south west) {\pgfornament[width=1cm,symmetry=h]{39}};
+\coordinate (QSA) at ($(quote.south)-(0.2cm,0.2cm)$);
+\coordinate (QSB) at ($(quote.south west)-(0.2cm,0.2cm)$);
+\pgfornamentline{QSA}{QSB}{2}{87}
+\end{tikzpicture}\par}
+In producing this, we have written
+\begin{lstlisting}
+{\centering\begin{tikzpicture}
+\renewcommand*{\raggeddictum}{}
+\renewcommand*{\dictumwidth}{0.8\textwidth}
+\node (quote) {\dictum[Steven Kotler, The Rise of Superman]{We really have no idea how deep our reservoir runs, no clear estimate of where our limits lie.}};
+\node at (quote.north east) {\pgfornament[width=1cm,symmetry=v]{39}};
+\node at (quote.south west) {\pgfornament[width=1cm,symmetry=h]{39}};
+\coordinate (QSA) at ($(quote.south)-(0.2cm,0.2cm)$);
+\coordinate (QSB) at ($(quote.south west)-(0.2cm,0.2cm)$);
+\pgfornamentline{QSA}{QSB}{2}{87}
+\end{tikzpicture}\par}  
+\end{lstlisting}
+The first two statements reset the alignment and width of the dictum. Then we wrap the main quote within a named node. Finally, we add two mirrored ornaments at its top-right and bottom-left while specifying \texttt{symmetry} for the \texttt{\textbackslash pgfornament} commands, in addition to a horizontal double branch under the quote via the \texttt{\textbackslash pgfornamentline} macro.
+
+\section{Asian Characters Support}
+
+\paragraph{Chinese/Japanese/Korean Layer}
+To be able to render Asian characters in \LaTeX{}, we can use the package \texttt{CJKutf8} and enclose the content within a \texttt{CJK*} environment. The syntax goes like this:
+\begin{lstlisting}
+\begin{CJK*}{UTF8}{bkai} % gkai for simplified Chinese, min for Japanese, ...
+... % can insert the desired Asian characters here
+\end{CJK*}     
+\end{lstlisting}
+Two example outputs are shown right below. (Read the source code for the original input words.) \par
+\begin{CJK*}{UTF8}{bkai}
+\raggedleft
+天長地久有時盡，此恨綿綿無絕期。\\
+白居易　《長恨歌》 \par
+\end{CJK*}
+\begin{CJK*}{UTF8}{min}
+もう一回　もう一回\\
+僕はこの手を伸ばしたい
+\end{CJK*} (Extra cookie if you know which song it comes from.)
+
+\paragraph{XeLaTeX and LuaLaTeX}
+As a remark, if the document will be mainly in Chinese/Japanese/Korean or any other non-Latin language in general, then it may be more beneficial to just switch to the XeLaTeX or LuaLaTeX compiler since they directly support UTF-8 encoded text. However, we will keep ourselves to the default pdfLaTeX compiler to avoid complications.
+
+\section{Organizing References by BibTeX}
+
+\paragraph{Importing and Citing References} Most publications or books will come with the \textit{BibTeX} metadata. To cite them, we can first download and (optionally) combine them in a single \texttt{.bib} file. Subsequently, we need to import the \texttt{biblatex} package and let it read the \texttt{.bib} file(s). Finally, we may call \texttt{\textbackslash printbibliography} to print them out. The commands to do so look like:
+\begin{lstlisting}
+\usepackage[style=ieee]{biblatex} % can use other style like apa
+\addbibresource{references.bib} % change to the name of your .bib file
+\nocite{*} % will still show the entries if they are not cited in the main text
+...
+\printbibliography[heading=bibintoc]
+\end{lstlisting}
+And to refer to any entry in the references, we simply add \texttt{\textbackslash cite\{<name\_in\_\allowbreak bib>\}}. For example, here we shall write \texttt{\textbackslash cite\{kottwitz2024latex\}} (can check my \texttt{.bib} file) to produce this: \cite{kottwitz2024latex}. We may also want to change the color of the citation link by setting the \texttt{citecolor} option for \texttt{\textbackslash hypersetup}. 
+
+\section{Fine-tuning Colored Boxes}
+
+In Section \ref{sec:colorbox}, we have learnt how to create simple colored boxes with the \texttt{tcolorbox} package. Here, we provide a simple recipe to design a stylish box further:
+\begin{lstlisting}
+\begin{tcolorbox}[enhanced, title=The title, attach boxed title to top text left={yshift=-0.5mm}, interior style tile={width=0.5\textwidth}{graphics/grid_paper.jpg},
+boxed title style={frame code={\path[tcb fill frame] (frame.north west) -- (frame.north east) -- ([xshift=3mm]frame.south east) -- (frame.south west) -- cycle;},
+interior code={\path[tcb fill interior] (interior.north west) -- (interior.north east) -- ([xshift=3mm]interior.south east) -- (interior.south west) -- cycle;}}]
+For demonstration.
+\end{tcolorbox}    
+\end{lstlisting}
+This produces:
+\begin{tcolorbox}[enhanced, title=The title, attach boxed title to top text left={yshift=-0.5mm}, interior style tile={width=0.5\textwidth}{graphics/grid_paper.jpg},
+boxed title style={frame code={\path[tcb fill frame] (frame.north west) -- (frame.north east) -- ([xshift=3mm]frame.south east) -- (frame.south west) -- cycle;},
+interior code={\path[tcb fill interior] (interior.north west) -- (interior.north east) -- ([xshift=3mm]interior.south east) -- (interior.south west) -- cycle;}}]
+For demonstration.
+\end{tcolorbox}
+We need the \texttt{enhanced} keyword to enable the extra features. The \texttt{attach boxed title to <position>} option controls the position of the title. We have also specified the \texttt{interior style tile} option to use a stock grid paper picture as tiles that fill the interior background. Finally, in the \texttt{boxed title style} option, we enter some drawing code, just like it is in TikZ, to the \texttt{frame code} and \texttt{interior code} parts to customize the appearance of the title box.

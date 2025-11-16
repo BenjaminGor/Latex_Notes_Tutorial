@@ -1,9 +1,9 @@
-\chapter{Plotting with Tikz (Part II)}
+\chapter{Plotting with TikZ (Part II)}
 
 \paragraph{Introduction}
 This chapter continues to discuss the finer details and broad applications of TikZ plotting.
 
-\section{Advanced Axis Control}
+\section{Advanced Axis Options}
 
 \subsection{Axis Scales}
 
@@ -53,15 +53,17 @@ Another simple way to transform the coordinate axes is via rotation. It is extre
 \subsection{3D Plotting}
 
 \paragraph{3D Coordinate Axes}
-To initiate a 3D TikZ plot, the easiest automatic way is to write the drawing code just as usual, but now with the coordinates being 3D. We can also control the axis scales, like in the 2D scenario, where we can specify the direction of each axis displayed on the page. This is demonstrated in Figure \ref{fig:3dvec}.
+To initialize a 3D TikZ plot, the easiest automatic way is to write the drawing code just as usual, but now with the coordinates being 3D. We can also control the axis scales, like in the 2D scenario, where we can specify the direction of each axis displayed on the page. This is demonstrated in Figure \ref{fig:3dvec}.
 \begin{lstlisting}
-\begin{tikzpicture}[x={(-1cm, -1.5cm)}, y={(1.5cm, -0.75cm)}, z={(0cm, 1.8cm)}, every path/.append style={>=Latex}]
+\begin{tikzpicture}[x={(-1cm, -1.5cm)}, y={(1.5cm, -0.75cm)}, z={(0cm, 1.8cm)}, every path/.append style={>=Latex}] % Axis settings
 \draw [->] (0,0,0) -- (3,0,0) node [below left] {$x$};
 \draw [->] (0,0,0) -- (0,3,0) node [below right] {$y$};
 \draw [->] (0,0,0) -- (0,0,3) node [above] {$z$};
+% Unit vectors
 \draw [->, very thick, Red] (0,0,0) -- (1,0,0) node [left] {$\hat{\imath} = (1,0,0)^T$};
 \draw [->, very thick, Red] (0,0,0) -- (0,1,0) node [above right, midway] {$\hat{\jmath} = (0,1,0)^T$} ; 
 \draw [->, very thick, Red] (0,0,0) -- (0,0,1) node [left] {$\hat{k} = (0,0,1)^T$};
+% The blue vector
 \draw [Gray, dashed] (1,2,0) -- (1,0,0) node[below, midway, sloped]{$y=2$}; 
 \draw [Gray, dashed] (1,2,0) -- (0,2,0) node[below, midway, sloped]{$x=1$}; 
 \draw [Gray, dashed] (1,2,0) -- (1,2,2.5) node[midway, right]{$z=2.5$};
@@ -85,7 +87,7 @@ To initiate a 3D TikZ plot, the easiest automatic way is to write the drawing co
     \caption{A vector in three-dimensional space.}
     \label{fig:3dvec}
 \end{figure}
-Notice that we have utilized the \texttt{append style} function to add the requirement that all arrow tips will use the \texttt{LaTeX} type.
+Notice that we have utilized the \texttt{append style} function to add the requirement that all arrow tips will use the \texttt{LaTeX} type on top of the default behavior.
 
 \paragraph{Surface Plots}
 Moving from 2D to 3D, we may now want to draw surface plots instead of just curves. This can be done by declaring a normal axis scope and using the \texttt{\textbackslash addplot3} command with the \texttt{surf} keyword on the level equation. Figure \ref{fig:2dgauss} below serves as an example.
@@ -109,7 +111,7 @@ Moving from 2D to 3D, we may now want to draw surface plots instead of just curv
 We can add a mesh grid and choose the color map (viridis here) at the start of the axis environment. It is also possible to provide a \texttt{colorbar}. To draw a contour plot instead, we simply replace \texttt{surf} by \texttt{contour gnuplot}\footnote{Or \texttt{contour lua} if you are using LuaLaTeX.} and use the \texttt{view=\{0\}\{90\}} trick introduced at the end of the last chapter.
 
 \paragraph{3D Spheres and Arcs}
-To construct a 3D sphere and draw arcs on it, we need to import the \texttt{tikz-3dplot} package (requires \texttt{\textbackslash usepackage\{tikz-3dplot\}} \footnote{A positive side effect is that it also loads the smaller \texttt{3d} TikZ library, which allows the user to write in cylindrical/spherical coordinates.} this time).  Drawing only the sphere is not hard (plus the \texttt{ball color} option). Meanwhile, drawing the arcs requires us to first locate the center as well as the two ends of each of them via \texttt{\textbackslash tdplotdefinepoints}, and then actually execute that with \texttt{\textbackslash tdplotdrawpolytopearc}. The whole procedure is illustrated by Figure \ref{fig:spherearc}.
+To construct a 3D sphere and draw arcs on it, we need to import the \texttt{tikz-3dplot} package (requires \texttt{\textbackslash usepackage\{tikz-3dplot\}} \footnote{A positive side effect is that it also loads the smaller \texttt{3d} TikZ library, which allows the user to write in cylindrical/spherical coordinates.} this time).  Drawing only the sphere is not hard (plus the \texttt{ball color} option). Meanwhile, drawing the arcs requires us to first locate the center as well as the two ends of each of them via \texttt{\textbackslash tdplotdefinepoints}\footnote{However, this command only supports Cartesian coordinates.}, and then actually execute that with \texttt{\textbackslash tdplotdrawpolytopearc}. The whole procedure is illustrated by Figure \ref{fig:spherearc}.
 \begin{lstlisting}
 \tdplotsetmaincoords{70}{110}
 \begin{tikzpicture}[scale=2.5,tdplot_main_coords,rotate=15]
@@ -155,6 +157,7 @@ There are many other types of plots that we can make with TikZ. The most basic o
 \begin{tikzpicture}
 \begin{axis}[width=0.95\textwidth, height=0.65\textwidth, x tick label style={rotate=45,/pgf/number format/.cd,set thousands separator={}}, enlarge x limits={abs=2}, xlabel=year, ylabel=$\text{CO}_2$ concentration (ppm), title=Mauna Loa Observatory Measurement, xlabel style={yshift=-15pt}]
 \addplot[Green, mark=*] table [x=year, y=mean, col sep=comma] {co2_annmean_mlo.csv};
+\addplot[Green, dashed, domain=2000:2025] {400} node[below left]{$400$ ppm};
 \end{axis}
 \end{tikzpicture}    
 \end{lstlisting}
@@ -163,15 +166,16 @@ There are many other types of plots that we can make with TikZ. The most basic o
     \begin{tikzpicture}
     \begin{axis}[width=0.95\textwidth, height=0.65\textwidth, x tick label style={rotate=45,/pgf/number format/.cd,set thousands separator={}}, enlarge x limits={abs=2}, xlabel=year, ylabel=$\text{CO}_2$ concentration (ppm), title=Mauna Loa Observatory Measurement, xlabel style={yshift=-15pt}]
     \addplot[Green, mark=*] table [x=year, y=mean, col sep=comma] {co2_annmean_mlo.csv};
+    \addplot[Green, dashed, domain=2000:2025] {400} node[below left]{$400$ ppm};
     \end{axis}
     \end{tikzpicture}
     \caption{The time-series of $\text{CO}_2$ concentration recorded at Mauna Loa Observatory from 1959 to 2024.}
     \label{fig:CO2}
 \end{figure}
-Some noticeable points include that if we change the graph color, we have to explicitly append \texttt{mark=*} to get back the dot marks along the curve. Removing it will produce only the curve. We enforce \texttt{enlarge x limits} to take \texttt{abs=2} so that the $x$-domain extends by $2$ years. We also rotate the $x$-axis ticks by $45^\circ$ and use some options to format out the \texttt{,} originally in the year numbers. (Try removing them to see what happens!) Accounting for that, we also shift the $x$-axis label downward by $15$ pt.
+Some noticeable points include that if we change the graph color, we have to explicitly append \texttt{mark=*} to get back the dots along the curve. Removing it will produce only the curve. A reference horizontal dashed line is drawn too by simply providing the constant. We enforce \texttt{enlarge x limits} to take \texttt{abs=2} so that the $x$-axis extends by $2$ years. We also rotate the $x$-axis tick labels by $45^\circ$ and use some options to format out the \texttt{,} originally in the year numbers. (Try removing them to see what happens!) Accounting for that, we also shift the $x$-axis label downward by $15$ pt.
 
 \paragraph{Bar Plots}
-Bar plots are another commonly seen plot type. To construct a bar plot, we either declare \texttt{xbar} or \texttt{ybar} in the \texttt{axis} option at the start and call the \texttt{\textbackslash addplot} command for each set of bars, or put the keyword directly after \texttt{\textbackslash addplot}. A small example is given as Figure \ref{fig:classscore}.
+Bar plots are another commonly seen plot type. To construct a bar plot, we either declare \texttt{xbar} or \texttt{ybar} in the \texttt{axis} option at the start and call the \texttt{\textbackslash addplot} command for each set of bars, or put the \texttt{xbar}/\texttt{ybar} keyword directly after \texttt{\textbackslash addplot}. A small example is given as Figure \ref{fig:classscore}.
 \begin{lstlisting}
 \begin{tikzpicture}
 \begin{axis}[title=Class Subject Performance,
@@ -211,7 +215,7 @@ Bar plots are another commonly seen plot type. To construct a bar plot, we eithe
     \caption{A toy dataset about the scores of three classes in three different subjects.}
     \label{fig:classscore}
 \end{figure}
-Here we use \texttt{symbolic x coords} to tell the \texttt{axis} that the $x$-coordinates should be treated as strings, and \texttt{xtick=data} guarantees that the ticks will be as the input data. \texttt{nodes near coords} produces the numbers above the bars. Last but not least, we have tweaked the style for the legend, particularly \texttt{legend columns=-1} to arrange the entries horizontally.
+Here we use the \texttt{symbolic x coords} option to tell the \texttt{axis} that the $x$-coordinates are now strings, and \texttt{xtick=data} guarantees that the tick labels will be those appearing in the input data. \texttt{nodes near coords} produces the numbers above the bars. Last but not least, we have tweaked the style for the legend, particularly \texttt{legend columns=-1} to arrange the entries horizontally.
 
 \section{Referencing between TikZ Pictures}
 
@@ -220,7 +224,7 @@ Sometimes we need to combine multiple TikZ pictures, and share name labels betwe
 \begin{lstlisting}
 \tikzset{decorated arrows/.style={postaction=decorate,
          decoration={markings,mark={at position 0.5 with {\arrow{stealth}}}}}}
-% Main Classifying Diagram
+% Main diagram
 \begin{tikzpicture}[remember picture]
 \draw[thick, ->] (-6,0) -- (6,0) node[right]{$\tr(A)$};
 \draw[thick, ->] (0,-6) -- (0,6) node[above]{$\det(A)$};
@@ -238,7 +242,7 @@ Sometimes we need to combine multiple TikZ pictures, and share name labels betwe
 \node[anchor=center, blue] at (0, 1) {Center};
 ... % omitted other cases
 \end{tikzpicture} 
-% Saddle Point
+% Saddle point, notice the "at" key
 \begin{tikzpicture}[remember picture, overlay]
 \begin{axis}[at=(saddle), anchor=center, scale=0.5, xmin=-2, xmax=2, ymin=-2, ymax=2, axis lines=center, hide axis]
 \addplot[domain=-1:1.5,samples=50,blue,decorated arrows] ({0.5*e^(x) + 0.5*e^(-x)},{0.5*e^(x) - 1*e^(-x)});
@@ -285,6 +289,7 @@ Sometimes we need to combine multiple TikZ pictures, and share name labels betwe
     \coordinate (source) at (5, 1);
     \node[anchor=center, blue] at (5.5, 3) {Source};
     \end{tikzpicture}
+    
     \begin{tikzpicture}[remember picture, overlay]
     \begin{axis}[at=(saddle), anchor=center, scale=0.5, xmin=-2, xmax=2, ymin=-2, ymax=2,
     axis lines=center, hide axis]
@@ -359,12 +364,12 @@ Sometimes we need to combine multiple TikZ pictures, and share name labels betwe
     \caption{Different types of equilibrium points and their representative phase portraits in two-dimensional dynamical systems.}
     \label{fig:phasediagram}
 \end{figure}
-(The full code can be checked from the source file.) In the main procedure, the underlying axes and parabola are drawn, and the coordinates at which each phase portrait will be placed are marked and named. Then, a smaller TikZ picture is initiated for each type over the main diagram with the \texttt{overlay} option. The axis containing the phase lines is then centered at the marked coordinates by filling the \texttt{at} option with the shared name.
+(The full code can be checked from the source file.) In the main procedure, the underlying axes and parabola are drawn, and the coordinates at which each phase portrait will be placed are marked and named. Then, a smaller TikZ picture is initialized for each flow type over the main diagram with the \texttt{overlay} option. The axis containing the phase lines is then centered at the marked coordinates by filling the \texttt{at} option with the shared name.
 
-\section{Matrices in Tikz}
+\section{Matrices in TikZ}
 
 \paragraph{Matrices of Nodes}
-To generate a matrix in TikZ that can be marked, we can use the \texttt{\textbackslash matrix} command with the \texttt{matrix of math nodes} option. This is illustrated by Figure \ref{fig:tikzmatrix} below.
+To generate a matrix in TikZ that can be labeled, we can use the \texttt{\textbackslash matrix} command with the \texttt{matrix of math nodes} option. This is illustrated by Figure \ref{fig:tikzmatrix} below.
 \begin{lstlisting}
 \begin{tikzpicture}[remember picture]
 \node (A) {$A=$};
@@ -372,15 +377,15 @@ To generate a matrix in TikZ that can be marked, we can use the \texttt{\textbac
 {2 & 1 & 7 & \frac{8}{9} \\
 \mathcolor{red}{5} & -\frac{1}{3} & 5 & 0 \\
 -3 & \frac{4}{11} & 6 & -\frac{1}{6} \\};
-\begin{scope}[on background layer]
+\begin{scope}[on background layer] % the blue shadings
 \draw [Green, dashed, fill=blue!12, fill opacity=0.5] ($(mymatrix-1-1.north west)+(-0.5ex,1ex)$) rectangle ($(mymatrix-3-1.south east)+(0.5ex,-1ex)$);
 \draw [Green, dashed, fill=blue!12, fill opacity=0.5] ($(mymatrix-2-1.north west)+(-0.5ex,1ex)$) rectangle ($(mymatrix-2-4.south east)+(0.5ex,-1ex)$);
 \end{scope}
 \node at (mymatrix-1-1) [above, font=\footnotesize, yshift=10, Green] {Col 1};
 \node at (mymatrix-2-4) [right, font=\footnotesize, xshift=15, Green] {Row 2};
-\draw[Red, -Stealth] (pic cs:Ap) to[in=-45, out=-180] (mymatrix-2-1);
+\draw[Red, -Stealth] (pic cs:Ap) to[in=-45, out=-180] (mymatrix-2-1); % to the tikzmark
 \end{tikzpicture}
-{\large$\mathcolor{red}{\tikzmark{Ap}A_{21} = 5}$}    
+\large$\mathcolor{red}{\tikzmark{Ap}A_{21} = 5}$
 \end{lstlisting}
 \begin{figure}
     \centering
@@ -400,7 +405,7 @@ To generate a matrix in TikZ that can be marked, we can use the \texttt{\textbac
     \node at (mymatrix-2-4) [right, font=\footnotesize, xshift=15, Green] {Row 2};
     \draw[Red, -Stealth] (pic cs:Ap) to[in=-45, out=-180] (mymatrix-2-1);
     \end{tikzpicture}
-    {\large$\mathcolor{red}{\tikzmark{Ap}A_{21} = 5}$}
+    \large$\mathcolor{red}{\tikzmark{Ap}A_{21} = 5}$
     \caption{Typesetting and labeling a TikZ matrix.}
     \label{fig:tikzmatrix}
 \end{figure}
@@ -411,7 +416,7 @@ We have also used two additional TikZ libraries. The first one is \texttt{backgr
 \section{Flow Charts}
 
 \paragraph{Flow Charts with Shapes}
-A general TikZ application is to produce flow charts for various processes. This is demonstrated by the bisection algorithm example in Figure \ref{fig:bisect}. We will need to load the \texttt{shapes.geometric} TikZ library for the shapes representing different components.
+A general TikZ application is to produce flow charts for various processes. This is demonstrated by the bisection algorithm example in Figure \ref{fig:bisect}. We will need to load the \texttt{shapes.geometric} TikZ library for defining the shapes representing different components.
 \begin{lstlisting}
 \begin{tikzpicture}[startend/.style={rectangle, rounded corners, minimum width=3cm, minimum height=1cm, draw=black},
 io/.style={trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=4cm, minimum height=1cm, draw=black},
@@ -463,6 +468,7 @@ decision/.style={diamond, minimum width=5cm, minimum height=1cm, draw=black}]
     \caption{The flow chart of the bisection algorithm.}
     \label{fig:bisect}
 \end{figure}
+Again, we have used \texttt{<direction>= of} syntax throughout the code to place the nodes at relative positions. A node named \texttt{back} is also pinpointed in the middle of the second arrow for the return arrow later.
 
 \section{Electrical Circuit Diagrams}
 
