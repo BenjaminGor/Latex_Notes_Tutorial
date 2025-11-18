@@ -1,31 +1,38 @@
 \chapter{The Basic Set-up and Structure of a \LaTeX{} Book}
 
 \paragraph{Introduction}
-The first chapter discusses how to properly configure \LaTeX{} files and organize the structure of the content so that we can generate our first readable \LaTeX{} book PDF. 
+The first chapter discusses how to properly create \LaTeX{} files and organize the structure of the content so that we can generate our first readable \LaTeX{} book PDF. 
 
 \section{Class, Commands, Options, and Packages}
 \label{sec:komaopt}
 
 \paragraph{Class}
-For each \LaTeX{} document, we need to specify its \textit{class}. Throughout this book, we will use the \verb|scrbook| class provided by the \textbf{KOMA-Script}. To do so, we write \texttt{\textbackslash documentclass\{scrbook\}} at the very beginning (\textit{preamble}, everything before \texttt{\textbackslash begin\{document\}}) of the main \TeX{} file. Although not explored in this book, some other notable classes that may be of use include \verb|beamer|, \verb|moderncv|, \verb|article| (or \verb|scrartcl|), and \verb|scrreprt|.
+For each \LaTeX{} document, we need to specify its \textit{class}\index{Class}. Throughout this book, we will use the \verb|scrbook|\index{scrbook@\texttt{scrbook}} class provided by the \textbf{KOMA-Script}\index{KOMA-Script}. To do so, we write \texttt{\textbackslash documentclass\{scrbook\}}\index{documentclass@\texttt{\textbackslash documentclass}} at the very beginning (\textit{preamble}\index{Preamble}, everything before \texttt{\textbackslash begin\{document\}}) of the main \texttt{.tex}\index{tex@\texttt{.tex}} file. Although not explored in this book, some other notable classes that may be of use include \verb|beamer|, \verb|moderncv|, \verb|article| (or \verb|scrartcl|), and \verb|scrreprt|.
 
 \paragraph{Commands and Options}
-The \verb|scrbook| class provides several \textit{options} to customize the format of the book. We can either supply them in the argument when declaring the class, or use the command \texttt{\textbackslash KOMAoptions} in the preamble. Meanwhile, a \textit{command} works like a function in common programming languages and performs some specific action. Commands in \LaTeX{} are denoted by the backslash \verb|\| as the first character before their names. In this book, we have used
+The \verb|scrbook| class provides several \textit{options}\index{Option} to customize the format of the book. We can either supply them in the argument when declaring the class, or use the command \texttt{\textbackslash KOMAoptions}\index{KOMAoptions@\texttt{\textbackslash KOMAoptions}} in the preamble. Meanwhile, a \textit{command}\index{Command} works like a function in common programming languages and performs some specific action. Commands in \LaTeX{} are denoted by the backslash \verb|\| as the first character before their names. In this book, we have used
 \begin{lstlisting}
 \KOMAoptions{paper=a4, fontsize=12pt, chapterprefix=true, twoside=semi, DIV=classic, parskip=half}
 \end{lstlisting}
-The argument is filled inside the curly brackets \verb|{}| following the command. Clearly, here the \verb|paper| option requires the pages to be in A4 size while \verb|fontsize| indicates that the font is 12 pt large. The remaining options will be explained as we go through the later chapters.
+The \textit{argument}\index{Argument} is filled inside the curly brackets \verb|{}|\index{\texttt{\{\}}} following the command. Clearly, here the \verb|paper| option requires the pages to be in A4 size while \verb|fontsize| indicates that the font will be 12 pt large. The remaining options will be explained as we go through the later chapters.
 
 \paragraph{Packages}
-To enable extra functionalities, we need to import \textit{packages}. We can write along the lines of \texttt{\textbackslash usepackage[<options>]\{<package\_name>\}} in the preamble to do so. We will not list all the required packages now at once, but only when they are needed later. The first package we usually need is the \verb|fontenc| package with the \verb|T1| option, set inside a pair of square brackets. This syntax of square brackets will be the same for configuring options in other commands.
+To enable extra functionalities, we need to import \textit{packages}\index{Package}. We can write along the lines of \texttt{\textbackslash usepackage[<options>]\{<package\_name>\}}\index{usepackage@\texttt{\textbackslash usepackage}} in the preamble to do so. We will not list all the required packages now at once, but only when they are needed later. The first package we usually need is the \verb|fontenc|\index{fontenc@\texttt{fontenc}} package, with the \verb|T1| option set inside a pair of square brackets []\index{\texttt{[]}}. This syntax of square brackets will be the same for configuring options in other commands.
 
 \begin{exercisebox}
 \begin{Exercise}
 Try to import the \verb|fontenc| package with the \verb|T1| option as suggested above. There may not be any noticeable difference, but at least you should not be receiving errors.
 \end{Exercise}
+\setboolean{firstanswerofthechapter}{true}
 \begin{Exercise}
 Also, try to achieve the same class setting through the \texttt{\textbackslash documentclass\allowbreak[<options>]\{scrbook\}} declaration instead of the \texttt{\textbackslash KOMAoptions} command.
 \end{Exercise}
+\begin{Answer}
+\begin{lstlisting}
+\documentclas/*!s!*/[paper=a4, fontsize=12pt, chapterprefix=true, twoside=semi, DIV=classic, parskip=half]{scrbook}
+\end{lstlisting}
+\end{Answer}
+\setboolean{firstanswerofthechapter}{false}
 \end{exercisebox}
 
 \section{Structure Hierarchy}
@@ -33,41 +40,40 @@ Also, try to achieve the same class setting through the \texttt{\textbackslash d
 \subsection{Chapters and (Sub-)Sections}
 
 \paragraph{Chapters, Sections}
-In most of the books, the entire content is divided into \textit{chapters}, which in turn usually consist of several \textit{sections}. To mark the beginning of a chapter or section in \LaTeX{}, we place the commands \texttt{\textbackslash chapter\{<chapter\_name\allowbreak>\}} or \texttt{\textbackslash section\{<section\_name>\}} within the \verb|document| scope, which contains the main content and is marked by a pair of \texttt{\textbackslash begin\{document\}} and \texttt{\textbackslash end\{document\}} declarations. As mentioned in the beginning, the preamble has to be inserted before such a \verb|document| scope. So, to typeset the very first section at the start, we write
+In most books, the entire content is divided into \textit{chapters}\index{Chapter}, which in turn usually consist of several \textit{sections}\index{Section}. To mark the beginning of a chapter or section in \LaTeX{}, we place the commands \texttt{\textbackslash chapter\{<chapter\_name\allowbreak>\}}\index{chapter@\texttt{\textbackslash chapter}} or \texttt{\textbackslash section\{<section\_name>\}}\index{section@\texttt{\textbackslash section}} within the \verb|document|\index{document@\texttt{document}} scope, which contains the main content and is marked by a pair of \texttt{\textbackslash begin\{document\}} and \texttt{\textbackslash end\{document\}} declarations. As mentioned at the beginning, the preamble has to be inserted before such a \verb|document| scope. So, to typeset the very first section at the start, we write
 \begin{lstlisting}
 % <preamble before the main document>
 \begin{document}
 ...
 \chapter{The Basic Set-up and Structure of a \LaTeX{} Book}
 ...
-\section{Class, Options, and Packages}
+\section{Class, Commands, Options, and Packages}
 
 \paragraph{Class}
 For each \LaTeX{} document, we need to specify its \textit{class}. Throughout this book, ...
-...
 \end{document}
 \end{lstlisting}
-The \verb|%| symbol indicates a trailing \textit{comment} (highlighted in green) whose purpose is to leave some note about the code. Comments are neither interpreted nor displayed. The \texttt{\textbackslash textit\{<text>\}} command presents the text in italic shape.
+The \verb|%|\index{\texttt{\%}} symbol indicates a trailing \textit{comment}\index{Comment} (highlighted in green) whose purpose is to leave some note about the code. Comments are neither interpreted nor displayed. The \texttt{\textbackslash textit\{<text>\}} command presents the text in italic shape.
 
 \paragraph{Chapter Numbering}
-The \LaTeX{} system records and updates the numbering for chapters/sections internally every time they are initialized. However, we can manually override that by invoking the command \texttt{\textbackslash setcounter\{chapter\}\{<number\allowbreak>\}}. To achieve the effect of Chapter \ref{chap:install} at the beginning, we use \texttt{\textbackslash setcounter\allowbreak\{chapter\}\{-1\}} so that the counter increases by $1$ to $0$ as intended when Chapter \ref{chap:install} is generated. The similar can be done for sections.
+The \LaTeX{} system records and updates the \textit{numbering}\index{Numbering} for chapters/sections internally every time they are initialized. However, we can manually override that by invoking the command \texttt{\textbackslash setcounter\{chapter\}\{<number\allowbreak>\}}\index{setcounter@\texttt{\textbackslash setcounter}}. To achieve the effect of Chapter \ref{chap:install} at the very beginning, we use \texttt{\textbackslash setcounter\allowbreak\{chapter\}\{-1\}} so that the counter\index{Counter} increases by $1$ to $0$ as intended when Chapter \ref{chap:install} is generated. The same can be done for sections.
 
 \paragraph{Subsections, Paragraphs}
-Attentive readers may have already figured out that it is possible to stack an extra level/depth (a \textit{subsection}) in the content hierarchy. This is aptly done not long ago by the \texttt{\textbackslash subsection\{<section\_name>\}} command:
+Attentive readers may have already figured out that it is possible to stack an extra level/depth (a \textit{subsection}\index{Subsection}) in the content hierarchy. This is aptly done not long ago by the \texttt{\textbackslash subsection\{<section\_name>\}}\index{subsection@\texttt{\textbackslash subsection}} command:
 \begin{lstlisting}
 \section{Structure Hierarchy}
 
 \subsection{Chapters and (Sub-)Sections}
 
 \paragraph{Chapters, Sections}
-As in any other book, the entire content is divided into \textit{chapters}, ...
+In most books, the entire content is divided into \textit{chapters}, ...
 \end{lstlisting}
-He/she may also notice that we have used the \texttt{\textbackslash paragraph} command a few times to attach an unnumbered heading for each \textit{paragraph}. There are also starred versions like \texttt{\textbackslash chapter*\{<chapter\_name>\}}, \texttt{\textbackslash section*\{<section\_name>\}}, \texttt{\textbackslash subsection*\{<section\_name>\}}, and so on, which neither display nor increment the numbering/counters.
+He/she may also notice that we have used the \texttt{\textbackslash paragraph}\index{paragraph@\texttt{\textbackslash paragraph}} command a few times to attach an unnumbered heading for each \textit{paragraph}\index{Paragraph}. There are also starred versions like \texttt{\textbackslash chapter*\{<chapter\_name>\}}\index{chapter*@\texttt{\textbackslash chapter*}}, \texttt{\textbackslash section*\{<section\_name>\}}\index{section*@\texttt{\textbackslash section*}}, \texttt{\textbackslash subsection*\{<section\_name>\}}\index{subsection*@\texttt{\textbackslash subsection*}}, and so on, which neither display nor increment the numbering/counters.
 
 \paragraph{Referencing Chapters/Sections}
-We can create references to chapters/sections by appending the \texttt{\textbackslash label\{<label\_name>\}} after their declarations, and then use them via \texttt{\textbackslash ref\{<label\_name>\}}. For example, for Chapter \ref{chap:install}, we write
+We can create \textit{references}\index{Reference (Internal)} to chapters/sections by appending the \texttt{\textbackslash label\{<label\_name>\}}\index{label@\texttt{\textbackslash label}} after their declarations, and then use them via \texttt{\textbackslash ref\{<label\_name>\}}\index{ref@\texttt{\textbackslash ref}}. For example, for Chapter \ref{chap:install}, we write
 \begin{lstlisting}
-\chapter{Installation of \LaTeX{} Distribution}
+\chapter{Installing or Preparing \LaTeX{}}
 \label{chap:install}
 ...
 \end{lstlisting}
@@ -76,14 +82,14 @@ and we can call it with \texttt{\textbackslash ref\{chap:install\}}. The \texttt
 \subsection{Generating Table of Contents}
 
 \paragraph{Table of Contents}
-After establishing the structure of the book, it is convenient to generate a \textit{table of contents (TOC)} as well. In the \verb|scrbook| class, it is easily done by adding the command \texttt{\textbackslash tableofcontents} within the main \verb|document| environment. To control the depth of layers shown, we can call \texttt{\textbackslash setcounter{tocdepth}\allowbreak\{<integer>\}} in the preamble, where the \verb|integer| usually ranges from $-1$ to $3$ ($0$: chapters, $1$: sections, $2$: subsections).
+After establishing the structure of the book, it is convenient to generate a \textit{table of contents (TOC)}\index{Table of Contents (TOC)} as well. In the \verb|scrbook| class, it is easily done by adding the command \texttt{\textbackslash tableofcontents}\index{tableofcontents@\texttt{\textbackslash tableofcontents}} within the main \verb|document| environment. To control the depth of layers shown, we can call \texttt{\textbackslash setcounter\{tocdepth\}\{<integer>\}}\index{setcounter\{tocdepth\}@\texttt{\textbackslash setcounter\{tocdepth\}}} in the preamble, where the \verb|integer| usually ranges from $-1$ to $3$ ($0$: chapters, $1$: sections, $2$: subsections).
 
 \begin{exercisebox}
 \begin{Exercise}
-Try to add some (numbered or unnumbered) chapters, sections, subsections, or even subsubsections (which are, not surprisingly, produced by \texttt{\textbackslash subsubsection}) to see how they are displayed in the book. You may also want to check out \texttt{\textbackslash part}.
+Try to add some (numbered or unnumbered) chapters, sections, subsections, or even subsubsections (which are, not surprisingly, produced by \texttt{\textbackslash subsubsection}\index{subsubsection@\texttt{\textbackslash subsubsection}}) to see how they are displayed in the book. You may also want to check out \texttt{\textbackslash part}\index{part@\texttt{\textbackslash part}}.
 \end{Exercise}
 \begin{Exercise}
-As a follow-up to the last exercise, turn on the table of contents and confirm how the new entries are linked to it. Also, try to adjust the value for \texttt{\textbackslash setcounter{tocdepth}} as proposed above to see the effect.
+As a follow-up to the last exercise, switch on the table of contents and confirm how the new entries are linked to it. Also, try to adjust the value for \texttt{\textbackslash setcounter\{tocdepth\}} as proposed above to see the effect.
 \end{Exercise}
 \end{exercisebox}
 
@@ -91,7 +97,7 @@ As a follow-up to the last exercise, turn on the table of contents and confirm h
 \label{subsection:TeXorg}
 
 \paragraph{Include}
-As the size of the project scales up, it is often helpful to keep the files sorted in a clean order for maintenance. We can put the content of each chapter into separate \texttt{.tex} files, and then use the \texttt{\textbackslash include\{<tex\_file\_name>\}} command to import them into the main script. For example, this chapter is stored as \texttt{ch1\_basic\_structure.tex} in my project space, and in the main \texttt{.tex} file, we shall write something like
+As the size of the project scales up, it is often helpful to keep the files sorted in a clean order for maintenance. We can put the content of each chapter into separate \texttt{.tex} files, and then use the \texttt{\textbackslash include\{<tex\_file\_name>\}}\index{include@\texttt{\textbackslash include}} command to import them into the main script. For example, this chapter is stored as \texttt{ch1\_basic\_structure.tex} in my project space, and in the main \texttt{.tex} file, we shall write something like
 \begin{lstlisting}
 % <preamble again>
 \begin{document}
@@ -106,7 +112,7 @@ As the size of the project scales up, it is often helpful to keep the files sort
 \section{Testing the Book Layout by Lipsum}
 
 \paragraph{Dummy Text}
-Sometimes we may need to insert some placeholder text into the document to test how well the book will look in a specific layout. In this case, we can borrow the standard dummy text \textit{Lorem Ipsum} (or in short \textit{Lipsum}) widely used by the community. Just import the \verb|lipsum| generator package, and add \texttt{\textbackslash lipsum[<paragraph\_no.>]} to the desired locations. For example, the code segment
+Sometimes we may need to insert some \textit{placeholder/dummy text}\index{Dummy Text} into the document to test how well the book will look in a specific layout. In this case, we can borrow the standard dummy text \textit{Lorem Ipsum} (or in short \textit{Lipsum}\index{Lorem Ipsum (Lipsum)}) widely used by the community. Just import the \verb|lipsum|\index{lipsum@\texttt{lipsum}} generator package, and add \texttt{\textbackslash lipsum[<paragraph\_no.>]}\index{lipsum@\texttt{\textbackslash lipsum}} to the desired locations. For example, the code segment
 \begin{lstlisting}
 produces the following text exactly: \par
 \lipsum[1-2]
@@ -114,4 +120,4 @@ produces the following text exactly: \par
 \end{lstlisting}
 produces the following text exactly: \par
 \lipsum[1-2] \par
-The \texttt{\textbackslash par} command signals the end of a paragraph and appends a vertical line spacing afterwards. 
+The \texttt{\textbackslash par}\index{par@\texttt{\textbackslash par}} command signals the end of a paragraph and appends a vertical line spacing afterwards. 
