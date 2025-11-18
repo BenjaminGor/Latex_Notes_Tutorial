@@ -2,17 +2,20 @@
 \chapter{Installing or Preparing \LaTeX{}}
 \label{chap:install}
 
-\paragraph{Introduction} The foremost thing we have to do is obviously preparing a \LaTeX{} environment. Here we will introduce two most common approaches that people use: an online editor versus a local installation.
+\paragraph{Introduction} The foremost thing we have to do is obviously prepare a working \LaTeX{} environment. Here we will introduce two most common approaches that people use: an online editor versus a local installation.
 
 \section{Online Editor}
 
 \paragraph{Overleaf}
-\textbf{Overleaf} (\href{https://www.overleaf.com}{https://www.overleaf.com}) is a popular online \LaTeX{} editor that is quite simple for beginners to pick up. It also provides a very complete documentation, so we will not go into the details. There are mainly three advantages of using Overleaf. First, it comes with most, if not all, of the common packages, hence there is no need to do extra work. Second, it allows multiple collaborators to view and edit the same project. Finally, the project can be easily linked to a \textbf{GitHub} repository for open-access and version control (which this book has been using!). 
+\textbf{Overleaf}\index{Overleaf} (\href{https://www.overleaf.com}{https://www.overleaf.com}) is a popular online \LaTeX{}\index{LaTeX@\LaTeX} editor that is quite simple for beginners to pick up. It also provides a very complete documentation, so we will not go into the details. There are mainly three advantages of using Overleaf. First, it comes with most, if not all, of the common packages, hence there is no need to do extra work to make it ready. Second, it allows multiple collaborators to view and edit the same project via sharing. Finally, the project can be easily linked to a \textbf{GitHub}\index{GitHub} repository for open-access and version control (which this book has been using!). 
 
 \section{Local Installation}
 
 \paragraph{MiKTeX/MacTeX}
-On the other hand, local \LaTeX{} distribution is usually provided by \textbf{MiKTeX} on Windows (\href{https://miktex.org}{https://miktex.org}) and \textbf{MacTeX} on Mac (\href{https://www.tug.org/mactex}{https://www.tug.org/mactex}). Particularly for MiKTeX, packages can be easily installed using its console, and there is also an option to download the missing ones when they are needed.
+On the other hand, local \LaTeX{} distribution is usually brought by \textbf{MiKTeX}\index{MiKTeX} on Windows (\href{https://miktex.org}{https://miktex.org}) and \textbf{MacTeX}\index{MacTeX} on Mac (\href{https://www.tug.org/mactex}{https://\allowbreak www.tug.org/mactex}). Particularly for MiKTeX, packages can be easily installed using its console, and there is also an option to automatically download the missing ones when they are needed.
 
-\paragraph{Choice of Editor}
-The traditional local editor for \LaTeX{} is \textbf{TeXstudio} (\href{https://www.texstudio.org}{https://\allowbreak www.texstudio.org}) that is also not difficult to use. Some users may be more comfortable with \textbf{Visual Studio Code}, which is possible with the \LaTeX{} Workshop extension.
+\paragraph{Choice of IDE}
+The traditional local editor (or formally known as an integrated development environment, IDE\index{Integrated Development Environment (IDE)}) for \LaTeX{} is \textbf{TeXstudio}\index{TeXstudio} (\href{https://www.texstudio.org}{https://\allowbreak www.texstudio.org}) that is also not difficult to use. Some users may be more comfortable with the more common \textbf{Visual Studio Code}\index{Visual Studio Code}, which is possible to run \LaTeX{} with the \LaTeX{} Workshop extension.
+
+\paragraph{Compiler}
+The default \LaTeX{} compiler in both cases will likely be \textbf{pdfLaTeX}\index{pdfLaTeX}, and to make things smooth, we will stick with that. However, note that there are the more powerful \textbf{XeLaTeX}\index{XeLaTeX} and \textbf{LuaLaTeX}\index{LuaLaTeX}, which can be a suitable choice for advanced users.
