@@ -1,46 +1,50 @@
 \chapter{More on Book Layout Design}
 
 \paragraph{Introduction}
-This chapter will go into the details about designing and refining the layout of a \LaTeX{} book, including how to edit the page style with running headers/footers, polishing chapter/section headings, making a good-looking title page, and more.
+This chapter will go into the details about designing and refining the layout of a \LaTeX{} book, including how to edit the page style with running headers/footers, polishing chapter/section headings, making a good-looking title page, and more. The readers can consult the \href{https://mirrors.ctan.org/macros/latex/contrib/koma-script/doc/scrguide-en.pdf}{KOMA-Script 
+Documentation} when needed.
 
 \section{Page Configuration}
 
 \subsection{Some Universal Settings for the Pages}
 
 \paragraph{Two-sided Book}
-In a printed book, there will be a distinction between odd (right) and even (left) pages, i.e.\ \textit{two-sided}, whereas an electronic PDF document is usually \textit{one-sided} and has no such issue. To choose one of these configurations in a \texttt{scrbook}, we can change the \texttt{twoside} parameter in \texttt{\textbackslash KOMAoptions} to \texttt{false}, \texttt{semi}, or \texttt{true}. Unsurprisingly, \texttt{false} indicates one-sided and \texttt{true} means two-sided. Being two-sided means that there will be a difference between the inner/outer margins, with the outer margin (left/right on even/odd pages) occupying two times the space as the inner one. The running headers on odd and even pages will also show the current section/chapter differently.
+In a printed book, there will be a distinction between \textit{odd-numbered}\index{Odd-numbered} (right) and \textit{even-numbered}\index{Even-numbered} (left) pages, i.e.\ \textit{two-sided}\index{Two-sided}, whereas an electronic PDF document is usually \textit{one-sided}\index{One-sided} and has no such issue. To choose one of these configurations in a \texttt{scrbook}, we can change the \texttt{twoside}\index{twoside@\texttt{twoside}} parameter in \texttt{\textbackslash KOMAoptions} to \texttt{false}, \texttt{semi}, or \texttt{true}. Unsurprisingly, \texttt{false} indicates one-sided and \texttt{true} means two-sided. Being two-sided means that there will be a difference between the \textit{inner/outer margins}\index{Margin}\index{Outer Margin}\index{Inner Margin}, with the outer margin (left/right on even/odd pages) occupying two times the space as the inner one. The running headers on odd and even pages will also show the current section/chapter differently. Moreover, empty \textit{interleaf}\index{Interleaf Page} pages will be inserted to enforce that each chapter starts at an odd-numbered page.
 
 In this book, the \texttt{twoside} option is set to \texttt{semi} by adding \texttt{\textbackslash KOMAoptions\allowbreak\{twoside=semi\}}. This retains equal margins as if the document is one-sided, but the headers will switch alternately just like two-sided.
 
 \paragraph{Division Factor}
-The extent of the type area in pages is controlled by the \texttt{DIV} factor passed to \texttt{\textbackslash KOMAoptions}. The higher the value of \texttt{DIV}, the larger the fraction of the main text area and the smaller the margins. The reference value of \texttt{DIV} usually ranges from $9$ to $12$. However, we can delegate the calculation of an optimal \texttt{DIV} by setting \texttt{DIV} to either \texttt{calc} or \texttt{classic}. If a new font is loaded, it is also desirable to recalculate an appropriate type area by calling \texttt{\textbackslash KOMAoptions\{DIV=last\}} that reuses the same setting.
+The extent of the type area in pages is controlled by the \texttt{DIV}\index{DIV Factor@\texttt{DIV} Factor} factor passed to \texttt{\textbackslash KOMAoptions}. The higher the value of \texttt{DIV}, the larger the fraction of the \textit{main text area}\index{Main Text Area} and the smaller the margins. The reference value of \texttt{DIV} usually ranges from $9$ to $12$. However, we can delegate the calculation of an optimal \texttt{DIV} by setting \texttt{DIV} to either \texttt{calc} or \texttt{classic}. If a new font is loaded, it is also desirable to recalculate an appropriate type area by calling \texttt{\textbackslash KOMAoptions\{DIV=last\}} that reuses the same setting.
 
 \paragraph{Line Spread}
-Finally, to control the \textit{line spread} in the main text, just add \texttt{\textbackslash linespread\{<value>\}}. Here it is set to $1.25$.
+Finally, to control the \textit{line spread}\index{Line Spread} in the main text, just add \texttt{\textbackslash linespread\{<value>\}}\index{linespread@\texttt{\textbackslash linespread}}. Here it is set to $1.25$.
 
 \subsection{Page Style}
 
 \paragraph{Headers and Footers}
-A very important part of a page is its \textit{header} and \textit{footer}. Editing the content within a header/footer requires us to load the \texttt{scrlayer-\allowbreak scrpage} package. The default page style for the main content in the book is invoked by \texttt{\textbackslash pagestyle\{scrheadings\}}. We can refer to the inner/center/outer header/footer via \texttt{ihead}, \texttt{chead}, \texttt{ohead}, \texttt{ifoot}, \texttt{cfoot}, and \texttt{ofoot} correspondingly. For example, the default page number is put at the outer footer, and this book has moved it to the center footer by declaring:
+A very important part of a page is its \textit{header}\index{Header} and \textit{footer}\index{Footer}. Editing the content within a header/footer requires us to load the \texttt{scrlayer-\allowbreak scrpage}\index{scrlayer-scrpage@\texttt{scrlayer-scrpage}} package. The default page style for the main content in the book is invoked by \texttt{\textbackslash pagestyle\{scrheadings\}}\index{pagestyle@\texttt{\textbackslash pagestyle}}\index{scrheadings@\texttt{scrheadings}}. We can refer to the inner/center/outer header/footer via \texttt{ihead}\index{ihead@\texttt{ihead}}, \texttt{chead}\index{chead@\texttt{chead}}, \texttt{ohead}\index{ohead@\texttt{ohead}}, \texttt{ifoot}\index{ifoot@\texttt{ifoot}}, \texttt{cfoot}\index{cfoot@\texttt{cfoot}}, and \texttt{ofoot}\index{ofoot@\texttt{ofoot}} correspondingly. For example, the default \textit{page number}\index{Page Number} is put at the outer footer, and this book has moved it to the center footer by declaring:
 \begin{lstlisting}
 \pagestyle{scrheadings}
 \ofoot*{}
 \cfoot*{\pagemark}    
 \end{lstlisting}
-where the variable \texttt{\textbackslash pagemark} stores the page number in \texttt{scrbook}.
+where the variable \texttt{\textbackslash pagemark}\index{pagemark@\texttt{\textbackslash pagemark}} stores the page number in \texttt{scrbook}.
 
 There is also a finer division between even/odd pages for headers/footers: \texttt{lehead}, \texttt{cehead}, \texttt{rehead}, \texttt{lohead}, \texttt{cohead}, \texttt{rohead}, where \texttt{l}, \texttt{c}, \texttt{r} stand for left/center/right, and \texttt{e}, \texttt{o} represent even and odd respectively. If we want to swap the chapter/section in the even/odd-paged headers, we can write something like
 \begin{lstlisting}
 \lehead*[]{\rightmark}
 \rohead*[]{\leftmark}    
 \end{lstlisting}
-The content in the optional argument will be applied to the chapter page (more accurately, the \textit{plain} page style), and is left empty as in the default setting. The \texttt{\textbackslash leftmark} and \texttt{\textbackslash rightmark} hold the original left/right headers, the depth of which is controlled by
+The content in the optional argument will be applied to the chapter page (more accurately, the \textit{plain}\index{Plain Page Style} page style), and is left empty as in the default setting. The \texttt{\textbackslash leftmark}\index{leftmark@\texttt{\textbackslash leftmark}} and \texttt{\textbackslash rightmark}\index{rightmark@\texttt{\textbackslash rightmark}} hold the original left/right headers, the depth of which is controlled by \texttt{\textbackslash automark}\index{automark@\texttt{\textbackslash automark}}:
 \begin{lstlisting}
 \automark[section]{chapter} % [right]{left}
 \end{lstlisting}
 
+\paragraph{Separate File for Styles and Commands}
+Before going deeper into the details of configuring the page style, a good practice to be mentioned is to move the initial commands (and often all the packages as well) to a separate \texttt{.sty}\index{sty@\texttt{.sty}} file to avoid congesting the preamble. We can subsequently load that by the usual \texttt{\textbackslash usepackage}\index{usepackage@\texttt{\textbackslash usepackage}} command. This book has used \texttt{\textbackslash usepackage\{mymacros\}} with a self-created \texttt{mymacros.sty} file, for example.
+
 \paragraph{Setting Font Style for Elements}
-Now we will further customize the font style and color of our header by the command \texttt{\textbackslash setkomafont\{<element>\}\allowbreak\{<commands>\}}. As its name suggests, it applies commands to set up a certain element in a page. For headers, the corresponding alias is \texttt{pagehead}, and in this book, we have
+Now we will further customize the font style and color of our header by the command \texttt{\textbackslash setkomafont\{<element>\}\allowbreak\{<commands>\}}\index{setkomafont@\texttt{\textbackslash setkomafont}}. As its name suggests, it applies styling commands to set up a certain element on a page. For headers, the corresponding alias is \texttt{pagehead}, and in this book, we have
 \begin{lstlisting}
 \setkomafont{pagehead}{\color{RoyalBlue}\slshape\bfseries}    
 \end{lstlisting}
@@ -50,14 +54,14 @@ Many other elements can be changed as well, including \texttt{chapter}, \texttt{
 \end{lstlisting}
 
 \paragraph{Separating Line for Headers}
-The separating line under the header is added via passing the switch \texttt{headsepline=on} to \texttt{\textbackslash KOMAoptions}. We similarly have \texttt{footsepline}.
+The separating line under the header is added via passing the switch \texttt{headsepline=on}\index{headsepline@\texttt{headsepline}} to \texttt{\textbackslash KOMAoptions}. We similarly have \texttt{footsepline}\index{footsepline@\texttt{footsepline}}.
 
 \paragraph{Format for the Chapter Mark}
-Sometimes we may want to change the chapter label in the header too. This is done by applying \texttt{\textbackslash renewcommand*} to \texttt{\textbackslash chaptermarkformat}. In this book, we have
+Sometimes we may want to change the chapter label in the header too. This is done by applying \texttt{\textbackslash renewcommand*} to \texttt{\textbackslash chaptermarkformat}\index{chaptermarkformat@\texttt{\textbackslash chaptermarkformat}}. In this book, we have
 \begin{lstlisting}
 \renewcommand*{\chaptermarkformat}{\chapapp~\thechapter\autodot~--~} % ~ occupies a space, -- is a long dash
 \end{lstlisting}
-\texttt{\textbackslash chapapp} stores the word "Chapter" that can be modified later, \texttt{\textbackslash thechapter} contains the current chapter counter, and \texttt{\textbackslash autodot} is empty, reserved for an extra dot after any chapter/section numbering. As you may have guessed, there is also \texttt{\textbackslash sectionmarkformat}.
+\texttt{\textbackslash chapapp}\index{chapapp@\texttt{\textbackslash chapapp}} stores the word “Chapter” that can be modified later, \texttt{\textbackslash thechapter}\index{thechapter@\texttt{\textbackslash thechapter}} contains the current chapter counter, and \texttt{\textbackslash autodot}\index{autodot@\texttt{\textbackslash autodot}} is empty, reserved for an extra dot after any chapter/section numbering. As you may have guessed, there is also \texttt{\textbackslash sectionmarkformat}\index{sectionmarkformat@\texttt{\textbackslash sectionmarkformat}}.
 
 \begin{exercisebox}
 \begin{Exercise}
@@ -69,56 +73,54 @@ Edit the page style to make your own header and footer.
 \label{sec:appearch}
 
 \paragraph{Prefix and Format of Chapter Headings}
-We can single out the chapter number as a prefix in the chapter title by setting \texttt{chapterprefix=true} in \texttt{\textbackslash KOMAoptions}. Furthermore, we can customize it by \texttt{\textbackslash addtokomafont}, which behaves similarly to \texttt{\textbackslash setkomafont} and adds new commands on top of the original ones:
+We can single out the chapter number as a prefix in the chapter title by setting \texttt{chapterprefix=true}\index{chapterprefix@\texttt{chapterprefix}} in \texttt{\textbackslash KOMAoptions}. Furthermore, we can customize it by \texttt{\textbackslash addtokomafont}\index{addtokomafont@\texttt{\textbackslash addtokomafont}}, which behaves similarly to \texttt{\textbackslash setkomafont} and adds new commands on top of the original ones:
 \begin{lstlisting}
 \addtokomafont{chapterprefix}{\itshape\color{white}}
 \end{lstlisting}
-In addition, we can again call \texttt{\textbackslash renewcommand*} to manipulate \texttt{\textbackslash chapterformat}. In this book, the following code is adopted to produce a blue box to hold the chapter number in position:
+In addition, we can again call \texttt{\textbackslash renewcommand*} to manipulate \texttt{\textbackslash chapterformat}\index{chapterformat@\texttt{\textbackslash chapterformat}}. In this book, the following code is adopted to produce a blue box to hold the chapter number in position:
 \begin{lstlisting}
 \renewcommand*{\chapterformat}{\raggedleft\colorbox{RoyalBlue}{\parbox[b][2.8em]{2.8em}{\vfill\centering{\large\chapapp}\\[-0.4em]\thechapter\vfill}}}  
 \end{lstlisting}
 
 \paragraph{Format for Section Numbers}
-In the same way, we have \texttt{\textbackslash sectionformat} that can be edited for section headings. The code to produce the white section number in a black box is
+In the same way, we have \texttt{\textbackslash sectionformat}\index{sectionformat@\texttt{\textbackslash sectionformat}} that can be edited for section headings. The code to produce the white section number in a black box is
 \begin{lstlisting}
 \renewcommand*{\sectionformat}{\colorbox{black}{\textcolor{white}{\thesection}}\enskip}
 \end{lstlisting}
 
 \paragraph{Format for Section Line}
-Meanwhile, the black line under section headings is governed by \texttt{\textbackslash sectionlinesformat}. To modify that, notice that it has to accept $4$ arguments, where only the third (section number) and the last (section name) will be relevant here:
+Meanwhile, the black line under section headings is governed by \texttt{\textbackslash sectionlinesformat}\index{sectionlinesformat@\texttt{\textbackslash sectionlinesformat}}. To modify that, notice that it has to accept $4$ arguments, where only the third (section number) and the last (section name) will be relevant here:
 \begin{lstlisting}
 \renewcommand*{\sectionlinesformat}[4]{\makebox[0pt][l]{\rule[-\fboxsep-\fboxrule]{\textwidth}{\fboxrule}}#3\parbox[b]{0.85\textwidth}{\linespread{1}\selectfont#4}}
 \end{lstlisting}
-(Reference: \href{https://tex.stackexchange.com/questions/581566/section-formatting-with-boxed-numbering-and-horizontal-line}{\TeX{} StackExchange 581566}) The \texttt{makebox} command creates an artificial empty box that does not occupy any width ($0$ pt) and contains the desired separating line (\texttt{\textbackslash rule} with a length of \texttt{\textbackslash textwidth}). It is vertically offset downwards by \texttt{\textbackslash fboxsep} (plus \texttt{\textbackslash fboxrule}) to compensate for the padding around the black numbered box (\texttt{\#3}) that follows, defined via \texttt{\textbackslash sectionformat} above. The section name (\texttt{\#4}) is subsequently wrapped by a \texttt{\textbackslash parbox} that is bottom-aligned and can account for any title longer than one line.
+(Reference: \href{https://tex.stackexchange.com/questions/581566/section-formatting-with-boxed-numbering-and-horizontal-line}{\TeX{} StackExchange 581566}) The \texttt{\textbackslash makebox} command creates an artificial empty box that does not occupy any width ($0$ pt) and contains the desired separating line (\texttt{\textbackslash rule} with a length of \texttt{\textbackslash textwidth}). It is vertically offset downwards by \texttt{\textbackslash fboxsep} (plus \texttt{\textbackslash fboxrule}) to compensate for the padding around the black numbered box (\texttt{\#3}) that follows, defined via \texttt{\textbackslash sectionformat} above. The section name (\texttt{\#4}) is subsequently wrapped by a \texttt{\textbackslash parbox} that is bottom-aligned and can account for any title longer than one line.
 
 \paragraph{End of Chapter Headings}
-While there is also the \texttt{\textbackslash chapterlinesformat} command for making a line below the chapter title, we can achieve more by tackling \texttt{\textbackslash chapterheadendvskip} instead. It controls the stuff (usually some vertical skip) that occurs after a chapter heading. For aesthetics, we will load the \texttt{pgfornament} package that supplies many beautiful visual patterns. Then, we can write
+While there is also the \texttt{\textbackslash chapterlinesformat}\index{chapterlinesformat@\texttt{\textbackslash chapterlinesformat}} command for making a line below the chapter title, we can achieve more by tackling \texttt{\textbackslash chapterheadendvskip}\index{chapterheadendvskip@\texttt{\textbackslash chapterheadendvskip}} instead. It controls the stuff (usually some vertical skip) that occurs after a chapter heading. For aesthetics, we will load the \texttt{pgfornament}\index{pgfornament@\texttt{pgfornament}} package that supplies many beautiful visual patterns. Then, we can write
 \begin{lstlisting}
 \renewcommand*{\chapterheadendvskip}{\pgfornament[width=\textwidth]{88}\par} % the 88th ornament
 \end{lstlisting}
-to achieve the chapter line layout present in the book.
+\index{pgfornament@\texttt{\textbackslash pgfornament}}to achieve the chapter line layout present in the book.
 
 \paragraph{Start of Chapter Headings}
-There exists the \texttt{\textbackslash chapterheadstartvskip} counterpart for anything before the chapter title as well. The default vertical space above the chapter heading may be too much, and we can shorten it via 
+There exists the \texttt{\textbackslash chapterheadstartvskip}\index{chapterheadstartvskip@\texttt{\textbackslash chapterheadstartvskip}} counterpart for anything before the chapter title as well. The default vertical space above the chapter heading may be too much, and we can shorten it via 
 \begin{lstlisting}
 \renewcommand*{\chapterheadstartvskip}{\addvspace{2em}}    
 \end{lstlisting}
-\texttt{\textbackslash addvspace} is a variant of \texttt{\textbackslash vspace}, which is a kind of \textit{rubber length}: it adds just enough vertical space so that the total space is as large as the input length if the existing space is shorter than that, and does nothing when it is already long enough.
+\texttt{\textbackslash addvspace}\index{addvspace@\texttt{\textbackslash addvspace}} is a variant of \texttt{\textbackslash vspace}, which is a kind of \textit{rubber length}\index{Rubber Length}: it adds just enough vertical space so that the total space is as large as the input length if the existing space is shorter than that, and does nothing when it is already long enough.
 
-\paragraph{Default Sans-serif} As you may notice, the chapter/section headings are written in sans-serif. To change this, we can set \texttt{sfdefaults} to \texttt{no} in \texttt{\textbackslash KOMAoptions}. We can also mark up text with \texttt{\textbackslash textmaybesf\{<text>\}} or the \texttt{\textbackslash maybesf\allowbreak family} switch, which are toggled by \texttt{sfdefaults} too.
+\paragraph{Default Sans-serif} As you may notice, the chapter/section headings are written in sans-serif. To change this, we can set \texttt{sfdefaults}\index{sfdefaults@\texttt{sfdefaults}} to \texttt{no} in \texttt{\textbackslash KOMAoptions}. We can also mark up text with \texttt{\textbackslash textmaybesf\{<text>\}}\index{textmaybesf@\texttt{\textbackslash textmaybesf}} or the \texttt{\textbackslash maybesf\allowbreak family}\index{maybesf@\texttt{\textbackslash maybesf}} switch, which are toggled by \texttt{sfdefaults} too.
 
 \section{Title Page and Front/Back Matter}
 
-(interleaf?)
-
 \paragraph{Title Page}
-The easiest way to generate a \textit{title page} is to simply use the \texttt{\textbackslash make\allowbreak title} command. Just enter the book (sub)title, author name, and the like in the preamble using the corresponding commands, for example:
+The easiest way to generate a \textit{title page}\index{Title Page} is to simply use the \texttt{\textbackslash make\allowbreak title}\index{maketitle@\texttt{\textbackslash maketitle}} command. Just enter the book (sub)title, author name, and the like in the preamble using the corresponding commands, for example:
 \begin{lstlisting}
 \title{How to Reproduce this Book Exactly with \LaTeX}
 \subtitle{A Self-contained Tutorial on Writing Mathematical Notes}
 \author{C.~L.~Loi}
 \end{lstlisting}
-and maybe \texttt{\textbackslash date} and \texttt{\textbackslash publishers}, etc. Then calling \texttt{\textbackslash maketitle} will automatically build a title page for you. In addition, the \texttt{titlepage} switch in \texttt{\textbackslash KOMAoptions} can decide if it is embedded in-page. However, it is more flexible to design our own title page using the \texttt{titlepage} environment. In this book, we have adopted:
+\index{title@\texttt{\textbackslash title}}\index{subtitle@\texttt{\textbackslash subtitle}}\index{author@\texttt{\textbackslash author}}\index{date@\texttt{\textbackslash date}}and maybe \texttt{\textbackslash date} and \texttt{\textbackslash publishers}, etc. Then calling \texttt{\textbackslash maketitle} will automatically build a title page for you. In addition, the \texttt{titlepage} switch in \texttt{\textbackslash KOMAoptions} can decide if it is embedded in-page. However, it is more flexible to design our own title page using the \texttt{titlepage}\index{titlepage@\texttt{titlepage}} environment. In this book, we have adopted:
 \begin{lstlisting}
 \begin{titlepage}
 \parbox{0.7\textwidth}{\Huge\raggedright\textbf{\textmaybesf{How to Reproduce this Book Exactly with \LaTeX}}}\par
@@ -134,7 +136,7 @@ CUHK-EESC/NTU-AS\par}
 \end{lstlisting}
 where we have utilized a lot of boxes and positioning/spacing commands.
 
-\paragraph{Front/Main/Back Matter} Usually in a book, there will be \textit{front matter} (title page, preface, table of contents) and \textit{back matter} (bibliography, index). To mark them, just write \texttt{\textbackslash frontmatter} and \texttt{\textbackslash backmatter} in front of the corresponding parts. We also have \texttt{\textbackslash mainmatter} for transitioning to the main content. So it should look like
+\paragraph{Front/Main/Back Matter} Usually in a book, there will be \textit{front matter}\index{Front Matter} (title page, preface, table of contents) and \textit{back matter}\index{Back Matter} (bibliography, index). To mark them, just write \texttt{\textbackslash frontmatter}\index{frontmatter@\texttt{\textbackslash frontmatter}} and \texttt{\textbackslash backmatter}\index{backmatter@\texttt{\textbackslash backmatter}} in front of the corresponding parts. We also have \texttt{\textbackslash mainmatter}\index{mainmatter@\texttt{\textbackslash mainmatter}} for transitioning to the main content. So it should look like
 \begin{lstlisting}
 \frontmatter
 ...
@@ -145,16 +147,16 @@ where we have utilized a lot of boxes and positioning/spacing commands.
 \include{ch1_basic_structure}
 ...
 \end{lstlisting}
-\texttt{\textbackslash frontmatter} will use Roman page numbering, and \texttt{\textbackslash mainmatter} will switch it back to the normal Arabic numbering. We can also manually do this by
+\texttt{\textbackslash frontmatter} will use Roman page numbering, and \texttt{\textbackslash mainmatter} will switch it back to the normal Arabic numbering. We can also manually do this by the \texttt{\textbackslash pagenumbering}\index{pagenumbering@\texttt{\textbackslash pagenumbering}} command.
 \begin{lstlisting}
 \pagenumbering{roman}
 ...
 \cleardoubleoddpage
 \pagenumbering{arabic}
 \end{lstlisting}
-The \texttt{\textbackslash cleardoubleoddpage} command is needed to properly flush the page.
+The \texttt{\textbackslash cleardoubleoddpage}\index{cleardoubleoddpage@\texttt{\textbackslash cleardoubleoddpage}} command is needed to properly flush the page.
 
-\paragraph{Back of Title} Sometimes we may want to put a copyright statement or other information at the back of the title page. If we choose to create the title page by the \texttt{\textbackslash maketitle} method, then we can simply supply the \texttt{\textbackslash lowertitleback} or \texttt{\textbackslash uppertitleback} command, e.g.\ for this book:
+\paragraph{Back of Title} Sometimes we may want to put a copyright statement or other information at the back of the title page. If we choose to create the title page by the \texttt{\textbackslash maketitle} method, then we can simply supply the \texttt{\textbackslash lowertitleback}\index{lowertitleback@\texttt{\textbackslash lowertitleback}} or \texttt{\textbackslash uppertitleback}\index{uppertitleback@\texttt{\textbackslash uppertitleback}} command, e.g.\ for this book, we may have:
 \begin{lstlisting}
 \lowertitleback{"How to Reproduce this Book Exactly with \LaTeX"\\
 Copyright, C.~L.~Loi, 2025. All rights reserved.}    
@@ -165,7 +167,7 @@ However, if the title page is designed manually, then we may instead write, afte
 \vspace*{\fill}
 "How to Reproduce this Book ... All rights reserved.
 \end{lstlisting}
-\texttt{\textbackslash thispagestyle\{empty\}} selects the \texttt{empty} page style for just this one page.
+\texttt{\textbackslash thispagestyle\{empty\}}\index{thispagestyle@\texttt{\textbackslash thispagestyle}} selects the \texttt{empty}\index{empty@\texttt{empty}} page style for just this one page.
 
 \begin{exercisebox}
 \begin{Exercise}
@@ -173,18 +175,18 @@ Design your own title page.
 \end{Exercise}
 \end{exercisebox}
 
-\section{Footnotes and Markings}
+\section{Notes and Markings}
 
-\subsection{Footnotes and Line Numbers}
+\subsection{Footnotes, Margin Notes, and Line Numbers}
 
 \paragraph{Footnotes}
-The basic way to add a footnote like this\footnote{This is a simple footnote that is directly inserted after the desired location.} is to use the \texttt{\textbackslash footnote\allowbreak\{<text>\}} command, as
+The basic way to add a \textit{footnote}\index{Footnote} like this\footnote{This is a simple footnote that is directly inserted after the desired location.} is to use the \texttt{\textbackslash footnote\allowbreak\{<text>\}}\index{footnote@\texttt{\textbackslash footnote}} command, as
 \begin{lstlisting}
 The basic way to add a footnote like this\footnote{This is a simple footnote that is directly inserted after the desired location.} is ...   
 \end{lstlisting}
-Another way is to use the \texttt{\textbackslash footnotemark} \texttt{\textbackslash footnotetext} pair like this\footnotemark{}
+Another way is to use the \texttt{\textbackslash footnotemark}\index{footnotemark@\texttt{\textbackslash footnotemark}} \texttt{\textbackslash footnotetext}\index{footnotetext@\texttt{\textbackslash footnotetext}} pair like this:\footnotemark{}
 \begin{lstlisting}
-Another way is to use the \texttt{\textbackslash footnotemark} \texttt{\textbackslash footnotetext} pair like this\footnotemark{}
+Another way is to use the \texttt{\textbackslash footnotemark} \texttt{\textbackslash footnotetext} pair like this:\footnotemark{}
 ...
 where we can put the text anywhere after the mark.\footnotetext{This footnote by \texttt{\textbackslash footnotetext} will automatically be traced to the latest texttt{\textbackslash footnotemark}.}
 \end{lstlisting}
@@ -196,14 +198,20 @@ If there is more than one \texttt{\textbackslash footnotemark} before a \texttt{
 \footnotetext{Try removing the patch above, and the numbering will clash.}
 
 \paragraph{Separating Line for Footnotes} 
-To customize the appearance of the separating line above the footnotes, we can call \texttt{\textbackslash renewcommand*\{\textbackslash footnoterule\}\allowbreak\{<code>\}}. However, a shortcut is to do \texttt{\textbackslash setfootnoterule<length>}, where it is set to $0.8$ times \texttt{\textbackslash textwidth} in this book.
+To customize the appearance of the separating line above the footnotes, we can call \texttt{\textbackslash renewcommand*\{\textbackslash footnoterule\}\allowbreak\{<code>\}}. However, a shortcut is to do \texttt{\textbackslash setfootnoterule\{<length>\}}\index{setfootnoterule@\texttt{\textbackslash setfootnoterule}}, where it is set to $0.8$ times \texttt{\textbackslash textwidth} in this book.
 
 \paragraph{Referencing Footnote}
 A footnote can be labeled and referenced as well. Just put \texttt{\textbackslash label\{<label\_name>\}} inside the footnote and use \texttt{\textbackslash ref} as for other elements.
 
+\paragraph{Margin Notes}
+To add a \textit{margin note}\index{Margin Note}, we simply use \texttt{\textbackslash marginpar\{<text>\}}\index{marginpar@\texttt{\textbackslash marginpar}} at the desired location like this:\marginpar{Hi, it should be wide enough to write a very important proof...}
+\begin{lstlisting}
+\marginpar{Hi, it should be wide enough to write a very important proof...}
+\end{lstlisting}
+
 \paragraph{Line Numbers}
 \linenumbers
-Meanwhile, to produce line numbers for text (which is common for thesis or publications), we can load the \texttt{lineno} package. Then we can initiate line numbers by using \texttt{\textbackslash linenumbers} and stop with \texttt{\textbackslash nolinenumbers}. For example, this paragraph is affected by \par
+Meanwhile, to produce \textit{line numbers}\index{Line Number} for text (which is common for thesis or publications), we can load the \texttt{lineno}\index{lineno@\texttt{lineno}} package. Then we can initiate line numbers by using \texttt{\textbackslash linenumbers}\index{linenumbers@\texttt{\textbackslash linenumbers}} and stop with \texttt{\textbackslash nolinenumbers}\index{nolinenumbers@\texttt{\textbackslash nolinenumbers}}. For example, this paragraph is affected by \par
 \nolinenumbers
 \begin{lstlisting}
 \linenumbers
@@ -211,18 +219,16 @@ Meanwhile, to produce line numbers for text ... For example, this paragraph is a
 \nolinenumbers 
 \end{lstlisting}
 
-(marginpar?)
-
 \subsection{Hyperlinks and Bookmarks}
 
 \paragraph{Hyperlinks} 
-To enable inserting hyperlinks (e.g.\ websites, or referencing in the book) in the document, we need to import the \texttt{hyperref} package. Then we can simply use the \texttt{\textbackslash href\{<link>\}\allowbreak\{<text>\}} command, for example
+To enable inserting \textit{hyperlinks}\index{Hyperlink} (e.g.\ websites, or referencing in the book) in the document, we need to import the \texttt{hyperref}\index{hyperref@\texttt{hyperref}} package. Then we can simply use the \texttt{\textbackslash href\{<link>\}\{<text>\}}\index{href@\texttt{\textbackslash href}} command, for example
 \begin{lstlisting}
 \href{https://www.google.com/}{Google}
 \end{lstlisting}
-yields the link to \href{https://www.google.com/}{Google}. Internal referencing links will be automatically formed. As a side note, we can also use \texttt{\textbackslash autoref} that determines the prefix for objects automatically in place of \texttt{\textbackslash ref}. 
+yields the link to \href{https://www.google.com/}{Google}. Internal referencing links will be automatically formed. As a side note, we can also use \texttt{\textbackslash autoref}\index{autoref@\texttt{\textbackslash autoref}} that determines the prefix for objects automatically in place of \texttt{\textbackslash ref}. 
 
-\paragraph{Highlighting Options for Links} The default highlighting effects for hyperlinks by \texttt{hyperref} can be controlled by \texttt{\textbackslash hypersetup}. In this book, we have used
+\paragraph{Highlighting Options for Links} The default highlighting effects for hyperlinks by \texttt{hyperref} can be controlled by \texttt{\textbackslash hypersetup}\index{hypersetup@\texttt{\textbackslash hypersetup}}. In this book, we have used
 \begin{lstlisting}
 \hypersetup{
     colorlinks,
@@ -234,9 +240,9 @@ yields the link to \href{https://www.google.com/}{Google}. Internal referencing 
     pdfkeywords = {Mathematics, LATEX}
 }
 \end{lstlisting}
-The \texttt{colorlinks} keyword replaces the default colored boxes by colored text, while \texttt{linkcolor} and \texttt{urlcolor} indicate the color for internal and external links respectively. The subsequent options are a by-product to set up the metadata for the PDF file.
+The \texttt{colorlinks}\index{colorlinks@\texttt{colorlinks}} keyword replaces the default colored boxes by colored text, while \texttt{linkcolor} and \texttt{urlcolor} indicate the color for internal and external links, respectively. The subsequent options are a by-product to set up the metadata for the PDF file.
 
-\paragraph{PDF Bookmarks} To further facilitate the PDF file, we can load the \texttt{bookmark} package with the following options:
+\paragraph{PDF Bookmarks} To further facilitate the PDF file, we can load the \texttt{bookmark}\index{bookmark@\texttt{bookmark}} package with the following options:
 \begin{lstlisting}
 \usepackage[open,openlevel=1,atend,numbered]{bookmark}
 \end{lstlisting}
@@ -245,11 +251,11 @@ The \texttt{open} and \texttt{openlevel} options tell to which depth the bookmar
 \subsection{Index Page}
 
 \paragraph{Indices}
-Many books will provide an index page for important words or concepts at the end of the book. To do this in \LaTeX{}, we can import the \texttt{imakeidx}\index{imakeidx@\texttt{imakeidx}} package, immediately followed by the \texttt{\textbackslash makeindex[intoc]} command. Then, to add an index entry, we add the \texttt{\textbackslash index\{<name>\}} command at the corresponding position. For example, in this paragraph:
+Many books will provide an \textit{index page}\index{Index Page} for important words or concepts at the end of the book. To do this in \LaTeX{}, we can import the \texttt{imakeidx}\index{imakeidx@\texttt{imakeidx}} package, immediately followed by the \texttt{\textbackslash makeindex[intoc]}\index{makeindex@\texttt{\textbackslash makeindex}} command. Then, to add an index entry, we add the \texttt{\textbackslash index\{<name>\}}\index{index@\texttt{\textbackslash index}} command at the corresponding position. For example, in this paragraph:
 \begin{lstlisting}
 ... To do this in \LaTeX{}, we can import the \texttt{imakeidx}\index{imakeidx@\texttt{imakeidx}} package ...    
 \end{lstlisting}
-Here, inside the \texttt{\textbackslash index} command, we put the internal name used for sorting and the actual shown index, separated by \texttt{@}. Meanwhile, a sub-index can be set with \texttt{!}. Finally, the full index list will be printed with \texttt{\textbackslash printindex}. To produce alphabetical headers for the indices, we can paste the following patch in the preamble (\href{https://tex.stackexchange.com/questions/712863/how-to-make-an-alphabetically-ordered-index-using-imakeidx-package}{\TeX{} StackExchange 712863}):
+Here, inside the \texttt{\textbackslash index} command, we put the internal name used for sorting and the actual shown index, separated by \texttt{@}. Meanwhile, a sub-index can be set with \texttt{!}. Finally, the full index list will be printed with \texttt{\textbackslash printindex}\index{printindex@\texttt{\textbackslash printindex}}. To produce alphabetical headers for the indices, we can paste the following patch in the preamble (\href{https://tex.stackexchange.com/questions/712863/how-to-make-an-alphabetically-ordered-index-using-imakeidx-package}{\TeX{} StackExchange 712863}):
 \begin{lstlisting}
 \begin{filecontents}[overwrite]{myindexstyle.ist}
 headings_flag 1

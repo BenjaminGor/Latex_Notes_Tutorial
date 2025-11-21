@@ -8,7 +8,7 @@ This chapter presents different special environments in \LaTeX{} apart from the 
 \subsection{Unordered Lists}
 
 \paragraph{Unordered Lists}
-The ability to organize things into a \textit{list} is essential in any documenting system. In \LaTeX{}, we can achieve this by using the \verb|itemize| environment with the \texttt{\textbackslash item} command. For example, if we write
+The ability to organize things into a \textit{list}\index{List} is essential in any documenting system. In \LaTeX{}, we can achieve this by using the \verb|itemize|\index{itemize@\texttt{itemize}} environment with the \texttt{\textbackslash item}\index{item@\texttt{\textbackslash item}} command. For example, if we write
 \begin{lstlisting}
 \begin{itemize}
 \item Canada
@@ -36,12 +36,12 @@ then it will show up as
     \item Pusan
     \end{itemize}
 \end{itemize}  
-Notice that the items are \textit{unordered/bulleted} and the list can be nested.
+Notice that the items are \textit{unordered/bulleted}\index{Unordered List} and the list can be \textit{nested}\index{Nested List}.
 
 \subsection{Ordered Lists}
 
 \paragraph{Numbered Lists}
-Similarly, we can have an \textit{ordered/numbered} list by using the \verb|enumerate| environment. For example, by typing
+Similarly, we can have an \textit{ordered/numbered}\index{Ordered List}\index{Numbered List} list by using the \verb|enumerate|\index{enumerate@\texttt{enumerate}} environment. For example, by typing
 \begin{lstlisting}
 \begin{enumerate}
     \item A robot may not injure a human being ...
@@ -58,7 +58,7 @@ we acquire the following output:
 It is also possible to have nested \verb|enumerate| groups.
 
 \paragraph{Customizing Labels for Lists}
-The \verb|enumitem| package enhances the typesetting of lists. One of its prime utilities is to change the starting labels or bullets for every item by providing the \verb|label| option. For example,
+The \verb|enumitem|\index{enumitem@\texttt{enumitem}} package enhances the typesetting of lists. One of its prime utilities is to change the starting labels or bullets for every item by providing the \verb|label| option. For example,
 \begin{lstlisting}
 \begin{enumerate}[label=\alph*)]
     \item Apple
@@ -90,7 +90,7 @@ we have (notice their alphabetical labels)
 \subsection{Figures}
 
 \paragraph{Figures and Including Images}
-To import images into the document, we need to load the \verb|graphics| package and then use the \texttt{\textbackslash includegraphics\{<file\_\allowbreak name>\}} command. The image should be placed under the project directory, and we hereby go through an example which is displayed as Figure \ref{fig:ada} on the next page. The code to produce that figure is
+To import \textit{images}\index{Image} into the document, we need to load the \verb|graphics|\index{graphics@\texttt{graphics}} package and then use the \texttt{\textbackslash includegraphics\{<file\_\allowbreak name>\}}\index{includegraphics@\texttt{\textbackslash includegraphics}} command. The image should be placed under the project directory, and we hereby go through an example which is displayed as Figure \ref{fig:ada} on the next page. The code to produce that figure is
 \begin{lstlisting}
 \begin{figure}[ht!]
 \centering
@@ -105,10 +105,10 @@ To import images into the document, we need to load the \verb|graphics| package 
 \caption{The portrait of Ada Lovelace.}
 \label{fig:ada}
 \end{figure}
-First, we need to enclose the \texttt{\textbackslash includegraphics} command within a \verb|figure| environment. In fact, \verb|figure| is a type of \textit{floats} which can be freely moved around. The \verb|ht!| option indicates that priority is given to put the figure exactly in the place where the code is inserted (\verb|h|: here), or at the top of a page (\verb|t|). The \verb|width| option enforces the width of the image to some input value (and similarly, there are \verb|height| and \verb|scale|). The \texttt{\textbackslash caption} command unsurprisingly generates the caption, while the \verb|label| command works as it is in math mode and allows us to reference it by writing \texttt{\textbackslash ref\{fig:ada\}}.
+First, we need to enclose the \texttt{\textbackslash includegraphics} command within a \verb|figure|\index{figure@\texttt{figure}} environment. In fact, \verb|figure| is a type of \textit{floats}\index{Float} which can be freely moved around. The \verb|ht!| option indicates that priority is given to put the figure exactly in the place where the code is inserted (\verb|h|: here), or at the top of a page (\verb|t|). The \verb|width| option enforces the width of the image to some input value (and similarly, there are \verb|height| and \verb|scale|). The \texttt{\textbackslash caption}\index{caption@\texttt{\textbackslash caption}} command unsurprisingly generates the caption, while the \verb|label|\index{label@\texttt{\textbackslash label}} command works as it is in math mode and allows us to reference it by writing \texttt{\textbackslash ref\{fig:ada\}}\index{ref@\texttt{\textbackslash ref}}.
 
 \paragraph{Subfigures}
-We can create a set of smaller subfigures within a larger figure by utilizing the \verb|subcaption| package and \verb|subfigure| scopes. To illustrate, the following code is deployed to generate Figure \ref{fig:TC1}: 
+We can create a set of smaller subfigures within a larger figure by utilizing the \verb|subcaption|\index{subcaption@\texttt{subcaption}} package and \verb|subfigure|\index{subfigure@\texttt{subfigure}} scopes. To illustrate, the following code is deployed to generate Figure \ref{fig:TC1}: 
 \begin{lstlisting}
 \begin{figure}[ht!]
 \centering
@@ -144,10 +144,10 @@ The \verb|b| option fixes the vertical alignment of \verb|subfigure| at the bott
 \label{fig:TC1}
 \end{figure}
 
-\paragraph{Continued Floats} To make an extended figure of subfigures that spans multiple pages, we can simply arrange them into separate \verb|figure| environments and call the \texttt{\textbackslash ContinuedFloat} command in all the subsequent \verb|figure| groups. Continuing from the last example, we may have added
+\paragraph{Continued Floats} To make an extended figure of subfigures that spans multiple pages, we can simply arrange them into separate \verb|figure| environments and call the \texttt{\textbackslash ContinuedFloat}\index{ContinuedFloat@\texttt{\textbackslash ContinuedFloat}} command in all the subsequent \verb|figure| groups. Continuing from the last example, we may have added
 \begin{lstlisting}
 \begin{figure}[hb!]
-\ContinuedFloat % here!
+\ContinuedFloat % look here!
 \caption{(Cont.) The infrared satellite images of various Tropical Cyclones affecting Hong Kong.}
 \centering
     \begin{subfigure}[b]{0.45\textwidth}
@@ -191,7 +191,7 @@ producing
 \subsection{Tables}
 
 \paragraph{Tabular Structures}
-Just like embedding figures, building a table requires us to place the content inside the corresponding \verb|table| float environment. While it is possible to use the native \verb|tabular| class for the actual table itself, a more powerful version is provided by the \verb|tabularx| package and its class that bears the same name.\footnote{Sometimes, it can be more advantageous to use \texttt{tabular} than \texttt{tabularx}, but their syntax are similar.} This is demonstrated via Table \ref{tab:armyunits} thereafter, which is generated by
+Just like embedding figures, building a \textit{table}\index{Table} requires us to place the content inside the corresponding \verb|table|\index{table@\texttt{table}} float environment. While it is possible to use the native \verb|tabular|\index{tabular@\texttt{tabular}} class for the actual table itself, a more powerful version is provided by the \verb|tabularx|\index{tabularx@\texttt{tabularx}} package and its class that bears the same name.\footnote{Sometimes, it can be more advantageous to use \texttt{tabular} than \texttt{tabularx}, but their syntax are similar.} This is demonstrated via Table \ref{tab:armyunits} thereafter, which is generated by
 \begin{lstlisting}
 \begin{table}[ht!]
 \centering
@@ -226,11 +226,11 @@ Artillery & The support unit that provides bombardment support from far away. & 
 \caption{The unit statistics table for a hypothetical game.}
 \label{tab:armyunits}
 \end{table}
-The \verb|ht!| option, \verb|caption|, and \verb|label| work exactly like the figure counterparts. For the \verb|tabularx| environment, the first argument indicates the width of the entire table, set to \texttt{\textbackslash textwidth} here. The second argument \texttt{\{|l|p\{0.55\textbackslash textwidth\}|\allowbreak >\{\textbackslash raggedleft\}X|>\{\textbackslash raggedleft\textbackslash arraybackslash\}X|\}} indicates the justification of the columns: the first column is left-aligned (\verb|l|, similarly we have \verb|c| and \verb|r|) and its size will accommodate the text; the second column (\verb|p|) forces a width of $0.55$ times \texttt{\textbackslash textwidth}; the remaining width is distributed evenly to last two \verb|X| columns. The part of \texttt{>\{\textbackslash raggedleft\}} is applied to the \verb|X| columns, making them right-aligned.\footnote{\texttt{\textbackslash arraybackslash} is needed in the last column, see \href{https://tex.stackexchange.com/questions/372464/last-tabularx-column-raggedright-with-memoir}{\TeX{} StackExchange 372464}.} Finally, \texttt{|} and \texttt{\textbackslash hline} produce vertical/horiztonal separating lines; \texttt{\&} slices between the columns and \texttt{\textbackslash\textbackslash} marks the end of a row.
+The \verb|ht!| option, \verb|caption|, and \verb|label| work exactly like the figure counterparts. For the \verb|tabularx| environment, the first argument indicates the width of the entire table, set to \texttt{\textbackslash textwidth} here. The second argument \texttt{\{|l|p\{0.55\textbackslash textwidth\allowbreak\}|>\{\textbackslash raggedleft\}X|>\{\textbackslash raggedleft\textbackslash arraybackslash\}X|\}} indicates the justification of the columns: the first column is left-aligned (\verb|l|, similarly we have \verb|c| and \verb|r|) and its size will accommodate the text; the second column (\verb|p|) forces a width of $0.55$ times \texttt{\textbackslash textwidth}; the remaining width is distributed evenly to last two \verb|X| columns. The part of \texttt{>\{\textbackslash raggedleft\}} is applied to the \verb|X| columns, making them right-aligned.\footnote{\texttt{\textbackslash arraybackslash} is needed in the last column, see \href{https://tex.stackexchange.com/questions/372464/last-tabularx-column-raggedright-with-memoir}{\TeX{} StackExchange 372464}.} Finally, \texttt{|} and \texttt{\textbackslash hline} produce vertical/horiztonal separating lines; \texttt{\&} slices between the columns and \texttt{\textbackslash\textbackslash} marks the end of a row.
 
 Also, note that \texttt{\textbackslash ContinuedFloat} can also be applied to \texttt{table} floats.
 
-\paragraph{Caption by the Side} It is also possible to arrange the table so that the caption appears to the side of it. This is done by stacking the \verb|captionbeside| environment provided by KOMA-script. For example, the code
+\paragraph{Caption by the Side} It is also possible to arrange the table so that the caption appears to the side of it. This is done by stacking the \verb|captionbeside|\index{captionbeside@\texttt{captionbeside}} environment provided by KOMA-script. For example, the code
 \begin{lstlisting}
 \begin{table}[ht]
     \begin{captionbeside}{This caption appears to the left of the Fibonacci numbers table.}[l][\textwidth]{
@@ -280,17 +280,17 @@ $6$ & $8$ \\
 \end{captionbeside}
 \label{tab:fib}
 \end{table}
-We supply the caption in the first argument, followed by two options: the relative position of the caption and the full width of the structure, finally with the actual \verb|tabularx| object. We also have to load the \verb|adjustbox| package and use the corresponding command to make the table aligned at the top (\verb|valign=t|). This further requires us to first set the \texttt{\textbackslash KOMAoptions} to take \verb|captions=besidetop| (likewise we have \verb|captions=besidebottom| and more).
+We supply the caption in the first argument, followed by two options: the relative position of the caption and the full width of the structure, finally with the actual \verb|tabularx| object. We also have to load the \verb|adjustbox|\index{adjustbox@\texttt{adjustbox}} package and use the corresponding command to make the table aligned at the top (\verb|valign=t|). This further requires us to first set the \texttt{\textbackslash KOMAoptions} to take \verb|captions=besidetop|\index{captions@\texttt{captions}} (likewise we have \verb|captions=besidebottom| and more).
 
 \paragraph{Shared Numbering between Figures and Tables}
-Sometimes we may want to share the numbering between floats (including figures and tables). This is done by the following patch that can be inserted into the preamble:
+Sometimes we may want to share the numbering\index{Shared Numbering} between floats (including figures and tables). This is done by the following patch that can be inserted into the preamble:
 \begin{lstlisting}
 \makeatletter
 \let\c@table\c@figure
 \let\ftype@table\ftype@figure
 \makeatother
 \end{lstlisting}
-This involves the primitive \TeX{} functions, so we will not discuss them there. For more information, read \href{https://stackoverflow.com/questions/3865036/using-a-single-count-for-figures-and-tables-in-latex}{StackOverflow 3865036}, and \href{https://tex.stackexchange.com/questions/8351/what-do-makeatletter-and-makeatother-do}{\TeX{} StackExchange 8351} for what the \texttt{\textbackslash makeatletter} and \texttt{\textbackslash makeatother} commands do.
+This involves the primitive \TeX{} functions, so we will not discuss them there. For more information, read \href{https://stackoverflow.com/questions/3865036/using-a-single-count-for-figures-and-tables-in-latex}{StackOverflow 3865036}, and \href{https://tex.stackexchange.com/questions/8351/what-do-makeatletter-and-makeatother-do}{\TeX{} StackExchange 8351} for what the \texttt{\textbackslash makeatletter}\index{makeatletter@\texttt{\textbackslash makeatletter}} and \texttt{\textbackslash makeatother}\index{makeatother@\texttt{\textbackslash makeatother}} commands do.
 
 \begin{exercisebox}
 \begin{Exercise}
@@ -304,7 +304,7 @@ Recreate any one of the tables in Chapter \ref{chap:maths}.
 \section{Minipages and Multiple Columns}
 
 \paragraph{Minipages}
-Sometimes we may want to split the content into smaller blocks that are embedded within the current page, and can be placed or ordered (e.g.\ parallel) in the way we want. The \verb|minipage| environment basically acts like a more versatile version of a \verb|parbox| command and serves this purpose. For example, something like
+Sometimes we may want to split the content into smaller blocks that are embedded within the current page, and can be placed or ordered (e.g.\ parallel) in the way we want. The \verb|minipage|\index{minipage@\texttt{minipage}} environment basically acts like a more versatile version of a \verb|parbox| command and serves this purpose. For example, something like
 \begin{lstlisting}
 \begin{center}
 \begin{minipage}[b]{0.48\textwidth}
@@ -328,7 +328,7 @@ yields \par
 \end{center}
 The \verb|b| option indicates that the two blocks will be bottom-aligned, provided that their width is fixed to $0.48$ times \texttt{\textbackslash textwidth} and thus they fit in the main text area.
 
-\paragraph{Parallel Columns} The \verb|parcolumns| package can also achieve an effect similar to \verb|minipage| and is more specialized for typesetting different pieces in two or more parallel columns. It also supports page breaks. Using the same example, we can write
+\paragraph{Parallel Columns} The \verb|parcolumns|\index{parcolumns@\texttt{parcolumns}} package can also achieve an effect similar to \verb|minipage| and is more specialized for typesetting different pieces in two or more parallel columns. It also supports page breaks. Using the same example, we can write
 \begin{lstlisting}
 \begin{parcolumns}{2}
 \colchunk[1]{\lipsum[6]}
@@ -346,9 +346,9 @@ to get\\
 \colchunk[1]{\lipsum[8]}
 \colchunk[2]{\lipsum[9]}
 \end{parcolumns}
-where the first argument of \texttt{parcolumns} clearly indicates the number of columns and the \texttt{\textbackslash colplacechunks} command releases the loaded \texttt{\textbackslash colchunk[<col\allowbreak\_index>]} and goes to the next paragraph.
+where the first argument of \texttt{parcolumns} clearly indicates the number of columns and the \texttt{\textbackslash colplacechunks}\index{colplacechunks@\texttt{\textbackslash colplacechunks}} command releases the loaded \texttt{\textbackslash colchunk[<col\allowbreak\_index>]}\index{colchunk@\texttt{\textbackslash colchunk}} and goes to the next paragraph.
 
-\paragraph{Multiple Columns} A task closely related to what \verb|parcolumns| does above is to typeset a single, continuous stream of text along multiple columns, like in many academic papers. The \texttt{multicol} package is designed for this and will carry out the automatic splitting. For example, by encapsulating the text inside the \verb|multicols| environment as
+\paragraph{Multiple Columns} A task closely related to what \verb|parcolumns| does above is to typeset a single, continuous stream of text along multiple columns, like in many academic papers. The \texttt{multicol} package is designed for this and will carry out the automatic splitting. For example, by encapsulating the text inside the \verb|multicols|\index{multicols@\texttt{multicols}} environment as
 \begin{lstlisting}
 \begin{multicols}{2}
 Zhuge Liang (born 181, Yangdu [now Yinan, Shandong province], China--died August 234, Wuzhangyuan [now in Shaanxi province], China) was a celebrated adviser to Liu Bei, founder of the Shu-Han dynasty (221--263/264).
@@ -371,7 +371,7 @@ Zhuge, to whom supernatural powers often are ascribed, has been a favoured chara
 A mechanical and mathematical genius, Zhuge is credited with inventing a bow for shooting several arrows at once and with perfecting the Eight Dispositions, a series of military tactics. In the Sanguozhi yanyi (Romance of the Three Kingdoms), the great 14th-century historical novel, Zhuge is one of the main characters; he is portrayed as being able to control the wind and foretell the future. (Source: Encyclopaedia Britannica)
 \end{multicols}
 
-\paragraph{Two Columns Set-up} We can also pass the \verb|twocolumn=true| option to \texttt{\textbackslash KOMAoptions} to demand the entire book to be formatted in two columns globally. However, note that it will greatly mess up the layout of this book. (The decision to adopt such a format should be made at an early time!)
+\paragraph{Two Columns Set-up} We can also pass the \verb|twocolumn=true|\index{twocolumn@\texttt{twocolumn}} option to \texttt{\textbackslash KOMAoptions} to demand the entire book to be formatted in two columns globally. However, note that it will greatly mess up the layout of this book. (The decision to adopt such a format should be made at an early time!)
 
 \paragraph{In the Same Page}
-Last but not least, text will normally be distributed across pages, and if we want to force a specific part to stay together on the same page, we can surround it within the \texttt{samepage} scope.
+Last but not least, text will normally be distributed across pages, and if we want to force a specific part to stay together on the same page, we can surround it within the \texttt{samepage}\index{samepage@\texttt{samepage}} scope.

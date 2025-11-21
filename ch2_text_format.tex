@@ -45,19 +45,20 @@ Each of the previous font families is internally assigned a specific \textit{fon
 
 \begin{exercisebox}
 \begin{Exercise}
+\label{exer:font}%
 Change the font family just for the dummy Lipsum paragraph above to typewriter.
 \end{Exercise}
-\setboolean{firstanswerofthechapter}{true}
-\begin{Answer}
+\begin{Exercise}
+Choose a font of your liking from the Font Catalogue to replace the original one in the book.
+\end{Exercise}
+\end{exercisebox}
+\setboolean{firstanswerofthechapter}{true}%
+\begin{Answer}[ref=exer:font]
 \begin{lstlisting}
 \texttt{\lipsum[3]} % or {\ttfamily \lipsum[3]}
 \end{lstlisting}
 \end{Answer}
 \setboolean{firstanswerofthechapter}{false}
-\begin{Exercise}
-Choose a font of your liking from the Font Catalogue to replace the original one in the book.
-\end{Exercise}
-\end{exercisebox}
 
 \section{Text Attributes}
 
@@ -197,7 +198,7 @@ It is also possible to design a custom color by the command \texttt{\textbacksla
 ...
 \textcolor{mint}{Mint Tears}
 \end{lstlisting}
-gives \textcolor{mint}{Mint Tears}. Color codes can be checked via \href{https://latexcolor.com/}{https://latexcolor.com/}. In addition, we can mix colors by the expression \texttt{<color\_1>!<mix\_ratio>!\allowbreak <color\_2>}\index{Color Mixing}. For instance,
+gives \textcolor{mint}{Mint Tears}. Color codes can be checked via \href{https://latexcolor.com/}{https://latexcolor.com/}. In addition, we can mix colors by the expression \texttt{<color\_1>!<mix\_ratio>!\allowbreak <color\_2>}\index{Color Mix}. For instance,
 \begin{lstlisting}
 \textcolor{Blue!40!Green}{Copper (II)} \textcolor{Orange!50}{Sulphate}
 \end{lstlisting}
@@ -218,7 +219,7 @@ The effects of \texttt{\textbackslash\textbackslash}, \texttt{\textbackslash par
 As explained before, ... ends a paragraph and starts a new one. \\
 Both of them initiate a \textit{new line}, ... which is similar and sometimes used.
                 % here is a blank line with this comment only
-A blank line in a \TeX{} file ... held in the current vertical list (see ...). \par
+A blank line in a \texttt{.tex} file ... held in the current vertical list (see ...). \par
 The effects of \texttt{\textbackslash\textbackslash}, \texttt{\textbackslash par}, and blank lines can be observed right in this subsection, which is typed as
 ... % this code block, see Section 2.4
 \end{lstlisting}
@@ -226,8 +227,8 @@ The effects of \texttt{\textbackslash\textbackslash}, \texttt{\textbackslash par
 \subsection{Justification and Indents}
 
 \paragraph{Ragged and Centering}
-{\raggedright The \texttt{\textbackslash raggedright}\index{raggedright@\texttt{\textbackslash raggedright}} and \texttt{\textbackslash raggedleft}\index{raggedleft@\texttt{\textbackslash raggedleft}} commands produce \textit{left/right-justified}\index{Justification (Text: left, right, fully, center)} text respectively. As you may have figured out, this paragraph is "ragged right" so that the text sticks to the left boundary, but the right side is now uneven. \par}
-{\raggedleft Meanwhile, this lipsum text is "ragged left": \lipsum[4]\par}
+{\raggedright The \texttt{\textbackslash raggedright}\index{raggedright@\texttt{\textbackslash raggedright}} and \texttt{\textbackslash raggedleft}\index{raggedleft@\texttt{\textbackslash raggedleft}} commands produce \textit{left/right-justified}\index{Justification (Text: left, right, fully, center)} text respectively. As you may have figured out, this paragraph is “ragged right” so that the text sticks to the left boundary, but the right side is now uneven. \par}
+{\raggedleft Meanwhile, this lipsum text is “ragged left”: \lipsum[4]\par}
 The default setting is \textit{fully-justified} so that the text extends to both edges like this one. \texttt{\textbackslash raggedleft} and \texttt{\textbackslash raggedright} act like a switch, changing all paragraphs beyond, and we may want to put them within a group enclosed by curly brackets. \par
 {\centering We also have \texttt{\textbackslash centering}\index{centering@\texttt{\textbackslash centering}} which is quite self-explanatory and is demonstrated here. For these three commands to work properly, we require \texttt{\textbackslash par} to finish, similar to before. The code to generate the above paragraphs is \par}
 \begin{lstlisting}
@@ -336,7 +337,7 @@ Ouch...
 gives \par
 \hspace{3ex} Hello \hspace{5ex} World \vspace{1.5em} !!! \\
 Ouch...\par
-The first two \texttt{\textbackslash hspace} commands should work as you have expected, but notice that on the other hand, \texttt{\textbackslash vspace} in the middle of a line will only take effect after it, and so the exclamation marks above are not moved down (but "Ouch..." is). Finally, they accept negative lengths, and you may want to play with that.\par
+The first two \texttt{\textbackslash hspace} commands should work as you have expected, but notice that on the other hand, \texttt{\textbackslash vspace} in the middle of a line will only take effect after it, and so the exclamation marks above are not moved down (but “Ouch...” is). Finally, they accept negative lengths, and you may want to play with that.\par
 
 It is also possible to achieve the same effect after a line break by writing something along the lines of \texttt{\textbackslash\textbackslash [<length>]}, e.g.\
 \begin{lstlisting}
@@ -347,7 +348,7 @@ Don't come any closer!!!\\[-1em]
 Nope *Taking out the axe*
 
 \paragraph{Starred Spaces}
-There also exist starred versions of \texttt{\textbackslash hspace*\{<length>\}}\index{hspace*@\texttt{\textbackslash hspace*}} and \texttt{\textbackslash vspace*\{<length>\}}\index{vspace*@\texttt{\textbackslash vspace*}}. The difference is that the original ones will be "gobbled up" (see \href{https://tex.stackexchange.com/questions/89082/hspace-vs-hspace}{{\TeX{} StackExchange 89082}}) and disappear at line breaks, but the new ones will not. To see this clearly, let's try
+There also exist starred versions of \texttt{\textbackslash hspace*\{<length>\}}\index{hspace*@\texttt{\textbackslash hspace*}} and \texttt{\textbackslash vspace*\{<length>\}}\index{vspace*@\texttt{\textbackslash vspace*}}. The difference is that the original ones will be “gobbled up” (see \href{https://tex.stackexchange.com/questions/89082/hspace-vs-hspace}{{\TeX{} StackExchange 89082}}) and disappear at line breaks, but the new ones will not. To see this clearly, let's try
 \begin{lstlisting}
 x\hspace{3ex}y\\
 \hspace{4ex}y?\\

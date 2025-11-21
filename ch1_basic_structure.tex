@@ -17,23 +17,23 @@ The \verb|scrbook| class provides several \textit{options}\index{Option} to cust
 The \textit{argument}\index{Argument} is filled inside the curly brackets \verb|{}|\index{\texttt{\{\}}} following the command. Clearly, here the \verb|paper| option requires the pages to be in A4 size while \verb|fontsize| indicates that the font will be 12 pt large. The remaining options will be explained as we go through the later chapters.
 
 \paragraph{Packages}
-To enable extra functionalities, we need to import \textit{packages}\index{Package}. We can write along the lines of \texttt{\textbackslash usepackage[<options>]\{<package\_name>\}}\index{usepackage@\texttt{\textbackslash usepackage}} in the preamble to do so. We will not list all the required packages now at once, but only when they are needed later. The first package we usually need is the \verb|fontenc|\index{fontenc@\texttt{fontenc}} package, with the \verb|T1| option set inside a pair of square brackets []\index{\texttt{[]}}. This syntax of square brackets will be the same for configuring options in other commands.
+To enable extra functionalities, we need to import \textit{packages}\index{Package}. We can write along the lines of \texttt{\textbackslash usepackage[<options>]\{<package\_name>\}}\index{usepackage@\texttt{\textbackslash usepackage}} in the preamble to do so. We will not list all the required packages now at once, but only when they are needed later. The first package we usually need is the \verb|fontenc|\index{fontenc@\texttt{fontenc}} package, with the \verb|T1| option set inside a pair of square brackets \texttt{[]}\index{\texttt{[]}}. This syntax of square brackets will be the same for configuring options in other commands.
 
 \begin{exercisebox}
 \begin{Exercise}
 Try to import the \verb|fontenc| package with the \verb|T1| option as suggested above. There may not be any noticeable difference, but at least you should not be receiving errors.
 \end{Exercise}
-\setboolean{firstanswerofthechapter}{true}
 \begin{Exercise}
 Also, try to achieve the same class setting through the \texttt{\textbackslash documentclass\allowbreak[<options>]\{scrbook\}} declaration instead of the \texttt{\textbackslash KOMAoptions} command.
 \end{Exercise}
+\end{exercisebox}
+\setboolean{firstanswerofthechapter}{true}
 \begin{Answer}
 \begin{lstlisting}
 \documentclas/*!s!*/[paper=a4, fontsize=12pt, chapterprefix=true, twoside=semi, DIV=classic, parskip=half]{scrbook}
 \end{lstlisting}
 \end{Answer}
 \setboolean{firstanswerofthechapter}{false}
-\end{exercisebox}
 
 \section{Structure Hierarchy}
 
@@ -56,7 +56,7 @@ For each \LaTeX{} document, we need to specify its \textit{class}. Throughout th
 The \verb|%|\index{\texttt{\%}} symbol indicates a trailing \textit{comment}\index{Comment} (highlighted in green) whose purpose is to leave some note about the code. Comments are neither interpreted nor displayed. The \texttt{\textbackslash textit\{<text>\}} command presents the text in italic shape.
 
 \paragraph{Chapter Numbering}
-The \LaTeX{} system records and updates the \textit{numbering}\index{Numbering} for chapters/sections internally every time they are initialized. However, we can manually override that by invoking the command \texttt{\textbackslash setcounter\{chapter\}\{<number\allowbreak>\}}\index{setcounter@\texttt{\textbackslash setcounter}}. To achieve the effect of Chapter \ref{chap:install} at the very beginning, we use \texttt{\textbackslash setcounter\allowbreak\{chapter\}\{-1\}} so that the counter\index{Counter} increases by $1$ to $0$ as intended when Chapter \ref{chap:install} is generated. The same can be done for sections.
+The \LaTeX{} system records and updates the \textit{numbering}\index{Numbering (Chapters, Sections, etc.)} for chapters/sections internally every time they are initialized. However, we can manually override that by invoking the command \texttt{\textbackslash setcounter\{chapter\}\{<number\allowbreak>\}}\index{setcounter@\texttt{\textbackslash setcounter}}. To achieve the effect of Chapter \ref{chap:install} at the very beginning, we use \texttt{\textbackslash setcounter\allowbreak\{chapter\}\{-1\}} so that the counter\index{Counter} increases by $1$ to $0$ as intended when Chapter \ref{chap:install} is generated. The same can be done for sections.
 
 \paragraph{Subsections, Paragraphs}
 Attentive readers may have already figured out that it is possible to stack an extra level/depth (a \textit{subsection}\index{Subsection}) in the content hierarchy. This is aptly done not long ago by the \texttt{\textbackslash subsection\{<section\_name>\}}\index{subsection@\texttt{\textbackslash subsection}} command:
@@ -82,7 +82,7 @@ and we can call it with \texttt{\textbackslash ref\{chap:install\}}. The \texttt
 \subsection{Generating Table of Contents}
 
 \paragraph{Table of Contents}
-After establishing the structure of the book, it is convenient to generate a \textit{table of contents (TOC)}\index{Table of Contents (TOC)} as well. In the \verb|scrbook| class, it is easily done by adding the command \texttt{\textbackslash tableofcontents}\index{tableofcontents@\texttt{\textbackslash tableofcontents}} within the main \verb|document| environment. To control the depth of layers shown, we can call \texttt{\textbackslash setcounter\{tocdepth\}\{<integer>\}}\index{setcounter\{tocdepth\}@\texttt{\textbackslash setcounter\{tocdepth\}}} in the preamble, where the \verb|integer| usually ranges from $-1$ to $3$ ($0$: chapters, $1$: sections, $2$: subsections).
+After establishing the structure of the book, it is convenient to generate a \textit{table of contents (TOC)}\index{Table of Contents (TOC)} as well. In the \verb|scrbook| class, it is easily done by adding the command \texttt{\textbackslash tableofcontents}\index{tableofcontents@\texttt{\textbackslash tableofcontents}} within the main \verb|document| environment. To control the depth of layers shown, we can call \texttt{\textbackslash setcounter\{tocdepth\}\{<integer>\}} in the preamble, where the \verb|integer| usually ranges from $-1$ to $3$ ($0$: chapters, $1$: sections, $2$: subsections).
 
 \begin{exercisebox}
 \begin{Exercise}

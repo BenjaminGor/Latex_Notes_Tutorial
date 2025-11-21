@@ -1,0 +1,158 @@
+% Font
+\usepackage[T1]{fontenc}
+\usepackage[sf]{noto}
+
+% Page Style
+\usepackage{scrlayer-scrpage}
+% Header/Footer
+\pagestyle{scrheadings}
+\automark[section]{chapter}
+\ofoot*{}
+\cfoot*{\pagemark}
+% Font Style for Elements
+\setkomafont{pagehead}{\color{RoyalBlue}\slshape\bfseries}
+\setkomafont{caption}{\itshape}
+% Chapter Heading (and related)
+\renewcommand*{\chaptermarkformat}{\chapapp~\thechapter\autodot~--~}
+\addtokomafont{chapterprefix}{\itshape\color{white}}
+\renewcommand*{\chapterformat}{\raggedleft\colorbox{RoyalBlue}{\parbox[b][2.8em]{2.8em}{\vfill\centering{\large\chapapp}\\[-0.4em]\thechapter\vfill}}}
+\renewcommand*{\chapterheadstartvskip}{\addvspace{2em}}
+\renewcommand*{\chapterheadendvskip}{\pgfornament[width=\textwidth]{88}\par}
+% Section Heading
+\renewcommand*{\sectionformat}{\colorbox{black}{\textcolor{white}{\thesection}}\enskip}
+\renewcommand*{\sectionlinesformat}[4]{\makebox[0pt][l]{\rule[-\fboxsep-\fboxrule]{\textwidth}{\fboxrule}}#3\parbox[b]{0.85\textwidth}{\linespread{1}\selectfont#4}}
+
+% Index Page
+\usepackage{imakeidx}
+\begin{filecontents}[overwrite]{myindexstyle.ist}
+headings_flag 1
+heading_prefix
+ "\\bigskip\\par\\penalty-50\\textbf{"
+heading_suffix
+ "}\\\\[\\medskipamount]"
+symhead_positive "Symbols"
+symhead_negative "symbols"
+numhead_positive "Numbers"
+numhead_negative "numbers"
+delim_0 ",\~"
+\end{filecontents}
+\makeindex[intoc, options=-s myindexstyle]
+
+% PDF Links and Bookmark
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    linkcolor = black,
+    urlcolor = blue!90!Green,
+    citecolor = blue!90!Green,
+    pdfauthor = Benjamin Loi,
+    pdftitle = How to Reproduce this Book Exactly with LATEX,
+    pdfsubject = v1.0.0,
+    pdfkeywords = {Mathematics, LATEX}
+}
+\usepackage[open,openlevel=1,atend,numbered]{bookmark}
+
+% Colored Boxes
+\usepackage[many]{tcolorbox}
+\newtcolorbox{mybox}[1][]{
+  colback=Green!20, 
+  colframe=Gray,
+  coltitle=Yellow,
+  title=This is my box,
+  boxrule=1pt,
+  leftrule=1ex,
+  boxsep=1ex,
+  left=1ex,
+  right=1ex,
+  sharp corners,
+  breakable,
+  before skip=\topsep,
+  after skip=\topsep, #1}
+% Theorem
+\tcbuselibrary{theorems}
+\newtcbtheorem[number within=chapter]{thm}{Theorem}{
+  colback=Green!20,
+  colframe=Green!50,
+  fonttitle=\bfseries,
+  boxrule=1pt,
+  boxsep=1ex,
+  left=1ex,
+  right=1ex,
+  pad after break=1.5ex,
+  sharp corners,
+  breakable,
+  before skip=\topsep,
+  after skip=\topsep}{thm}
+\tcbset{mycommon/.style={
+  colback=Green!20,
+  colframe=Green!50,
+  fonttitle=\bfseries,
+  coltitle=black,
+  theorem style=plain,
+  boxrule=1pt,
+  boxsep=1ex,
+  left=1ex,
+  right=1ex,
+  pad after break=1.5ex,
+  sharp corners,
+  breakable,
+  before skip=\topsep,
+  after skip=\topsep}
+}
+\newtcbtheorem[use counter from=thm]{defn}{Definition}{mycommon}{defn}
+% Proof
+\tcolorboxenvironment{proof}{
+  blank,
+  breakable,
+  borderline west={0.5ex}{2pt}{black},
+  left=2ex,
+  before skip=\topsep,
+  after skip=\topsep}
+\newenvironment*{solution}{\begin{proof}[Solution]}{\end{proof}}
+% Exercise
+\newtcolorbox{exercisebox}[1][]{
+  colback=Mahogany!20, 
+  colbacktitle=Mahogany!10,
+  coltitle=black,
+  colframe=Mahogany,
+  fonttitle=\bfseries,
+  title=Exercise(s),
+  boxrule=0pt,
+  leftrule=1ex,
+  left=0pt,
+  right=0pt,
+  before=0pt,
+  after=0pt,
+  boxsep=1ex,
+  toptitle=1ex,
+  bottomtitle=1ex,
+  top=0pt,
+  left=1ex,
+  right=1ex,
+  bottom=0.5ex,
+  pad after break=1.5ex,
+  sharp corners,
+  breakable,
+  before skip=\topsep,
+  after skip=\topsep, #1} 
+\usepackage[lastexercise,answerdelayed]{exercise}
+\renewcounter{Exercise}[chapter]
+\renewcommand*{\theExercise}{\thechapter.\arabic{Exercise}}
+\renewcommand*{\ExerciseHeader}{\textbf{\theExercise )}}
+\renewcommand*{\ExerciseSkipBefore}{\dimexpr.5\baselineskip}
+\renewcommand*{\ExerciseSkipAfter}{\dimexpr.5\baselineskip}
+
+\usepackage{listings}
+\lstdefinestyle{lstTeXstyle}{
+    language=[latex]TeX, 
+    basicstyle=\footnotesize\ttfamily,
+    backgroundcolor=\color{Goldenrod!20},
+    keywordstyle=\color{blue!80}\bfseries,
+    commentstyle=\color{Green},
+    breaklines=true,
+    showstringspaces=false,
+    numbers=none,
+    belowskip=0pt,
+    escapeinside={/*!}{!*/},
+}
+\lstset{style=lstTeXstyle}
