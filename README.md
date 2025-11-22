@@ -11,7 +11,7 @@ This is the repository for the e-book <em>"How to Reproduce this Book Exactly wi
 Again, feel free to open an issue if you have any problems or suggestions about the book!
 This book will be regularly updated!
 
-<h2>Table of Content</h2>
+<h2>Table of Contents</h2>
 
 1. The Basic Set-up and Structure of a LaTeX Book
 2. Formatting of Text and Paragraphs
