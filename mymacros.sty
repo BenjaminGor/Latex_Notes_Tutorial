@@ -2,6 +2,29 @@
 \usepackage[T1]{fontenc}
 \usepackage[sf]{noto}
 
+% Various Packages
+\usepackage{lipsum}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{bm}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{mathtools}
+\usepackage{microtype}
+\usepackage{cancel}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{pgfornament}
+\usepackage{adjustbox}
+\usepackage{subcaption}
+\usepackage{parcolumns}
+\usepackage{multicol}
+\usepackage{ifthen}
+\usepackage{pgfmath}
+\usepackage{pgffor}
+\usepackage{lineno}
+\usepackage{CJKutf8}
+\usepackage{lscape}
+
 % Page Style
 \usepackage{scrlayer-scrpage}
 % Header/Footer
@@ -141,6 +164,12 @@ delim_0 ",\~"
 \renewcommand*{\ExerciseHeader}{\textbf{\theExercise )}}
 \renewcommand*{\ExerciseSkipBefore}{\dimexpr.5\baselineskip}
 \renewcommand*{\ExerciseSkipAfter}{\dimexpr.5\baselineskip}
+\newboolean{firstanswerofthechapter}  
+\renewcommand*{\AnswerHeader}{\ifthenelse{\boolean{firstanswerofthechapter}}
+    {\textbf{Answers for Chapter \thechapter}\par\vspace{1ex}%
+     \theExercise)}
+    {\theExercise)}
+}
 
 % Chapter Title Picture
 \newcommand*{\titlepic}{}
@@ -148,6 +177,14 @@ delim_0 ",\~"
 \DeclareNewLayer[align=lt,voffset=0.25\paperheight,background,mode=picture,contents={\putUL{\titlepic}}]{titlepiclayer}
 \newpairofpagestyles[scrheadings]{Styledpages}{\AddLayersToPageStyle{plain.Styledpages}{titlepiclayer}}
 
+% Tikz
+\usepackage{pgfplots}
+\usetikzlibrary{calc, angles, quotes, intersections, decorations.pathmorphing, decorations.shapes, arrows.meta, decorations.markings, patterns, matrix, positioning, backgrounds, tikzmark, shapes.geometric}
+\usepackage{tikz-3dplot}
+\usepackage{circuitikz}
+\usepackage{pgf-pie}
+
+% Listing
 \usepackage{listings}
 \lstdefinestyle{lstTeXstyle}{
     language=[latex]TeX, 
