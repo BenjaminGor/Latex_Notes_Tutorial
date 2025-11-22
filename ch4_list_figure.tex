@@ -232,7 +232,7 @@ Also, note that \texttt{\textbackslash ContinuedFloat} can also be applied to \t
 
 \paragraph{Caption by the Side} It is also possible to arrange the table so that the caption appears to the side of it. This is done by stacking the \verb|captionbeside|\index{captionbeside@\texttt{captionbeside}} environment provided by KOMA-script. For example, the code
 \begin{lstlisting}
-\begin{table}[ht]
+\begin{table}[ht!]
     \begin{captionbeside}{This caption appears to the left of the Fibonacci numbers table.}[l][\textwidth]{
         \adjustbox{valign=t}{
         \begin{tabularx}{0.4\textwidth}{|X|X|}
@@ -259,7 +259,7 @@ Also, note that \texttt{\textbackslash ContinuedFloat} can also be applied to \t
 \end{lstlisting}
 produces Table \ref{tab:fib} below.
 
-\begin{table}[ht]
+\begin{table}[ht!]
 \begin{captionbeside}{This caption appears to the left of the Fibonacci numbers table.}[l][\textwidth]{\adjustbox{valign=t}{\begin{tabularx}{0.4\textwidth}{|X|X|}
 \hline
 $n$ & $F_n$ \\

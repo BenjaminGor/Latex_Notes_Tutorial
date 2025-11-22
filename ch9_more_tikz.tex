@@ -32,7 +32,7 @@ We can adjust the units of the coordinate axes in a TikZ plot by specifying them
     \caption{Cartesian coordinate system transformation.}
     \label{fig:newcoord1}
 \end{figure}
-Be reminded that after the scale transformation, we have to supply \texttt{step = {(1,1)}} so that the grid lines are drawn in the new units. We have also used the \texttt{brace} and \texttt{mirror} decorations, which are not hard to understand.
+It is also possible to provide the \texttt{scale}\index{scale@\texttt{scale}} option. Be reminded that after the scale transformation, we have to supply \texttt{step = {(1,1)}} so that the grid lines are drawn in the new units. We have also used the \texttt{brace} and \texttt{mirror} decorations, which are not hard to understand.
 
 \paragraph{Coordinate Rotation}
 Another simple way to transform the coordinate axes is via rotation. It is extremely straightforward and immediately done in Figure \ref{fig:newcoord2}.
@@ -87,10 +87,10 @@ To initialize a 3D TikZ plot, the easiest automatic way is to write the drawing 
     \caption{A vector in three-dimensional space.}
     \label{fig:3dvec}
 \end{figure}
-Notice that we have utilized the \texttt{append style} function to add the requirement that all arrow tips will use the \texttt{LaTeX} type on top of the default behavior.
+Notice that we have utilized the \texttt{append style}\index{append style@\texttt{append style}} function to add the requirement that all arrow tips will use the \texttt{LaTeX} type on top of the default behavior.
 
 \paragraph{Surface Plots}
-Moving from 2D to 3D, we may now want to draw surface plots instead of just curves. This can be done by declaring a normal axis scope and using the \texttt{\textbackslash addplot3} command with the \texttt{surf} keyword on the level equation. Figure \ref{fig:2dgauss} below serves as an example.
+Moving from 2D to 3D, we may now want to draw \textit{surface plots}\index{Surface Plot} instead of just curves. This can be done by declaring a normal axis scope and using the \texttt{\textbackslash addplot3} command with the \texttt{surf}\index{surf@\texttt{surf}} keyword on the level equation. Figure \ref{fig:2dgauss} below serves as an example.
 \begin{lstlisting}
 \begin{tikzpicture}
 \begin{axis}[grid=major,colormap/viridis,zmin=-0.25]
@@ -108,10 +108,10 @@ Moving from 2D to 3D, we may now want to draw surface plots instead of just curv
     \caption{A 2D Gaussian surface plot.}
     \label{fig:2dgauss}
 \end{figure}
-We can add a mesh grid and choose the color map (viridis here) at the start of the axis environment. It is also possible to provide a \texttt{colorbar}. To draw a contour plot instead, we simply replace \texttt{surf} by \texttt{contour gnuplot}\footnote{Or \texttt{contour lua} if you are using LuaLaTeX.} and use the \texttt{view=\{0\}\{90\}} trick introduced at the end of the last chapter.
+We can add a mesh grid and choose the color map (viridis here) at the start of the axis environment. It is also possible to request a \texttt{colorbar}\index{colorbar@\texttt{colorbar}} in the axis setting. To draw a contour plot instead, we simply replace \texttt{surf} by \texttt{contour gnuplot}\index{contour gnuplot@\texttt{contour gnuplot}}\footnote{Or \texttt{contour lua} if you are using LuaLaTeX.} and use the \texttt{view=\{0\}\{90\}}\index{view@\texttt{view}} trick introduced at the end of the last chapter.
 
 \paragraph{3D Spheres and Arcs}
-To construct a 3D sphere and draw arcs on it, we need to import the \texttt{tikz-3dplot} package (requires \texttt{\textbackslash usepackage\{tikz-3dplot\}} \footnote{A positive side effect is that it also loads the smaller \texttt{3d} TikZ library, which allows the user to write in cylindrical/spherical coordinates.} this time).  Drawing only the sphere is not hard (plus the \texttt{ball color} option). Meanwhile, drawing the arcs requires us to first locate the center as well as the two ends of each of them via \texttt{\textbackslash tdplotdefinepoints}\footnote{However, this command only supports Cartesian coordinates.}, and then actually execute that with \texttt{\textbackslash tdplotdrawpolytopearc}. The whole procedure is illustrated by Figure \ref{fig:spherearc}.
+To construct a 3D sphere and draw arcs on it, we need to import the \texttt{tikz-3dplot}\index{tikz-3dplot@\texttt{tikz-3dplot}} package (requires \texttt{\textbackslash usepackage\{tikz-3dplot\}} \footnote{A positive side effect is that it also loads the smaller \texttt{3d} TikZ library, which allows the user to write in cylindrical/spherical coordinates.} this time).  Drawing only the sphere is not hard (plus the \texttt{ball color} option). Meanwhile, drawing the arcs requires us to first locate the center as well as the two ends of each of them via \texttt{\textbackslash tdplotdefinepoints}\index{tdplotdefinepoints@\texttt{\textbackslash tdplotdefinepoints}}\footnote{However, this command only supports Cartesian coordinates.}, and then actually execute that with \texttt{\textbackslash tdplotdrawpolytopearc}\index{tdplotdrawpolytopearc@\texttt{\textbackslash tdplotdrawpolytopearc}}. The whole procedure is illustrated by Figure \ref{fig:spherearc}.
 \begin{lstlisting}
 \tdplotsetmaincoords{70}{110}
 \begin{tikzpicture}[scale=2.5,tdplot_main_coords,rotate=15]
@@ -147,12 +147,12 @@ To construct a 3D sphere and draw arcs on it, we need to import the \texttt{tikz
     \caption{Drawing a sphere with a spherical triangle on it.}
     \label{fig:spherearc}
 \end{figure}
-Note that we also call \texttt{\textbackslash tdplotsetmaincoords} and deploy \texttt{tdplot\_main\_\allowbreak coords} to adjust the viewing angle. Furthermore, we have used the \texttt{rotate} option as a workaround to tune the orientation.
+Note that we also call \texttt{\textbackslash tdplotsetmaincoords}\index{tdplotsetmaincoords@\texttt{\textbackslash tdplotsetmaincoords}} and deploy \texttt{tdplot\_main\_\allowbreak coords}\index{tdplot\_main\_coords@\texttt{tdplot\_main\_coords}} to adjust the viewing angle. Furthermore, we have used the \texttt{rotate} option as a workaround to tune the orientation.
 
 \section{Data Visualization}
 
 \paragraph{Line Charts}
-There are many other types of plots that we can make with TikZ. The most basic one will probably be line charts, and we will use the Mauna Loa $\text{CO}_2$ concentration data (downloaded from \href{https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_annmean_mlo.csv}{https://gml.noaa.gov/webdata/ccgg/trends/co2/\allowbreak co2\_annmean\_mlo.csv}) as an example. As before, the \texttt{\textbackslash addplot} command is called, and it can accept and read a \texttt{.csv} (comma-separated values) file. We will supply the one downloaded from the link above, while providing the respective header names for the \texttt{x} and \texttt{y} axes. The result is shown in Figure \ref{fig:CO2} above.
+There are many other types of plots that we can make with TikZ. The most basic one will probably be \textit{line charts}\index{Line Chart}, and we will use the Mauna Loa $\text{CO}_2$ concentration data (downloaded from \href{https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_annmean_mlo.csv}{https://gml.noaa.gov/webdata/ccgg/trends/co2/\allowbreak co2\_annmean\_mlo.csv}) as an example. As before, the \texttt{\textbackslash addplot} command is called, and it can accept and read a \texttt{.csv}\index{csv@\texttt{.csv}} (comma-separated values) file with the \texttt{table}\index{table@\texttt{table}} syntax. We will supply the one downloaded from the link above, while providing the respective header names for the \texttt{x} and \texttt{y} axes. The result is shown in Figure \ref{fig:CO2} above.
 \begin{lstlisting}
 \begin{tikzpicture}
 \begin{axis}[width=0.95\textwidth, height=0.65\textwidth, x tick label style={rotate=45,/pgf/number format/.cd,set thousands separator={}}, enlarge x limits={abs=2}, xlabel=year, ylabel=$\text{CO}_2$ concentration (ppm), title=Mauna Loa Observatory Measurement, xlabel style={yshift=-15pt}]
@@ -172,14 +172,16 @@ There are many other types of plots that we can make with TikZ. The most basic o
     \caption{The time-series of $\text{CO}_2$ concentration recorded at Mauna Loa Observatory from 1959 to 2024.}
     \label{fig:CO2}
 \end{figure}
-Some noticeable points include that if we change the graph color, we have to explicitly append \texttt{mark=*} to get back the dots along the curve. Removing it will produce only the curve. A reference horizontal dashed line is drawn too by simply providing the constant. We enforce \texttt{enlarge x limits} to take \texttt{abs=2} so that the $x$-axis extends by $2$ years. We also rotate the $x$-axis tick labels by $45^\circ$ and use some options to format out the \texttt{,} originally in the year numbers. (Try removing them to see what happens!) Accounting for that, we also shift the $x$-axis label downward by $15$ pt.
+Some noticeable points include that if we change the graph color, we have to explicitly append \texttt{mark=*} to get back the dots along the curve. Removing it will produce only the curve. A reference horizontal dashed line is drawn too by simply providing the constant. We enforce \texttt{enlarge x limits} to take \texttt{abs=2} so that the $x$-axis extends by $2$ years. We also rotate the $x$-axis tick labels by $45^\circ$ and use a tweak to format out the \texttt{,} originally in the year numbers. (Try removing them to see what happens!) Accounting for that, we also shift the $x$-axis label downward by $15$ pt.
 
 \paragraph{Bar Plots}
-Bar plots are another commonly seen plot type. To construct a bar plot, we either declare \texttt{xbar} or \texttt{ybar} in the \texttt{axis} option at the start and call the \texttt{\textbackslash addplot} command for each set of bars, or put the \texttt{xbar}/\texttt{ybar} keyword directly after \texttt{\textbackslash addplot}. A small example is given as Figure \ref{fig:classscore}.
+\textit{Bar plots}\index{Bar Plot} are another commonly seen plot type. To construct a bar plot, we either declare \texttt{xbar}\index{xbar@\texttt{xbar}} or \texttt{ybar}\index{ybar@\texttt{ybar}} in the \texttt{axis} option at the start and call the \texttt{\textbackslash addplot} command for each set of bars, or put the \texttt{xbar}/\texttt{ybar} keyword directly after \texttt{\textbackslash addplot}. A small example is given as Figure \ref{fig:classscore}.
 \begin{lstlisting}
 \begin{tikzpicture}
 \begin{axis}[title=Class Subject Performance,
     ybar,
+    axis lines=left,
+    tick align=outside,
     enlargelimits=0.15,
     legend style={at={(0.5,-0.15)},anchor=north,legend columns=-1},
     ylabel=Score,
@@ -189,7 +191,7 @@ Bar plots are another commonly seen plot type. To construct a bar plot, we eithe
     nodes near coords align=vertical]
 \addplot coordinates {(Class A,75) (Class B,81) (Class C,73)};
 \addplot coordinates {(Class A,88) (Class B,80) (Class C,65)};
-\addplot coordinates {(Class A,86) (Class B,82) (Class C,70)};
+\addplot[draw=Green, fill=Green!30] coordinates {(Class A,86) (Class B,82) (Class C,70)};
 \legend{Language,Mathematics,Science}
 \end{axis}
 \end{tikzpicture}
@@ -199,6 +201,8 @@ Bar plots are another commonly seen plot type. To construct a bar plot, we eithe
     \begin{tikzpicture}
     \begin{axis}[title=Class Subject Performance,
     ybar,
+    axis lines=left,
+    tick align=outside,
     enlargelimits=0.15,
     legend style={at={(0.5,-0.15)},anchor=north,legend columns=-1},
     ylabel=Score,
@@ -208,19 +212,35 @@ Bar plots are another commonly seen plot type. To construct a bar plot, we eithe
     nodes near coords align=vertical]
     \addplot coordinates {(Class A,75) (Class B,81) (Class C,73)};
     \addplot coordinates {(Class A,88) (Class B,80) (Class C,65)};
-    \addplot coordinates {(Class A,86) (Class B,82) (Class C,70)};
+    \addplot[draw=Green, fill=Green!30] coordinates {(Class A,86) (Class B,82) (Class C,70)};
     \legend{Language,Mathematics,Science}
     \end{axis}
     \end{tikzpicture}
     \caption{A toy dataset about the scores of three classes in three different subjects.}
     \label{fig:classscore}
 \end{figure}
-Here we use the \texttt{symbolic x coords} option to tell the \texttt{axis} that the $x$-coordinates are now strings, and \texttt{xtick=data} guarantees that the tick labels will be those appearing in the input data. \texttt{nodes near coords} produces the numbers above the bars. Last but not least, we have tweaked the style for the legend, particularly \texttt{legend columns=-1} to arrange the entries horizontally.
+Here we use the \texttt{symbolic x coords}\index{symbolic coords@\texttt{symbolic coords}} option to tell the \texttt{axis} that the $x$-coordinates are now strings, and \texttt{xtick=data}\index{xtick@\texttt{xtick}} guarantees that the tick labels will be those appearing in the input data (similarly, we can control \texttt{ytick}\index{ytick@\texttt{ytick}}). Moreover, the ticks now point outside, set with the \texttt{tick align} option. \texttt{nodes near coords} produces the numbers above the bars. Last but not least, we have tweaked the style for the legend, particularly \texttt{legend columns=-1} to arrange the entries horizontally.
+
+\paragraph{Pie Chart}
+Meanwhile, to make a \textit{pie chart}\index{Pie Chart}, we can import the \texttt{pgf-pie}\index{pgf-pie@\texttt{pgf-pie}} package. Then it is done quite simply by a call to the \texttt{\textbackslash pie}\index{pie@\texttt{\textbackslash pie}} command. This is demonstrated in Figure \ref{fig:piechart} afterwards.
+\begin{lstlisting}
+\begin{tikzpicture}
+\pie{10/Agriculture, 25/Electric Power, 23/Industry, 13/Residential and Commercial, 28/Transportation, 1/Others}
+\end{tikzpicture}    
+\end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \pie{10/Agriculture, 25/Electric Power, 23/Industry, 13/Residential and Commercial, 28/Transportation, 1/Others}
+    \end{tikzpicture}
+    \caption{Total U.S. Greenhouse Gas Emissions by Economic Sector (Source: US EPA).}
+    \label{fig:piechart}
+\end{figure}
 
 \section{Referencing between TikZ Pictures}
 
 \paragraph{Remembering Names and Overlay}
-Sometimes we need to combine multiple TikZ pictures, and share name labels between them so that they can refer to objects in each other. We can enable this functionality by setting the \texttt{remember picture} option for them. This is demonstrated by the rather lengthy example of different phase portraits in Figure \ref{fig:phasediagram}.
+Sometimes we need to combine multiple TikZ pictures, and share name labels between them so that they can refer to objects in each other. We can enable this functionality by setting the \texttt{remember picture}\index{remember picture@\texttt{remember picture}} option for them. This is demonstrated by the rather lengthy example of different phase portraits in Figure \ref{fig:phasediagram}.
 \begin{lstlisting}
 \tikzset{decorated arrows/.style={postaction=decorate,
          decoration={markings,mark={at position 0.5 with {\arrow{stealth}}}}}}
@@ -364,12 +384,12 @@ Sometimes we need to combine multiple TikZ pictures, and share name labels betwe
     \caption{Different types of equilibrium points and their representative phase portraits in two-dimensional dynamical systems.}
     \label{fig:phasediagram}
 \end{figure}
-(The full code can be checked from the source file.) In the main procedure, the underlying axes and parabola are drawn, and the coordinates at which each phase portrait will be placed are marked and named. Then, a smaller TikZ picture is initialized for each flow type over the main diagram with the \texttt{overlay} option. The axis containing the phase lines is then centered at the marked coordinates by filling the \texttt{at} option with the shared name.
+(The full code can be checked from the source file.) In the main procedure, the underlying axes and parabola are drawn, and the coordinates at which each phase portrait will be placed are marked and named. Then, a smaller TikZ picture is initialized for each flow type over the main diagram with the \texttt{overlay}\index{overlay@\texttt{overlay}} option. The axis containing the phase lines is then centered at the marked coordinates by filling the \texttt{at}\index{at@\texttt{at}} option with the shared name.
 
 \section{Matrices in TikZ}
 
 \paragraph{Matrices of Nodes}
-To generate a matrix in TikZ that can be labeled, we can use the \texttt{\textbackslash matrix} command with the \texttt{matrix of math nodes} option. This is illustrated by Figure \ref{fig:tikzmatrix} below.
+To generate a matrix in TikZ that can be labeled, we can use the \texttt{\textbackslash matrix}\index{matrix@\texttt{\textbackslash matrix}} command with the \texttt{matrix of math nodes}\index{matrix of math nodes@\texttt{matrix of math nodes}} option. This is illustrated by Figure \ref{fig:tikzmatrix} below.
 \begin{lstlisting}
 \begin{tikzpicture}[remember picture]
 \node (A) {$A=$};
@@ -411,12 +431,12 @@ To generate a matrix in TikZ that can be labeled, we can use the \texttt{\textba
 \end{figure}
 Particularly, the \texttt{left/right delimiter} settings enclose the nodes with the square brackets, and the \texttt{right of} syntax puts the matrix to the right of the \texttt{A=} part. The positioning of the nodes can be controlled by changing \texttt{row sep}, \texttt{column sep}, and \texttt{inner sep}. 
 
-We have also used two additional TikZ libraries. The first one is \texttt{backgrounds} to draw blue shadings along the targeted row/column in the background via a \texttt{on background layer} scope. The second one is \texttt{tikzmark} so that we can place a corresponding \texttt{tikzmark} tag at some other location outside the TikZ picture, which can then refer to this tag as \texttt{pic cs:<name>} with the help of \texttt{remember picture} just introduced before.
+We have also used two additional TikZ libraries. The first one is \texttt{backgrounds} to draw blue shadings along the targeted row/column in the background via a \texttt{on background layer}\index{on background layer@\texttt{on background layer}} scope. The second one is \texttt{tikzmark} so that we can place a corresponding \texttt{\textbackslash tikzmark}\index{tikzmark@\texttt{\textbackslash tikzmark}} tag at some other location outside the TikZ picture, which can then refer to this tag as \texttt{pic cs:<name>}\index{pic cs@\texttt{pic cs}} with the help of \texttt{remember picture} just introduced before.
 
 \section{Flow Charts}
 
 \paragraph{Flow Charts with Shapes}
-A general TikZ application is to produce flow charts for various processes. This is demonstrated by the bisection algorithm example in Figure \ref{fig:bisect}. We will need to load the \texttt{shapes.geometric} TikZ library for defining the shapes representing different components.
+A general TikZ application is to produce \textit{flow charts}\index{Flow Chart} for various processes. This is demonstrated by the bisection algorithm example in Figure \ref{fig:bisect}. We will need to load the \texttt{shapes.geometric}\index{shapes.geometric@\texttt{shapes.geometric}} TikZ library for defining the shapes representing different components.
 \begin{lstlisting}
 \begin{tikzpicture}[startend/.style={rectangle, rounded corners, minimum width=3cm, minimum height=1cm, draw=black},
 io/.style={trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=4cm, minimum height=1cm, draw=black},
@@ -468,12 +488,12 @@ decision/.style={diamond, minimum width=5cm, minimum height=1cm, draw=black}]
     \caption{The flow chart of the bisection algorithm.}
     \label{fig:bisect}
 \end{figure}
-Again, we have used \texttt{<direction>= of} syntax throughout the code to place the nodes at relative positions. A node named \texttt{back} is also pinpointed in the middle of the second arrow for the return arrow later.
+Again, we have used \texttt{<direction>= of}\index{of@\texttt{of}} syntax throughout the code to place the nodes at relative positions. A node named \texttt{back} is also pinpointed in the middle of the second arrow for the return arrow later.
 
 \section{Electrical Circuit Diagrams}
 
 \paragraph{Electrical Circuits with Components}
-Finally, we can draw electrical circuit diagrams by importing the \texttt{circuitikz} package. A small example is given as Figure \ref{fig:circuit}.
+Finally, we can draw electrical circuit diagrams by importing the \texttt{circuitikz}\index{circuitikz@\texttt{circuitikz}} package. A small example is given as Figure \ref{fig:circuit}.
 \begin{lstlisting}
 \begin{circuitikz}
 \draw (-3,0) to[vsource, l=$E$] (3,0);

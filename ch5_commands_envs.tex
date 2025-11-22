@@ -190,7 +190,7 @@ By manipulating all the tools introduced in this chapter, efficiently imitate th
 \end{exercisebox}
 \begin{Answer}[ref=exer:temperature]
 \begin{lstlisting}
-\newcommand{\CtoF}[1]{\pgfmathsetmacro{\Fdegree}{#1*1.8+32}%
+\newcommand*{\CtoF}[1]{\pgfmathsetmacro{\Fdegree}{#1*1.8+32}%
 \ifthenelse{\lengthtest{\Fdegree pt > 100 pt}}{The temperature (\Fdegree in degree F) is too high!}{The temperature (\Fdegree in degree F) is alright.}}    
 \end{lstlisting}
 \end{Answer}

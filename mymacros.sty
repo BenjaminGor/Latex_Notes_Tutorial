@@ -142,6 +142,12 @@ delim_0 ",\~"
 \renewcommand*{\ExerciseSkipBefore}{\dimexpr.5\baselineskip}
 \renewcommand*{\ExerciseSkipAfter}{\dimexpr.5\baselineskip}
 
+% Chapter Title Picture
+\newcommand*{\titlepic}{}
+\newcommand*{\puttitlepic}[2][\paperwidth]{\renewcommand*{\titlepic}{\includegraphics[width=#1]{#2}}}
+\DeclareNewLayer[align=lt,voffset=0.25\paperheight,background,mode=picture,contents={\putUL{\titlepic}}]{titlepiclayer}
+\newpairofpagestyles[scrheadings]{Styledpages}{\AddLayersToPageStyle{plain.Styledpages}{titlepiclayer}}
+
 \usepackage{listings}
 \lstdefinestyle{lstTeXstyle}{
     language=[latex]TeX, 
