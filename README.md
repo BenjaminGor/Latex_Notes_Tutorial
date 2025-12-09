@@ -10,6 +10,8 @@ This is the repository for the e-book <em>"How to Reproduce this Book Exactly wi
 
 Again, feel free to open an issue if you have any problems or suggestions about the book!
 This book will be regularly updated!
+To do:
+Add a subsection for setting up an appendix.
 
 <h2>Table of Contents</h2>
 
