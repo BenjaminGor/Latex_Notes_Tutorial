@@ -1,5 +1,5 @@
 \documentclass{scrbook}
-\KOMAoptions{paper=a4, fontsize=12pt, chapterprefix=true, twoside=semi, DIV=classic, parskip=half, captions=besidetop}
+\KOMAoptions{paper=a4, fontsize=12pt, chapterprefix=true, twoside=false, DIV=classic, parskip=half, captions=besidetop} % Later change twoside back to semi after inserting the book cover
 \linespread{1.25}
 
 % Packages and Definitions in mymacros.sty
@@ -25,6 +25,8 @@ Copyright ©, C.~L.~Loi, 2025. All rights reserved.}
 
 \begin{document}
 
+\renewcommand{\thepage}{Cover Page}
+\includepdf[page=-, fitpaper]{Book Cover Latex.pdf}
 \frontmatter
 \include{front_matter}
 

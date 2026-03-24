@@ -61,7 +61,7 @@ delim_0 ",\~"
 \end{filecontents}
 \makeindex[intoc, options=-s myindexstyle]
 
-% PDF Links and Bookmark
+% PDF Links, Bookmark, and Importing Pages
 \usepackage{hyperref}
 \hypersetup{
     colorlinks,
@@ -70,10 +70,11 @@ delim_0 ",\~"
     citecolor = blue!90!Green,
     pdfauthor = Benjamin Loi,
     pdftitle = How to Reproduce this Book Exactly with LATEX,
-    pdfsubject = v1.0.0,
+    pdfsubject = v1.0.1,
     pdfkeywords = {Mathematics, LATEX}
 }
 \usepackage[open,openlevel=1,atend,numbered]{bookmark}
+\usepackage{pdfpages}
 
 % Colored Boxes
 \usepackage[many]{tcolorbox}
