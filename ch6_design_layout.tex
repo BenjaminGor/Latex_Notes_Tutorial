@@ -111,7 +111,7 @@ There exists the \texttt{\textbackslash chapterheadstartvskip}\index{chapterhead
 
 \paragraph{Default Sans-serif} As you may notice, the chapter/section headings are written in sans-serif. To change this, we can set \texttt{sfdefaults}\index{sfdefaults@\texttt{sfdefaults}} to \texttt{no} in \texttt{\textbackslash KOMAoptions}. We can also mark up text with \texttt{\textbackslash textmaybesf\{<text>\}}\index{textmaybesf@\texttt{\textbackslash textmaybesf}} or the \texttt{\textbackslash maybesf\allowbreak family}\index{maybesf@\texttt{\textbackslash maybesf}} switch, which are toggled by \texttt{sfdefaults} too.
 
-\section{Title Page and Front/Back Matter}
+\section{Title/Cover, Front/Back Matter and Appendix}
 
 \paragraph{Title Page}
 The easiest way to generate a \textit{title page}\index{Title Page} is to simply use the \texttt{\textbackslash make\allowbreak title}\index{maketitle@\texttt{\textbackslash maketitle}} command. Just enter the book (sub)title, author name, and the like in the preamble using the corresponding commands, for example:
@@ -151,10 +151,19 @@ where we have utilized a lot of boxes and positioning/spacing commands.
 \begin{lstlisting}
 \pagenumbering{roman}
 ...
-\cleardoubleoddpage
+\cleardoublepage
 \pagenumbering{arabic}
 \end{lstlisting}
-The \texttt{\textbackslash cleardoubleoddpage}\index{cleardoubleoddpage@\texttt{\textbackslash cleardoubleoddpage}} command is needed to properly flush the page.
+The \texttt{\textbackslash cleardoublepage}\index{cleardoublepage@\texttt{\textbackslash cleardoublepage}} command is needed to properly flush the page.
+
+\paragraph{Appendix} Similarly, we can declare an \textit{appendix}\index{Appendix} by simply adding the command \texttt{\textbackslash appendix}\index{appendix@\texttt{\textbackslash appendix}} to the corresponding location. Subsequent chapters will then be labeled as appendices started with letters.
+
+\paragraph{Inserting Book Cover or Other PDF Pages} Although we always say “Don't judge a book by its cover”, having a beautiful \textit{book cover}\index{Book Cover} is quite essential to attract potential readers. To append a custom book cover (preferably in PDF format) for finishing, we can import the \texttt{pdfpages}\index{pdfpages@\texttt{pdfpages}} package and invoke the command \texttt{\textbackslash includepdf}\index{includepdf@\texttt{\textbackslash includepdf}} along the lines of
+\begin{lstlisting}
+\renewcommand{\thepage}{Cover Page} % Manually enforcing the page name in the final PDF view
+\includepdf[page=-, fitpaper]{Book Cover Latex.pdf}
+\end{lstlisting}
+at the start of the main document. The \texttt{fitpaper}\index{fitpaper@\texttt{fitpaper}} option preserves and fits it to the original size of the inserted PDF page(s), and the \texttt{page} option indicates which page(s) to be inserted into the final product (\texttt{-} means all). Hence we can incorporate other external PDF files in the same way.
 
 \paragraph{Back of Title} Sometimes we may want to put a copyright statement or other information at the back of the title page. If we choose to create the title page by the \texttt{\textbackslash maketitle} method, then we can simply supply the \texttt{\textbackslash lowertitleback}\index{lowertitleback@\texttt{\textbackslash lowertitleback}} or \texttt{\textbackslash uppertitleback}\index{uppertitleback@\texttt{\textbackslash uppertitleback}} command, e.g.\ for this book, we may have:
 \begin{lstlisting}

@@ -494,6 +494,12 @@ gives $\norm{\bm{x}}_1 = \sum_{i=1}^n\abs{x_i}$.
 \paragraph{Special Math Characters}
 Two other types of symbols that may be of interest come from \texttt{\textbackslash mathbb\{<character>\}}\index{mathbb@\texttt{\textbackslash mathbb}} and \texttt{\textbackslash mathcal\{<character>\}}\index{mathcal@\texttt{\textbackslash mathcal}} for sets and classes. For example, the set of all real numbers is commonly denoted by $\mathbb{R}$ (\texttt{\textbackslash mathbb\{R\}}), while the class of continuously differentiable functions is denoted by $\mathcal{C}^1$ (\texttt{\textbackslash mathcal\{C\}\^{}1}). Moreover, in some situations we may want to type math characters in upright, and we can use \texttt{\textbackslash mathrm\{<character>\}}\index{mathrm@\texttt{\textbackslash mathrm}}, e.g.\ for a differential $\mathrm{d}x$ (\texttt{\textbackslash mathrm\{d\}x}).
 
+\paragraph{Prescripts} To add a superscript or subscript but at the left instead of the default right, we can utilize the \texttt{\textbackslash prescript}\index{prescript@\texttt{\textbackslash prescript}} command. For example,
+\begin{lstlisting}
+$\prescript{12}{6}{\text{C}}$
+\end{lstlisting}
+is rendered as $\prescript{12}{6}{\text{C}}$.
+
 \paragraph{SI Units}
 For other science applications, the physical quantities involved are often accompanied by units. The \verb|siunitx|\index{siunitx@\texttt{siunitx}} package helps facilitate the typesetting of units and expressing the exponents. For example, \texttt{\textbackslash si\{\textbackslash N\} = \textbackslash si\{\textbackslash kg \textbackslash per \textbackslash m \textbackslash per \textbackslash square \textbackslash s\}} is interpreted as $\si{\N} = \si{\kg \per \m \per \square \s}$\index{si@\texttt{\textbackslash si}}, while \texttt{\textbackslash SI\{4.184e3\}\allowbreak\{\textbackslash J \textbackslash per \textbackslash kg \textbackslash per \textbackslash K\}} generates \SI{4.184e3}{\J \per \kg \per \K}\index{SI@\texttt{\textbackslash SI}}.
 
