@@ -10,8 +10,12 @@ This is the repository for the e-book <em>"How to Reproduce this Book Exactly wi
 
 Again, feel free to open an issue if you have any problems or suggestions about the book!
 This book will be regularly updated!
-To do:
-Add a subsection for setting up an appendix. (Done!)
+To-do list for 1.0.2:
+1. TexLive for Linux
+2. \autodot
+3. The "open" keyword
+4. \RedeclareSectionCommand
+5. Drawing hatches in TikZ
 
 <h2>Table of Contents</h2>
 
