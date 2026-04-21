@@ -12,10 +12,11 @@ Again, feel free to open an issue if you have any problems or suggestions about 
 This book will be regularly updated!
 To-do list for 1.0.2:
 1. TexLive for Linux
-2. \autodot
-3. The "open" keyword
-4. \RedeclareSectionCommand
-5. Drawing hatches in TikZ
+2. \mathscr
+3. \autodot
+4. The "open" keyword
+5. \RedeclareSectionCommand
+6. Drawing hatches in TikZ
 
 <h2>Table of Contents</h2>
 
