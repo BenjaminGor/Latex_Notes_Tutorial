@@ -125,14 +125,14 @@ We often need to insert wide pictures into the book, and the \textit{landscape m
 In Section \ref{sec:colorbox}, we have learnt how to create simple colored boxes with the \texttt{tcolorbox} package. Here, we provide a simple recipe to design a stylish box further:
 \begin{lstlisting}
 \begin{tcolorbox}[enhanced, title=The title, attach boxed title to top text left={yshift=-0.5mm}, interior style tile={width=0.5\textwidth}{graphics/grid_paper.jpg}, frame style={top color=black!90, bottom color=gray!70},
-boxed title style={frame code={\path[tcb fill frame] (frame.north west) -- (frame.north east) -- ([xshift=3mm]frame.south east) -- (frame.south west) -- cycle;},
+boxed title style={empty, frame code={\path[tcb fill frame] (frame.north west) -- (frame.north east) -- ([xshift=3mm]frame.south east) -- (frame.south west) -- cycle;},
 interior code={\path[tcb fill interior] (interior.north west) -- (interior.north east) -- ([xshift=3mm]interior.south east) -- (interior.south west) -- cycle;}}]
 For demonstration.
 \end{tcolorbox}    
 \end{lstlisting}
 This produces:
 \begin{tcolorbox}[enhanced, title=The title, attach boxed title to top text left={yshift=-0.5mm}, interior style tile={width=0.5\textwidth}{graphics/grid_paper.jpg}, frame style={top color=black!90, bottom color=gray!70},
-boxed title style={frame code={\path[tcb fill frame] (frame.north west) -- (frame.north east) -- ([xshift=3mm]frame.south east) -- (frame.south west) -- cycle;},
+boxed title style={empty, frame code={\path[tcb fill frame] (frame.north west) -- (frame.north east) -- ([xshift=3mm]frame.south east) -- (frame.south west) -- cycle;},
 interior code={\path[tcb fill interior] (interior.north west) -- (interior.north east) -- ([xshift=3mm]interior.south east) -- (interior.south west) -- cycle;}}]
 For demonstration.
 \end{tcolorbox}

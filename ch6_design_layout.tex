@@ -13,6 +13,8 @@ In a printed book, there will be a distinction between \textit{odd-numbered}\ind
 
 In this book, the \texttt{twoside} option is set to \texttt{semi} by adding \texttt{\textbackslash KOMAoptions\allowbreak\{twoside=semi\}}. This retains equal margins as if the document is one-sided, but the headers will switch alternately just like two-sided.
 
+\paragraph{Opening of New Chapters} If the book is made two-sided as described above, then we can control on which side the first page of new chapters should start, by changing the \texttt{\textbackslash KOMAoptions} parameter \texttt{open}\index{open@\texttt{open}}. The default value of \texttt{open} for \texttt{scrbook} is \texttt{right}, i.e. new chapters always start on right-sided pages, but we can also set it to \texttt{left} or \texttt{any} (starting immediately on the next page).
+
 \paragraph{Division Factor}
 The extent of the type area in pages is controlled by the \texttt{DIV}\index{DIV Factor@\texttt{DIV} Factor} factor passed to \texttt{\textbackslash KOMAoptions}. The higher the value of \texttt{DIV}, the larger the fraction of the \textit{main text area}\index{Main Text Area} and the smaller the margins. The reference value of \texttt{DIV} usually ranges from $9$ to $12$. However, we can delegate the calculation of an optimal \texttt{DIV} by setting \texttt{DIV} to either \texttt{calc} or \texttt{classic}. If a new font is loaded, it is also desirable to recalculate an appropriate type area by calling \texttt{\textbackslash KOMAoptions\{DIV=last\}} that reuses the same setting.
 
@@ -59,9 +61,9 @@ The separating line under the header is added via passing the switch \texttt{hea
 \paragraph{Format for the Chapter Mark}
 Sometimes we may want to change the chapter label in the header too. This is done by applying \texttt{\textbackslash renewcommand*} to \texttt{\textbackslash chaptermarkformat}\index{chaptermarkformat@\texttt{\textbackslash chaptermarkformat}}. In this book, we have
 \begin{lstlisting}
-\renewcommand*{\chaptermarkformat}{\chapapp~\thechapter\autodot~--~} % ~ occupies a space, -- is a long dash
+\renewcommand*{\chaptermarkformat}{\chapapp~\thechapter~--~} % ~ occupies a space, -- is a long dash
 \end{lstlisting}
-\texttt{\textbackslash chapapp}\index{chapapp@\texttt{\textbackslash chapapp}} stores the word “Chapter” that can be modified later, \texttt{\textbackslash thechapter}\index{thechapter@\texttt{\textbackslash thechapter}} contains the current chapter counter, and \texttt{\textbackslash autodot}\index{autodot@\texttt{\textbackslash autodot}} is empty, reserved for an extra dot after any chapter/section numbering. As you may have guessed, there is also \texttt{\textbackslash sectionmarkformat}\index{sectionmarkformat@\texttt{\textbackslash sectionmarkformat}}.
+\texttt{\textbackslash chapapp}\index{chapapp@\texttt{\textbackslash chapapp}} stores the word “Chapter” that can be modified later, \texttt{\textbackslash thechapter}\index{thechapter@\texttt{\textbackslash thechapter}} contains the current chapter counter. Depending on the need of the user, \texttt{\textbackslash autodot}\index{autodot@\texttt{\textbackslash autodot}} may be explicitly typed, reserved for an extra dot after any chapter/section numbering as long as a non-Arabic numbering is invoked (e.g. an appendix). As you may have guessed, there is also \texttt{\textbackslash sectionmarkformat}\index{sectionmarkformat@\texttt{\textbackslash sectionmarkformat}}.
 
 \begin{exercisebox}
 \begin{Exercise}
@@ -108,6 +110,12 @@ There exists the \texttt{\textbackslash chapterheadstartvskip}\index{chapterhead
 \renewcommand*{\chapterheadstartvskip}{\addvspace{2em}}    
 \end{lstlisting}
 \texttt{\textbackslash addvspace}\index{addvspace@\texttt{\textbackslash addvspace}} is a variant of \texttt{\textbackslash vspace}, which is a kind of \textit{rubber length}\index{Rubber Length}: it adds just enough vertical space so that the total space is as large as the input length if the existing space is shorter than that, and does nothing when it is already long enough.
+
+\paragraph{General Settings for Sections} In general, the attributes of different chapters/(sub)sections can be modified via the command \texttt{\textbackslash RedeclareSection\allowbreak Command[<attributes>]\{<level\_name>\}}\index{RedeclareSectionCommand@\texttt{\textbackslash RedeclareSectionCommand}}. An example is
+\begin{lstlisting}
+\RedeclareSectionCommand[beforeskip=-4em plus-1em minus-1em, afterskip=3em, indent=10pt]{section}    
+\end{lstlisting}
+This modifies the vertical spacing before and after every section title, as well as the indent. The \texttt{plus}\index{plus@\texttt{plus}} and \texttt{minus}\index{minus@\texttt{minus}} words stand for a \textit{glue}\index{glue} that allows a flexible tolerance. It is also possible to create new section types by \texttt{\textbackslash DeclareNewSectionCommand \allowbreak[<attributes>]\{<level\_name>\}}\index{DeclareNewSectionCommand@\texttt{\textbackslash DeclareNewSectionCommand}}, usually requiring the key \texttt{counterwithin} to indicate the dependency of section numbering.
 
 \paragraph{Default Sans-serif} As you may notice, the chapter/section headings are written in sans-serif. To change this, we can set \texttt{sfdefaults}\index{sfdefaults@\texttt{sfdefaults}} to \texttt{no} in \texttt{\textbackslash KOMAoptions}. We can also mark up text with \texttt{\textbackslash textmaybesf\{<text>\}}\index{textmaybesf@\texttt{\textbackslash textmaybesf}} or the \texttt{\textbackslash maybesf\allowbreak family}\index{maybesf@\texttt{\textbackslash maybesf}} switch, which are toggled by \texttt{sfdefaults} too.
 
