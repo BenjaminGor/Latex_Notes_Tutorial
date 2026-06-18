@@ -2,7 +2,7 @@
 
 This is the repository for the e-book <em>"How to Reproduce this Book Exactly with LaTeX - A Self-contained Tutorial on Writing Mathematical Notes"</em> and its .tex files.
 
-<b>The newest updated PDF can be downloaded from [here](https://github.com/BenjaminGor/Latex_Notes_Tutorial/blob/main/Latex_Demo.pdf).</b>
+<b>The newest updated PDF (v1.0.2) can be downloaded from [here](https://github.com/BenjaminGor/Latex_Notes_Tutorial/blob/main/Latex_Demo.pdf).</b>
 
 ![Book Cover Latex.png](https://github.com/BenjaminGor/Latex_Notes_Tutorial/blob/main/Book%20Cover%20Latex.png)
 
@@ -10,13 +10,6 @@ This is the repository for the e-book <em>"How to Reproduce this Book Exactly wi
 
 Again, feel free to open an issue if you have any problems or suggestions about the book!
 This book will be regularly updated!
-To-do list for 1.0.2:
-1. TexLive for Linux
-2. \mathscr
-3. \autodot
-4. The "open" keyword
-5. \RedeclareSectionCommand
-6. Drawing hatches in TikZ
 
 <h2>Table of Contents</h2>
 
