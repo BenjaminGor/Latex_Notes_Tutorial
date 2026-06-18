@@ -6,6 +6,7 @@
 \usepackage{lipsum}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{bm}
+\usepackage{mathrsfs}
 \usepackage{physics}
 \usepackage{siunitx}
 \usepackage{mathtools}
@@ -36,13 +37,13 @@
 \setkomafont{pagehead}{\color{RoyalBlue}\slshape\bfseries}
 \setkomafont{caption}{\itshape}
 % Chapter Heading (and related)
-\renewcommand*{\chaptermarkformat}{\chapapp~\thechapter\autodot~--~}
+\renewcommand*{\chaptermarkformat}{\chapapp~\thechapter~--~}
 \addtokomafont{chapterprefix}{\itshape\color{white}}
 \renewcommand*{\chapterformat}{\raggedleft\colorbox{RoyalBlue}{\parbox[b][2.8em]{2.8em}{\vfill\centering{\large\chapapp}\\[-0.4em]\thechapter\vfill}}}
 \renewcommand*{\chapterheadstartvskip}{\addvspace{2em}}
 \renewcommand*{\chapterheadendvskip}{\pgfornament[width=\textwidth]{88}\par}
 % Section Heading
-\renewcommand*{\sectionformat}{\colorbox{black}{\textcolor{white}{\thesection}}\enskip}
+\renewcommand*{\sectionformat}{\colorbox{black}{\textcolor{white}{\thesection\autodot}}\enskip}
 \renewcommand*{\sectionlinesformat}[4]{\makebox[0pt][l]{\rule[-\fboxsep-\fboxrule]{\textwidth}{\fboxrule}}#3\parbox[b]{0.85\textwidth}{\linespread{1}\selectfont#4}}
 
 % Index Page
@@ -70,7 +71,7 @@ delim_0 ",\~"
     citecolor = blue!90!Green,
     pdfauthor = Benjamin Loi,
     pdftitle = How to Reproduce this Book Exactly with LATEX,
-    pdfsubject = v1.0.1,
+    pdfsubject = v1.0.2,
     pdfkeywords = {Mathematics, LATEX}
 }
 \usepackage[open,openlevel=1,atend,numbered]{bookmark}

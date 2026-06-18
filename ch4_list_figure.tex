@@ -230,6 +230,37 @@ The \verb|ht!| option, \verb|caption|, and \verb|label| work exactly like the fi
 
 Also, note that \texttt{\textbackslash ContinuedFloat} can also be applied to \texttt{table} floats.
 
+\paragraph{Customizing Rules in a Table}
+It is also common to change the color and width of rules in a table for aesthetic reasons. A small example is shown by Table \ref{tab:rudin} as follows.
+\begin{lstlisting}
+\begin{table}[ht!]
+\setlength{\arrayrulewidth}{0.5ex}
+\centering
+\begin{tabularx}{\textwidth}{p{0.5\textwidth}cccc}
+\arrayrulecolor{Red}
+ & Open & Closed & Perfect & Bounded \\
+\hline
+The set of all complex $z$ such that $\abs{z} < 1$ & No & Yes & No & Yes \\
+...
+\end{tabularx}
+...
+\end{lstlisting}
+\begin{table}[ht!]
+\setlength{\arrayrulewidth}{0.5ex}
+\centering
+\begin{tabularx}{\textwidth}{p{0.5\textwidth}cccc}
+\arrayrulecolor{Red}
+ & Open & Closed & Perfect & Bounded \\
+\hline
+The set of all complex $z$ such that $\abs{z} < 1$ & No & Yes & No & Yes \\
+The set of all complex $z$ such that $\abs{z} \leq 1$ & Yes & No & Yes & Yes \\
+The set of all integers & Yes & No & No & No \\
+\end{tabularx}
+\caption{Basic topological properties of some selected sets. (adapted from Baby Rudin)}
+\label{tab:rudin}
+\end{table}
+The \texttt{\textbackslash setlength\{\textbackslash arrayrulewidth\}\{\}}\index{arrayrulewidth@\texttt{\textbackslash arrayrulewidth}} and \texttt{\textbackslash arrayrulecolor}\index{arrayrulecolor@\texttt{\textbackslash arrayrulecolor}} parts obviously indicate the new rule width and color, respectively. Bear in mind that the latter requires setting the option \texttt{table} when importing the \texttt{xcolor} package.
+
 \paragraph{Caption by the Side} It is also possible to arrange the table so that the caption appears to the side of it. This is done by stacking the \verb|captionbeside|\index{captionbeside@\texttt{captionbeside}} environment provided by KOMA-script. For example, the code
 \begin{lstlisting}
 \begin{table}[ht!]
@@ -326,7 +357,7 @@ yields \par
 \lipsum[7]
 \end{minipage}    
 \end{center}
-The \verb|b| option indicates that the two blocks will be bottom-aligned, provided that their width is fixed to $0.48$ times \texttt{\textbackslash textwidth} and thus they fit in the main text area.
+The \verb|b| option indicates that the two blocks will be bottom-aligned (the same can be done for a \texttt{tabularx} object), provided that their width is fixed to $0.48$ times \texttt{\textbackslash textwidth} and thus they fit in the main text area.
 
 \paragraph{Parallel Columns} The \verb|parcolumns|\index{parcolumns@\texttt{parcolumns}} package can also achieve an effect similar to \verb|minipage| and is more specialized for typesetting different pieces in two or more parallel columns. It also supports page breaks. Using the same example, we can write
 \begin{lstlisting}
